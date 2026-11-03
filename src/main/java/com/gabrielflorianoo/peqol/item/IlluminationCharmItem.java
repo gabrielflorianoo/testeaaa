@@ -76,7 +76,7 @@ public class IlluminationCharmItem extends ToggleableItem {
         if (slot < 0 && !player.getAbilities().instabuild) {
             provider = EmcUtil.knowledge(player).orElse(null);
             unit = EmcUtil.value(template);
-            if (provider == null || unit <= 0 || !provider.hasKnowledge(template) || provider.getEmc().compareTo(BigInteger.valueOf(unit)) < 0) {
+            if (provider == null || unit <= 0 || !provider.hasKnowledge(template) || EmcUtil.isBlacklisted(template) || provider.getEmc().compareTo(BigInteger.valueOf(unit)) < 0) {
                 return;
             }
         }
@@ -96,6 +96,7 @@ public class IlluminationCharmItem extends ToggleableItem {
                 provider.syncEmc(player);
             }
         }
+        player.awardStat(com.gabrielflorianoo.peqol.registry.ModStats.LIGHTS_PLACED);
         SoundType sound = state.getSoundType(level, pos, player);
         level.playSound(null, pos, sound.getPlaceSound(), SoundSource.BLOCKS, 0.6F, sound.getPitch());
     }

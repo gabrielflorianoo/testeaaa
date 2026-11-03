@@ -1,0 +1,37 @@
+{
+  "display": {
+    "icon": {
+      "item": "peqol:construction_wand"
+    },
+    "title": {
+      "translate": "advancements.peqol.wand.title"
+    },
+    "description": {
+      "translate": "advancements.peqol.wand.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "peqol:restocker",
+  "criteria": {
+    "has_construction_wand": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "peqol:construction_wand"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_construction_wand"
+    ]
+  ]
+}

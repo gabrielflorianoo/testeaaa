@@ -7,6 +7,11 @@ import com.gabrielflorianoo.peqol.item.EmcChequeItem;
 import com.gabrielflorianoo.peqol.item.MendingCharmItem;
 import com.gabrielflorianoo.peqol.item.SatiationCharmItem;
 import com.gabrielflorianoo.peqol.item.SiphonCharmItem;
+import com.gabrielflorianoo.peqol.item.SmeltingCharmItem;
+import com.gabrielflorianoo.peqol.block.entity.AlchemicalVacuumBlockEntity;
+import com.gabrielflorianoo.peqol.registry.ModStats;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.entity.item.ItemEntity;
 import com.gabrielflorianoo.peqol.item.WandPlacement;
 import com.gabrielflorianoo.peqol.util.KnowledgeStats;
 import java.util.List;
@@ -179,5 +184,34 @@ public class PEQoLGameTests {
         int count = KnowledgeStats.itemsWithEmc();
         helper.assertTrue(count > 100, "Expected many items with EMC, got " + count);
         helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void smeltingCharmSmeltsOres(GameTestHelper helper) {
+        ItemStack result = SmeltingCharmItem.smeltResult(helper.getLevel(), new ItemStack(Items.RAW_IRON, 5));
+        helper.assertTrue(result.is(Items.IRON_INGOT) && result.getCount() == 5, "5 raw iron should smelt into 5 iron ingots, got " + result);
+        helper.assertTrue(SmeltingCharmItem.smeltResult(helper.getLevel(), new ItemStack(Items.OAK_LOG)).isEmpty(), "Logs are not ores");
+        helper.assertTrue(SmeltingCharmItem.smeltResult(helper.getLevel(), new ItemStack(Items.DIRT)).isEmpty(), "Dirt can't be smelted");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void blacklistIsEmptyByDefault(GameTestHelper helper) {
+        helper.assertFalse(EmcUtil.isBlacklisted(new ItemStack(Items.DIAMOND)), "Nothing is blacklisted by default");
+        helper.assertTrue(Stats.CUSTOM.contains(ModStats.ITEMS_BURNED), "Custom stats should be registered");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void vacuumCollectsDroppedItems(GameTestHelper helper) {
+        helper.setBlock(POS, ModBlocks.ALCHEMICAL_VACUUM.get());
+        AlchemicalVacuumBlockEntity vacuum = (AlchemicalVacuumBlockEntity) helper.getBlockEntity(POS);
+        vacuum.getOwnerData().set(helper.makeMockPlayer());
+        ItemEntity dropped = helper.spawnItem(Items.COBBLESTONE, 1.5F, 2.5F, 1.5F);
+        dropped.setItem(new ItemStack(Items.COBBLESTONE, 16));
+        helper.succeedWhen(() -> {
+            helper.assertTrue(vacuum.getPendingEmc().signum() > 0, "Vacuum should have buffered EMC for its offline owner");
+            helper.assertFalse(dropped.isAlive(), "The item entity should be gone");
+        });
     }
 }

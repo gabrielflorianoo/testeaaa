@@ -48,7 +48,11 @@ public class AlchemicalImporterBlockEntity extends BlockEntity implements IOwned
     private int ticks;
 
     public AlchemicalImporterBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntities.ALCHEMICAL_IMPORTER.get(), pos, state);
+        this(ModBlockEntities.ALCHEMICAL_IMPORTER.get(), pos, state);
+    }
+
+    protected AlchemicalImporterBlockEntity(net.minecraft.world.level.block.entity.BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
     }
 
     @Override

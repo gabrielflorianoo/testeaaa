@@ -1,0 +1,63 @@
+{
+  "display": {
+    "icon": {
+      "item": "projecte:transmutation_tablet"
+    },
+    "title": {
+      "translate": "advancements.peqol.root.title"
+    },
+    "description": {
+      "translate": "advancements.peqol.root.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+    "background": "minecraft:textures/block/crying_obsidian.png"
+  },
+  "criteria": {
+    "has_philosophers_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "projecte:philosophers_stone"
+            ]
+          }
+        ]
+      }
+    },
+    "has_transmutation_tablet": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "projecte:transmutation_tablet"
+            ]
+          }
+        ]
+      }
+    },
+    "has_transmutation_table": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "projecte:transmutation_table"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_philosophers_stone",
+      "has_transmutation_tablet",
+      "has_transmutation_table"
+    ]
+  ]
+}

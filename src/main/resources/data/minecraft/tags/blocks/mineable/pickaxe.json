@@ -3,6 +3,7 @@
   "values": [
     "peqol:alchemical_uplink",
     "peqol:alchemical_importer",
-    "peqol:alchemical_exporter"
+    "peqol:alchemical_exporter",
+    "peqol:alchemical_vacuum"
   ]
 }

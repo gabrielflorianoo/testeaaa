@@ -1,0 +1,37 @@
+{
+  "display": {
+    "icon": {
+      "item": "peqol:appraisal_lens"
+    },
+    "title": {
+      "translate": "advancements.peqol.lens.title"
+    },
+    "description": {
+      "translate": "advancements.peqol.lens.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "peqol:root",
+  "criteria": {
+    "has_appraisal_lens": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "peqol:appraisal_lens"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_appraisal_lens"
+    ]
+  ]
+}

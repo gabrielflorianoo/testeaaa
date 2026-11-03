@@ -1,0 +1,37 @@
+{
+  "display": {
+    "icon": {
+      "item": "peqol:restocker_talisman"
+    },
+    "title": {
+      "translate": "advancements.peqol.restocker.title"
+    },
+    "description": {
+      "translate": "advancements.peqol.restocker.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "peqol:root",
+  "criteria": {
+    "has_restocker_talisman": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "peqol:restocker_talisman"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_restocker_talisman"
+    ]
+  ]
+}

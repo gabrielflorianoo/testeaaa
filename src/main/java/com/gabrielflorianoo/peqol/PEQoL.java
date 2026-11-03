@@ -8,6 +8,7 @@ import com.gabrielflorianoo.peqol.registry.ModBlockEntities;
 import com.gabrielflorianoo.peqol.registry.ModBlocks;
 import com.gabrielflorianoo.peqol.registry.ModCreativeTab;
 import com.gabrielflorianoo.peqol.registry.ModItems;
+import com.gabrielflorianoo.peqol.registry.ModStats;
 import com.gabrielflorianoo.peqol.util.KnowledgeStats;
 import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
@@ -34,6 +35,7 @@ public class PEQoL {
         ModItems.ITEMS.register(modBus);
         ModBlockEntities.BLOCK_ENTITIES.register(modBus);
         ModCreativeTab.TABS.register(modBus);
+        ModStats.STATS.register(modBus);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, PEQoLConfig.COMMON_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, PEQoLConfig.CLIENT_SPEC);
@@ -47,6 +49,7 @@ public class PEQoL {
 
     private void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(PEQoLNetwork::register);
+        event.enqueueWork(ModStats::init);
         LOGGER.info("ProjectE QoL+ ready to make alchemy less tedious");
     }
 

@@ -57,7 +57,7 @@ public class RestockerTalismanItem extends ToggleableItem {
                 continue;
             }
             int missing = stack.getMaxStackSize() - stack.getCount();
-            if (missing <= 0 || !provider.hasKnowledge(stack)) {
+            if (missing <= 0 || !provider.hasKnowledge(stack) || EmcUtil.isBlacklisted(stack)) {
                 continue;
             }
             long unit = EmcUtil.value(stack);
@@ -70,6 +70,7 @@ public class RestockerTalismanItem extends ToggleableItem {
             }
             emc = emc.subtract(BigInteger.valueOf(unit).multiply(BigInteger.valueOf(toAdd)));
             stack.grow(toAdd);
+            player.awardStat(com.gabrielflorianoo.peqol.registry.ModStats.ITEMS_CREATED, toAdd);
             changed = true;
         }
         if (changed) {

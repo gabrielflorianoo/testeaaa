@@ -1,0 +1,89 @@
+{
+  "display": {
+    "icon": {
+      "item": "peqol:stellar_link"
+    },
+    "title": {
+      "translate": "advancements.peqol.charms.title"
+    },
+    "description": {
+      "translate": "advancements.peqol.charms.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "peqol:siphon",
+  "criteria": {
+    "has_mending_charm": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "peqol:mending_charm"
+            ]
+          }
+        ]
+      }
+    },
+    "has_satiation_charm": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "peqol:satiation_charm"
+            ]
+          }
+        ]
+      }
+    },
+    "has_stellar_link": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "peqol:stellar_link"
+            ]
+          }
+        ]
+      }
+    },
+    "has_illumination_charm": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "peqol:illumination_charm"
+            ]
+          }
+        ]
+      }
+    },
+    "has_smelting_charm": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "peqol:smelting_charm"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_mending_charm",
+      "has_satiation_charm",
+      "has_stellar_link",
+      "has_illumination_charm",
+      "has_smelting_charm"
+    ]
+  ]
+}

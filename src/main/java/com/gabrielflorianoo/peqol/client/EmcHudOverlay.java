@@ -37,6 +37,7 @@ public final class EmcHudOverlay implements IGuiOverlay {
     private int knowledge;
     private boolean fullKnowledge;
     private final List<Component> activeCharms = new ArrayList<>();
+    private BigInteger kleinStarEmc = BigInteger.ZERO;
 
     private EmcHudOverlay() {
     }
@@ -67,6 +68,9 @@ public final class EmcHudOverlay implements IGuiOverlay {
             knowledge = provider.getKnowledge().size();
             fullKnowledge = provider.hasFullKnowledge();
             hasTablet = EmcUtil.hasTablet(player);
+            BigInteger[] stars = {BigInteger.ZERO};
+            InventoryUtil.forEachStack(player, stack -> stars[0] = stars[0].add(BigInteger.valueOf(EmcUtil.storedEmc(stack))));
+            kleinStarEmc = stars[0];
             activeCharms.clear();
             InventoryUtil.forEachStack(player, stack -> {
                 if (stack.getItem() instanceof ToggleableItem && ToggleableItem.isActive(stack)) {
@@ -136,6 +140,9 @@ public final class EmcHudOverlay implements IGuiOverlay {
                     : Component.translatable("hud.peqol.knowledge", knowledge).withStyle(ChatFormatting.AQUA));
         }
 
+        if (PEQoLConfig.CLIENT.hudShowKleinStars.get() && kleinStarEmc.signum() > 0) {
+            lines.add(Component.translatable("hud.peqol.klein_stars", EmcUtil.format(kleinStarEmc, compact)).withStyle(ChatFormatting.DARK_AQUA));
+        }
         if (PEQoLConfig.CLIENT.hudShowHeldValue.get() && mc.player != null) {
             ItemStack held = mc.player.getMainHandItem();
             long unit = EmcUtil.value(held);

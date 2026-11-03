@@ -1,0 +1,63 @@
+{
+  "display": {
+    "icon": {
+      "item": "peqol:alchemical_uplink"
+    },
+    "title": {
+      "translate": "advancements.peqol.automation.title"
+    },
+    "description": {
+      "translate": "advancements.peqol.automation.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "peqol:root",
+  "criteria": {
+    "has_alchemical_uplink": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "peqol:alchemical_uplink"
+            ]
+          }
+        ]
+      }
+    },
+    "has_alchemical_importer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "peqol:alchemical_importer"
+            ]
+          }
+        ]
+      }
+    },
+    "has_alchemical_exporter": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "peqol:alchemical_exporter"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_alchemical_uplink",
+      "has_alchemical_importer",
+      "has_alchemical_exporter"
+    ]
+  ]
+}

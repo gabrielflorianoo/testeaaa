@@ -24,10 +24,13 @@ public final class ModCreativeTab {
                 output.accept(ModItems.ILLUMINATION_CHARM.get());
                 output.accept(ModItems.CONSTRUCTION_WAND.get());
                 output.accept(ModItems.APPRAISAL_LENS.get());
+                output.accept(ModItems.ALCHEMICAL_ANCHOR.get());
+                output.accept(ModItems.SMELTING_CHARM.get());
                 output.accept(ModItems.KNOWLEDGE_SCROLL.get());
                 output.accept(ModItems.ALCHEMICAL_UPLINK.get());
                 output.accept(ModItems.ALCHEMICAL_IMPORTER.get());
                 output.accept(ModItems.ALCHEMICAL_EXPORTER.get());
+                output.accept(ModItems.ALCHEMICAL_VACUUM.get());
             })
             .build());
 

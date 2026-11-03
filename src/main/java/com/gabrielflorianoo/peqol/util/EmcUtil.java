@@ -165,6 +165,7 @@ public final class EmcUtil {
             tryLearn(player, stack);
         }
         addEmc(player, gained);
+        player.awardStat(com.gabrielflorianoo.peqol.registry.ModStats.ITEMS_BURNED, stack.getCount());
         return gained;
     }
 
@@ -215,6 +216,41 @@ public final class EmcUtil {
 
     public static boolean isEmcHolder(ItemStack stack) {
         return !stack.isEmpty() && stack.getCapability(PECapabilities.EMC_HOLDER_ITEM_CAPABILITY).isPresent();
+    }
+
+    /**
+     * @return true if the server blacklisted this item from being created out of personal EMC.
+     */
+    public static boolean isBlacklisted(ItemStack stack) {
+        if (stack.isEmpty()) {
+            return false;
+        }
+        java.util.List<? extends String> entries = com.gabrielflorianoo.peqol.config.PEQoLConfig.COMMON.blacklist.get();
+        if (entries.isEmpty()) {
+            return false;
+        }
+        ResourceLocation id = ForgeRegistries.ITEMS.getKey(stack.getItem());
+        for (String entry : entries) {
+            if (entry.startsWith("#")) {
+                ResourceLocation tag = ResourceLocation.tryParse(entry.substring(1));
+                if (tag != null && stack.is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, tag))) {
+                    return true;
+                }
+            } else if (id != null && entry.equals(id.toString())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @return EMC stored inside an EMC holder item (Klein Star...), 0 otherwise.
+     */
+    public static long storedEmc(ItemStack stack) {
+        if (stack.isEmpty()) {
+            return 0;
+        }
+        return stack.getCapability(PECapabilities.EMC_HOLDER_ITEM_CAPABILITY).map(holder -> holder.getStoredEmc(stack)).orElse(0L);
     }
 
     public static boolean isTablet(ItemStack stack) {

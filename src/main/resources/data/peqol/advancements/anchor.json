@@ -1,0 +1,37 @@
+{
+  "display": {
+    "icon": {
+      "item": "peqol:alchemical_anchor"
+    },
+    "title": {
+      "translate": "advancements.peqol.anchor.title"
+    },
+    "description": {
+      "translate": "advancements.peqol.anchor.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "peqol:root",
+  "criteria": {
+    "has_alchemical_anchor": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "peqol:alchemical_anchor"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_alchemical_anchor"
+    ]
+  ]
+}

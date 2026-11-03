@@ -1,0 +1,37 @@
+{
+  "display": {
+    "icon": {
+      "item": "peqol:emc_cheque"
+    },
+    "title": {
+      "translate": "advancements.peqol.cheque.title"
+    },
+    "description": {
+      "translate": "advancements.peqol.cheque.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "peqol:root",
+  "criteria": {
+    "has_emc_cheque": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "peqol:emc_cheque"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_emc_cheque"
+    ]
+  ]
+}

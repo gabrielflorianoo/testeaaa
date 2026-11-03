@@ -4,6 +4,7 @@ import com.gabrielflorianoo.peqol.PEQoL;
 import com.gabrielflorianoo.peqol.block.entity.AlchemicalExporterBlockEntity;
 import com.gabrielflorianoo.peqol.block.entity.AlchemicalImporterBlockEntity;
 import com.gabrielflorianoo.peqol.block.entity.AlchemicalUplinkBlockEntity;
+import com.gabrielflorianoo.peqol.block.entity.AlchemicalVacuumBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -22,6 +23,10 @@ public final class ModBlockEntities {
     @SuppressWarnings("DataFlowIssue")
     public static final RegistryObject<BlockEntityType<AlchemicalExporterBlockEntity>> ALCHEMICAL_EXPORTER = BLOCK_ENTITIES.register("alchemical_exporter",
             () -> BlockEntityType.Builder.of(AlchemicalExporterBlockEntity::new, ModBlocks.ALCHEMICAL_EXPORTER.get()).build(null));
+
+    @SuppressWarnings("DataFlowIssue")
+    public static final RegistryObject<BlockEntityType<AlchemicalVacuumBlockEntity>> ALCHEMICAL_VACUUM = BLOCK_ENTITIES.register("alchemical_vacuum",
+            () -> BlockEntityType.Builder.of(AlchemicalVacuumBlockEntity::new, ModBlocks.ALCHEMICAL_VACUUM.get()).build(null));
 
     private ModBlockEntities() {
     }

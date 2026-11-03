@@ -83,7 +83,7 @@ public class SatiationCharmItem extends ToggleableItem {
             return;
         }
         IKnowledgeProvider provider = EmcUtil.knowledge(player).orElse(null);
-        if (provider == null || !provider.hasKnowledge(meal)) {
+        if (provider == null || !provider.hasKnowledge(meal) || EmcUtil.isBlacklisted(meal)) {
             return;
         }
         long value = EmcUtil.value(meal);
@@ -97,6 +97,7 @@ public class SatiationCharmItem extends ToggleableItem {
         provider.setEmc(provider.getEmc().subtract(cost));
         provider.syncEmc(player);
         player.eat(player.level(), meal);
+        player.awardStat(com.gabrielflorianoo.peqol.registry.ModStats.MEALS_EATEN);
         player.level().playSound(null, player.blockPosition(), SoundEvents.GENERIC_EAT, SoundSource.PLAYERS, 0.5F, 1.2F);
     }
 

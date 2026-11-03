@@ -1,6 +1,7 @@
 package com.gabrielflorianoo.peqol.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
+import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
 
 public final class PEQoLConfig {
@@ -72,6 +73,27 @@ public final class PEQoLConfig {
         public final ForgeConfigSpec.IntValue illuminationThreshold;
         public final ForgeConfigSpec.ConfigValue<String> illuminationItem;
 
+        // Vacuum
+        public final ForgeConfigSpec.IntValue vacuumRadius;
+        public final ForgeConfigSpec.IntValue vacuumInterval;
+
+        // Anchor
+        public final ForgeConfigSpec.BooleanValue anchorEnabled;
+        public final ForgeConfigSpec.LongValue anchorBaseCost;
+        public final ForgeConfigSpec.LongValue anchorCostPerBlock;
+        public final ForgeConfigSpec.LongValue anchorCrossDimensionCost;
+        public final ForgeConfigSpec.IntValue anchorCooldown;
+
+        // Smelting charm
+        public final ForgeConfigSpec.LongValue smeltingCostPerItem;
+        public final ForgeConfigSpec.BooleanValue smeltingOnlyOres;
+
+        // Restocker extras
+        public final ForgeConfigSpec.BooleanValue restockerReplacesTools;
+
+        // Blacklist
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> blacklist;
+
         // Buy command
         public final ForgeConfigSpec.BooleanValue buyEnabled;
         public final ForgeConfigSpec.BooleanValue buyRequiresTablet;
@@ -129,6 +151,8 @@ public final class PEQoLConfig {
                     .define("blocksOnly", true);
             restockerWholeHotbar = builder.comment("Restock the whole hotbar instead of only the selected slot and the offhand.")
                     .define("wholeHotbar", true);
+            restockerReplacesTools = builder.comment("When a learned tool breaks in your hand, a fresh one is created from personal EMC.")
+                    .define("replacesBrokenTools", true);
             builder.pop();
 
             builder.comment("Alchemical pick block: middle clicking a block you don't carry creates it from personal EMC").push("pickBlock");
@@ -173,6 +197,37 @@ public final class PEQoLConfig {
                     .defineInRange("threshold", 8, 1, 15);
             illuminationItem = builder.comment("Block item that is placed (must be a block item, e.g. minecraft:torch or minecraft:soul_torch).")
                     .define("item", "minecraft:torch");
+            builder.pop();
+
+            builder.comment("Alchemical Vacuum").push("vacuum");
+            vacuumRadius = builder.comment("Radius (in blocks) around the vacuum where items are collected.")
+                    .defineInRange("radius", 6, 1, 16);
+            vacuumInterval = builder.comment("Ticks between collections.")
+                    .defineInRange("interval", 10, 1, 1200);
+            builder.pop();
+
+            builder.comment("Alchemical Anchor (EMC teleport)").push("anchor");
+            anchorEnabled = builder.define("enabled", true);
+            anchorBaseCost = builder.comment("Flat EMC cost of every teleport.")
+                    .defineInRange("baseCost", 1_000L, 0L, Long.MAX_VALUE);
+            anchorCostPerBlock = builder.comment("Extra EMC per block of distance (same dimension).")
+                    .defineInRange("costPerBlock", 16L, 0L, Long.MAX_VALUE);
+            anchorCrossDimensionCost = builder.comment("Extra EMC when the anchor is in another dimension.")
+                    .defineInRange("crossDimensionCost", 100_000L, 0L, Long.MAX_VALUE);
+            anchorCooldown = builder.comment("Cooldown in ticks.")
+                    .defineInRange("cooldown", 60, 0, 72_000);
+            builder.pop();
+
+            builder.comment("Charm of Smelting").push("smelting");
+            smeltingCostPerItem = builder.comment("EMC paid for every item smelted on pickup (1/8 of coal's 128 EMC by default).")
+                    .defineInRange("costPerItem", 16L, 0L, Long.MAX_VALUE);
+            smeltingOnlyOres = builder.comment("Only smelt ores and raw materials (forge:ores / forge:raw_materials). If false, anything with a smelting recipe is smelted.")
+                    .define("onlyOres", true);
+            builder.pop();
+
+            builder.comment("Blacklist for every feature that CREATES items from personal EMC (buy, pick block, restocker, exporter, wand...).",
+                    "Accepts item ids (minecraft:diamond) and item tags (#forge:ores).").push("blacklist");
+            blacklist = builder.defineListAllowEmpty(List.of("items"), () -> List.<String>of(), o -> o instanceof String);
             builder.pop();
 
             builder.comment("/peqol buy").push("buy");
@@ -230,6 +285,7 @@ public final class PEQoLConfig {
         public final ForgeConfigSpec.BooleanValue hudShowActiveCharms;
         public final ForgeConfigSpec.BooleanValue hudShowHeldValue;
         public final ForgeConfigSpec.BooleanValue milestoneToasts;
+        public final ForgeConfigSpec.BooleanValue hudShowKleinStars;
 
         public final ForgeConfigSpec.BooleanValue tooltipAffordable;
         public final ForgeConfigSpec.BooleanValue tooltipSellValue;
@@ -255,6 +311,8 @@ public final class PEQoLConfig {
                     .define("showActiveCharms", true);
             hudShowHeldValue = builder.comment("Show the EMC value of the held stack.")
                     .define("showHeldValue", true);
+            hudShowKleinStars = builder.comment("Show the total EMC stored in the Klein Stars you carry.")
+                    .define("showKleinStars", true);
             milestoneToasts = builder.comment("Show a toast when your personal EMC crosses 1K, 10K, 100K, 1M, ...")
                     .define("milestoneToasts", true);
             builder.pop();

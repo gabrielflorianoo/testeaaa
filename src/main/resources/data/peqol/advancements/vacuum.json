@@ -1,0 +1,37 @@
+{
+  "display": {
+    "icon": {
+      "item": "peqol:alchemical_vacuum"
+    },
+    "title": {
+      "translate": "advancements.peqol.vacuum.title"
+    },
+    "description": {
+      "translate": "advancements.peqol.vacuum.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "peqol:automation",
+  "criteria": {
+    "has_alchemical_vacuum": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "peqol:alchemical_vacuum"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_alchemical_vacuum"
+    ]
+  ]
+}

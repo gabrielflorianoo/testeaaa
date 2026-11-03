@@ -51,6 +51,7 @@ public final class ClientForgeEvents {
         send(ModKeys.TOGGLE_SATIATION, KeyAction.TOGGLE_SATIATION);
         send(ModKeys.TOGGLE_STELLAR, KeyAction.TOGGLE_STELLAR);
         send(ModKeys.TOGGLE_ILLUMINATION, KeyAction.TOGGLE_ILLUMINATION);
+        send(ModKeys.TOGGLE_SMELTING, KeyAction.TOGGLE_SMELTING);
         while (ModKeys.TOGGLE_HUD.consumeClick()) {
             boolean visible = EmcHudOverlay.INSTANCE.toggle();
             mc.player.displayClientMessage(Component.translatable(visible ? "message.peqol.hud_on" : "message.peqol.hud_off")

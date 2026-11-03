@@ -4,6 +4,7 @@ import com.gabrielflorianoo.peqol.PEQoL;
 import com.gabrielflorianoo.peqol.block.AlchemicalExporterBlock;
 import com.gabrielflorianoo.peqol.block.AlchemicalImporterBlock;
 import com.gabrielflorianoo.peqol.block.AlchemicalUplinkBlock;
+import com.gabrielflorianoo.peqol.block.AlchemicalVacuumBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -22,6 +23,9 @@ public final class ModBlocks {
             () -> new AlchemicalImporterBlock(machineProperties(MapColor.COLOR_BLACK)));
     public static final RegistryObject<AlchemicalExporterBlock> ALCHEMICAL_EXPORTER = BLOCKS.register("alchemical_exporter",
             () -> new AlchemicalExporterBlock(machineProperties(MapColor.COLOR_RED)));
+
+    public static final RegistryObject<AlchemicalVacuumBlock> ALCHEMICAL_VACUUM = BLOCKS.register("alchemical_vacuum",
+            () -> new AlchemicalVacuumBlock(machineProperties(MapColor.COLOR_CYAN)));
 
     private ModBlocks() {
     }

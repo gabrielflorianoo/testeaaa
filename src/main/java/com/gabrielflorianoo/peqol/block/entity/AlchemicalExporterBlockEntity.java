@@ -109,7 +109,7 @@ public class AlchemicalExporterBlockEntity extends BlockEntity implements IOwned
         for (int index = 0; index < filters.size(); index++) {
             ItemInfo filter = filters.get(index);
             long unit = EmcUtil.emc().getValue(filter);
-            if (unit <= 0 || !provider.hasKnowledge(filter)) {
+            if (unit <= 0 || !provider.hasKnowledge(filter) || EmcUtil.isBlacklisted(filter.createStack())) {
                 continue;
             }
             ItemStack template = filter.createStack();

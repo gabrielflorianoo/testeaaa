@@ -8,6 +8,7 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
 
 ### HUD e tooltips (cliente)
 - **HUD de EMC**: seu EMC pessoal, ganho/perda por segundo (média de 5 s) e quantos itens você aprendeu. Por padrão aparece só quando você carrega uma Tábua de Transmutação. Dá para mudar o canto, o deslocamento, o formato compacto (`1.25M`) e o fundo. A tecla **H** mostra/esconde.
+- **Estrelas de Klein no HUD**: mostra o total de EMC guardado nas estrelas que você carrega.
 - **Valor da mão no HUD**: mostra quanto vale a pilha que você está segurando.
 - **Toasts de marco**: uma notificação aparece quando o seu EMC passa de 1K, 10K, 100K, 1M e assim por diante.
 - **Amuletos ativos no HUD**: os amuletos ligados aparecem listados embaixo do EMC.
@@ -29,7 +30,7 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
 | **Botão do meio** | **Pick block alquímico**: se você não tem o bloco, ele é criado com o seu EMC (exige o Reabastecedor ativo) |
 
 ### Itens
-- **Reabastecedor Alquímico**: enquanto está ativo no inventário, completa as pilhas de blocos da hotbar (e da mão secundária) usando o seu EMC. Só funciona com itens aprendidos e sem NBT. Ideal para construir.
+- **Reabastecedor Alquímico**: se uma ferramenta aprendida quebrar na sua mão, ele cria uma nova com EMC. Enquanto está ativo no inventário, completa as pilhas de blocos da hotbar (e da mão secundária) usando o seu EMC. Só funciona com itens aprendidos e sem NBT. Ideal para construir.
 - **Amuleto de Sifão**: itens coletados que estão no filtro viram EMC pessoal na hora (e são aprendidos), mesmo com o inventário cheio. Para adicionar ou remover um item do filtro, agache e clique com o botão direito segurando o item na outra mão. Agachar e clicar com a outra mão vazia lista o filtro.
 - **Amuleto de Reparo Alquímico**: repara as ferramentas e armaduras danificadas usando EMC. Um reparo completo custa cerca do valor do item.
 - **Amuleto da Saciedade**: escolha uma comida aprendida (agache e clique com o botão direito segurando a comida na outra mão). Ele come automaticamente quando a fome cairia sem desperdício, pagando com EMC.
@@ -37,6 +38,8 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
 - **Amuleto da Iluminação**: coloca tochas aos seus pés em lugares escuros. Usa as tochas do inventário primeiro e depois EMC. O item colocado é configurável (por exemplo, tocha de alma).
 - **Varinha de Construção Alquímica**: clique numa face e ela estende todos os blocos iguais conectados naquela face, de 1 a 81 blocos. Agache e clique no ar para mudar o tamanho. Mostra uma prévia em contorno lilás, usa os blocos do inventário e depois EMC, e respeita proteções de área.
 - **Lente de Avaliação Alquímica**: clique num baú (ou qualquer inventário) para ver quanto vale o conteúdo e os 5 itens mais valiosos. Em coletores, relés e condensadores, mostra o EMC armazenado. No ar, avalia o seu inventário.
+- **Amuleto da Fundição**: os minérios e materiais brutos coletados chegam já fundidos. Cada item custa 16 EMC (configurável).
+- **Âncora Alquímica**: agache e clique num bloco para ancorar o ponto; clique com o botão direito para teleportar até lá pagando EMC (base + distância, mais caro entre dimensões). Funciona entre dimensões e tem cooldown.
 - **Cheque de EMC**: o `/peqol withdraw` transforma EMC em um item que pode ser trocado entre jogadores. Clique com o botão direito para resgatar; agachado, você resgata a pilha inteira. O cheque não tem valor de EMC, então não dá para queimá-lo e duplicar EMC.
 - **Pergaminho do Conhecimento**: grava tudo o que você aprendeu. Outro jogador clica com o botão direito e aprende tudo o que está gravado, ótimo para servidores. Agachar e clicar com o botão direito apaga o pergaminho.
 
@@ -45,6 +48,7 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
 - **Importador Alquímico**: uma "mesa de transmutação" para automação. Itens inseridos por funis ou canos viram seu EMC e são aprendidos. Itens sem EMC ficam na origem. Se você estiver offline, guarda o EMC até você entrar.
 - **Exportador Alquímico**: clique nele com um item para filtrar. Ele cria os itens filtrados com o seu EMC e os empurra para os inventários vizinhos. Um sinal de redstone pausa o bloco.
   - **Modo estoque**: agache e clique com o botão direito segurando *N* itens. O exportador mantém exatamente *N* deles nos inventários vizinhos, repondo só o que for usado.
+- **Aspirador Alquímico**: suga os itens soltos num raio de 6 blocos e os transforma em EMC, com filtro opcional. Ideal para farms de mobs e de árvores. Guarda o EMC se você estiver offline, e redstone pausa.
 - A **Conexão Alquímica** emite sinal de comparador proporcional ao buffer.
 
 Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
@@ -83,11 +87,20 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 | Lente de Avaliação | Ouro ×3, Painel de Vidro, Pó de Covalência Baixo |
 | Elo Estelar | Pó de Covalência Alto ×2, Estrela de Klein Ein ×2, Faixa de Ferro |
 
+| Aspirador Alquímico | Faixa do Buraco Negro, Funil ×2, Importador Alquímico, Matéria Escura |
+| Âncora Alquímica | Pérola do Ender, Pó de Covalência Médio ×2, Bússola, Matéria Escura |
+| Amuleto da Fundição | Pó de Covalência Baixo ×4, Fornalha ×4, Faixa de Ferro |
+
+## Extras
+- **Estatísticas**: em Estatísticas → Geral aparecem os itens queimados, os itens criados com EMC, os blocos construídos com a varinha, os itens fundidos, os reparados, as luzes colocadas, os teleportes e as refeições alquímicas.
+- **Conquistas**: tem uma aba própria "ProjectE QoL+" com 11 conquistas.
+- **Lista negra para servidores**: `blacklist.items` impede que itens sejam criados com EMC pelo `buy`, pelo pick block, pelo Reabastecedor, pelo Exportador e pela varinha. Aceita IDs e tags, por exemplo `["minecraft:elytra", "#forge:ores"]`.
+
 ## Curios (opcional)
 Se o [Curios](https://www.curseforge.com/minecraft/mc-mods/curios) estiver instalado, os itens podem ficar nos slots dele e continuam funcionando:
 - **Cinto**: Reabastecedor, Iluminação e Tábua de Transmutação.
 - **Colar**: Sifão e Saciedade.
-- **Anel**: Reparo e Elo Estelar.
+- **Anel**: Reparo, Elo Estelar e Fundição.
 
 ## Configuração
 - `config/peqol-common.toml`: permite desativar `pay`, `withdraw`, `burn` e a queima rápida, e definir se é preciso ter a Tábua. Também controla o intervalo e o limite do Reabastecedor, o buffer da Conexão, a velocidade do Exportador, o aprender ao coletar (desligado por padrão) e outras opções.
@@ -111,6 +124,7 @@ A quality-of-life addon for ProjectE on Forge 1.20.1. It includes:
 - A Siphon Charm that turns filtered pickups into EMC.
 - Tradeable EMC Cheques and Knowledge Scrolls for sharing knowledge.
 - Uplink, Importer and Exporter blocks that bridge automation and personal EMC.
+- Alchemical Vacuum, Alchemical Anchor (EMC teleport), Charm of Smelting, broken-tool replacement, custom statistics, advancements and a server blacklist.
 - Construction Wand with preview, Charm of Illumination, Appraisal Lens.
 - `/peqol known` with clickable buy buttons, knowledge progress %, held-item value on the HUD and EMC milestone toasts.
 - Alchemical pick block (middle click creates the block from EMC).

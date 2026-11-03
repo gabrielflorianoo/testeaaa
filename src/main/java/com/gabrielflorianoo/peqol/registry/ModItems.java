@@ -1,7 +1,9 @@
 package com.gabrielflorianoo.peqol.registry;
 
 import com.gabrielflorianoo.peqol.PEQoL;
+import com.gabrielflorianoo.peqol.item.AlchemicalAnchorItem;
 import com.gabrielflorianoo.peqol.item.AppraisalLensItem;
+import com.gabrielflorianoo.peqol.item.SmeltingCharmItem;
 import com.gabrielflorianoo.peqol.item.ConstructionWandItem;
 import com.gabrielflorianoo.peqol.item.EmcChequeItem;
 import com.gabrielflorianoo.peqol.item.IlluminationCharmItem;
@@ -38,6 +40,10 @@ public final class ModItems {
             () -> new ConstructionWandItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).fireResistant()));
     public static final RegistryObject<AppraisalLensItem> APPRAISAL_LENS = ITEMS.register("appraisal_lens",
             () -> new AppraisalLensItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<AlchemicalAnchorItem> ALCHEMICAL_ANCHOR = ITEMS.register("alchemical_anchor",
+            () -> new AlchemicalAnchorItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).fireResistant()));
+    public static final RegistryObject<SmeltingCharmItem> SMELTING_CHARM = ITEMS.register("smelting_charm",
+            () -> new SmeltingCharmItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).fireResistant()));
     public static final RegistryObject<EmcChequeItem> EMC_CHEQUE = ITEMS.register("emc_cheque",
             () -> new EmcChequeItem(new Item.Properties().stacksTo(64).rarity(Rarity.RARE).fireResistant()));
     public static final RegistryObject<KnowledgeScrollItem> KNOWLEDGE_SCROLL = ITEMS.register("knowledge_scroll",
@@ -49,6 +55,9 @@ public final class ModItems {
             () -> new OwnedBlockItem(ModBlocks.ALCHEMICAL_IMPORTER.get(), new Item.Properties().rarity(Rarity.UNCOMMON), "alchemical_importer"));
     public static final RegistryObject<OwnedBlockItem> ALCHEMICAL_EXPORTER = ITEMS.register("alchemical_exporter",
             () -> new OwnedBlockItem(ModBlocks.ALCHEMICAL_EXPORTER.get(), new Item.Properties().rarity(Rarity.UNCOMMON), "alchemical_exporter"));
+
+    public static final RegistryObject<OwnedBlockItem> ALCHEMICAL_VACUUM = ITEMS.register("alchemical_vacuum",
+            () -> new OwnedBlockItem(ModBlocks.ALCHEMICAL_VACUUM.get(), new Item.Properties().rarity(Rarity.UNCOMMON), "alchemical_vacuum"));
 
     private ModItems() {
     }

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [" B ", "HIH", " D "],
+  "key": {
+    "B": { "item": "projecte:black_hole_band" },
+    "H": { "item": "minecraft:hopper" },
+    "I": { "item": "peqol:alchemical_importer" },
+    "D": { "item": "projecte:dark_matter" }
+  },
+  "result": { "item": "peqol:alchemical_vacuum" }
+}

@@ -63,6 +63,9 @@ public class MendingCharmItem extends ToggleableItem {
                 continue;
             }
             stack.setDamageValue(stack.getDamageValue() - points);
+            if (!stack.isDamaged()) {
+                player.awardStat(com.gabrielflorianoo.peqol.registry.ModStats.ITEMS_REPAIRED);
+            }
             emc = emc.subtract(BigInteger.valueOf(unit).multiply(BigInteger.valueOf(points)));
             changed = true;
         }

@@ -113,7 +113,8 @@ public class ConstructionWandItem extends Item {
         }
         IKnowledgeProvider provider = EmcUtil.knowledge(player).orElse(null);
         long unit = EmcUtil.value(template);
-        boolean emcAllowed = !creative && PEQoLConfig.COMMON.wandUsesEmc.get() && provider != null && unit > 0 && provider.hasKnowledge(template);
+        boolean emcAllowed = !creative && PEQoLConfig.COMMON.wandUsesEmc.get() && provider != null && unit > 0 && provider.hasKnowledge(template)
+                && !EmcUtil.isBlacklisted(template);
         long fromEmc = emcAllowed ? EmcUtil.affordable(provider.getEmc(), unit) : 0;
         long budget = creative ? Long.MAX_VALUE : inInventory + fromEmc;
         if (budget <= 0) {
@@ -139,6 +140,9 @@ public class ConstructionWandItem extends Item {
                 continue;
             }
             placed++;
+        }
+        if (placed > 0) {
+            player.awardStat(com.gabrielflorianoo.peqol.registry.ModStats.BLOCKS_BUILT, placed);
         }
         if (placed == 0 || creative) {
             return placed;

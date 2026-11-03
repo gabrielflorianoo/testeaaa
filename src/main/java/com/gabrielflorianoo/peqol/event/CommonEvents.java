@@ -6,6 +6,9 @@ import com.gabrielflorianoo.peqol.item.IlluminationCharmItem;
 import com.gabrielflorianoo.peqol.item.MendingCharmItem;
 import com.gabrielflorianoo.peqol.item.SatiationCharmItem;
 import com.gabrielflorianoo.peqol.item.SiphonCharmItem;
+import com.gabrielflorianoo.peqol.item.SmeltingCharmItem;
+import com.gabrielflorianoo.peqol.registry.ModStats;
+import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 import com.gabrielflorianoo.peqol.item.StellarLinkItem;
 import com.gabrielflorianoo.peqol.item.ToggleableItem;
 import com.gabrielflorianoo.peqol.util.EmcUtil;
@@ -62,6 +65,38 @@ public final class CommonEvents {
     }
 
     /**
+     * Restocker: a learned tool that breaks in your hand is recreated from personal EMC.
+     */
+    @SubscribeEvent
+    public static void onToolBroken(PlayerDestroyItemEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer player) || event.getHand() == null || !PEQoLConfig.COMMON.restockerReplacesTools.get()
+                || !hasActive(player, RestockerTalismanItem.class)) {
+            return;
+        }
+        ItemStack original = event.getOriginal();
+        if (original.isEmpty() || !original.isDamageableItem()) {
+            return;
+        }
+        ItemStack fresh = new ItemStack(original.getItem());
+        net.minecraft.world.InteractionHand hand = event.getHand();
+        //The broken stack is removed after this event, so swap in the new tool on the next server task
+        player.server.execute(() -> {
+            if (!player.isAlive() || !player.getItemInHand(hand).isEmpty() || EmcUtil.isBlacklisted(fresh) || !EmcUtil.isKnown(player, fresh)) {
+                return;
+            }
+            long value = EmcUtil.value(fresh);
+            if (value <= 0 || !EmcUtil.tryRemoveEmc(player, BigInteger.valueOf(value))) {
+                return;
+            }
+            player.setItemInHand(hand, fresh);
+            player.awardStat(ModStats.ITEMS_CREATED);
+            player.displayClientMessage(Component.translatable("message.peqol.tool_replaced", fresh.getHoverName(), EmcUtil.format(value))
+                    .withStyle(ChatFormatting.LIGHT_PURPLE), true);
+            player.level().playSound(null, player.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 0.6F, 1.4F);
+        });
+    }
+
+    /**
      * Sneak + right click with an item normally skips the block; the Exporter uses it to set stock targets.
      */
     @SubscribeEvent
@@ -90,6 +125,14 @@ public final class CommonEvents {
                 itemEntity.discard();
                 event.setCanceled(true);
                 player.level().playSound(null, player.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 0.25F, 1.6F);
+                return;
+            }
+        }
+        if (hasActive(player, SmeltingCharmItem.class)) {
+            ItemStack smelted = SmeltingCharmItem.trySmelt(player, stack);
+            if (!smelted.isEmpty()) {
+                //Let the normal pickup continue with the smelted stack
+                itemEntity.setItem(smelted);
                 return;
             }
         }

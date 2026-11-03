@@ -7,6 +7,7 @@ import com.gabrielflorianoo.peqol.item.IlluminationCharmItem;
 import com.gabrielflorianoo.peqol.item.MendingCharmItem;
 import com.gabrielflorianoo.peqol.item.SatiationCharmItem;
 import com.gabrielflorianoo.peqol.item.SiphonCharmItem;
+import com.gabrielflorianoo.peqol.item.SmeltingCharmItem;
 import com.gabrielflorianoo.peqol.item.StellarLinkItem;
 import com.gabrielflorianoo.peqol.item.ToggleableItem;
 import com.gabrielflorianoo.peqol.util.EmcUtil;
@@ -48,6 +49,7 @@ public final class ServerActions {
             case TOGGLE_SATIATION -> toggle(player, SatiationCharmItem.class);
             case TOGGLE_STELLAR -> toggle(player, StellarLinkItem.class);
             case TOGGLE_ILLUMINATION -> toggle(player, IlluminationCharmItem.class);
+            case TOGGLE_SMELTING -> toggle(player, SmeltingCharmItem.class);
         }
     }
 

@@ -3,6 +3,7 @@ package com.gabrielflorianoo.peqol.network;
 import com.gabrielflorianoo.peqol.config.PEQoLConfig;
 import com.gabrielflorianoo.peqol.event.CommonEvents;
 import com.gabrielflorianoo.peqol.item.RestockerTalismanItem;
+import com.gabrielflorianoo.peqol.registry.ModStats;
 import com.gabrielflorianoo.peqol.util.EmcUtil;
 import java.math.BigInteger;
 import java.util.function.Supplier;
@@ -61,7 +62,7 @@ public record PickBlockPacket(BlockPos pos) {
             return;
         }
         ItemStack picked = state.getCloneItemStack(new BlockHitResult(Vec3.atCenterOf(pos), Direction.UP, pos, false), level, pos, player);
-        if (picked.isEmpty() || picked.hasTag()) {
+        if (picked.isEmpty() || picked.hasTag() || EmcUtil.isBlacklisted(picked)) {
             return;
         }
         Inventory inventory = player.getInventory();
@@ -93,6 +94,7 @@ public record PickBlockPacket(BlockPos pos) {
         provider.setEmc(provider.getEmc().subtract(BigInteger.valueOf(unit).multiply(BigInteger.valueOf(amount))));
         provider.syncEmc(player);
         inventory.setPickedItem(picked);
+        player.awardStat(ModStats.ITEMS_CREATED, amount);
         player.connection.send(new ClientboundSetCarriedItemPacket(inventory.selected));
         player.inventoryMenu.broadcastChanges();
         player.level().playSound(null, player.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 0.4F, 1.8F);

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "peqol:block/alchemical_vacuum_top",
+    "bottom": "peqol:block/alchemical_vacuum_top",
+    "side": "peqol:block/alchemical_vacuum_side"
+  }
+}

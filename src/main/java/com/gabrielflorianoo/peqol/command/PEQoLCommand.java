@@ -20,6 +20,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import com.gabrielflorianoo.peqol.util.KnowledgeStats;
+import com.gabrielflorianoo.peqol.registry.ModStats;
 import moze_intel.projecte.api.ItemInfo;
 import moze_intel.projecte.api.capabilities.IKnowledgeProvider;
 import net.minecraft.network.chat.ClickEvent;
@@ -50,6 +51,8 @@ public final class PEQoLCommand {
             name -> Component.translatable("command.peqol.buy.not_learned", name));
     private static final DynamicCommandExceptionType TOO_MANY = new DynamicCommandExceptionType(
             max -> Component.translatable("command.peqol.buy.too_many", max));
+    private static final DynamicCommandExceptionType BLACKLISTED = new DynamicCommandExceptionType(
+            name -> Component.translatable("message.peqol.blacklisted", name));
     private static final SimpleCommandExceptionType SELF = new SimpleCommandExceptionType(Component.translatable("command.peqol.pay.self"));
 
     private PEQoLCommand() {
@@ -140,6 +143,9 @@ public final class PEQoLCommand {
         if (provider == null || unit <= 0 || !provider.hasKnowledge(template)) {
             throw NOT_LEARNED.create(template.getHoverName());
         }
+        if (EmcUtil.isBlacklisted(template)) {
+            throw BLACKLISTED.create(template.getHoverName());
+        }
         BigInteger cost = BigInteger.valueOf(unit).multiply(BigInteger.valueOf(count));
         if (!EmcUtil.tryRemoveEmc(player, cost)) {
             throw NOT_ENOUGH.create();
@@ -151,6 +157,7 @@ public final class PEQoLCommand {
             InventoryUtil.giveOrDrop(player, template.copyWithCount(amount));
             remaining -= amount;
         }
+        player.awardStat(ModStats.ITEMS_CREATED, count);
         Component name = template.getHoverName();
         ctx.getSource().sendSuccess(() -> Component.translatable("command.peqol.buy", count, name, EmcUtil.format(cost)).withStyle(ChatFormatting.GREEN), false);
         return count;
