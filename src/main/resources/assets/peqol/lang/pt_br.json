@@ -388,8 +388,17 @@
   "info.peqol.shop.product": "Vende %s por %s EMC",
   "info.peqol.shop.stock": "Estoque: %s",
   "info.peqol.shop.sold": "Vendidos até agora: %s",
-  "info.peqol.shop.hint": "Clientes: mão vazia para comprar, agachado para uma pilha.",
+  "info.peqol.shop.hint": "Clientes: mão vazia para comprar (agachado: pilha). Dono: agache com a mão vazia para alternar compra/venda.",
   "command.peqol.shop.look": "Olhe para um dos seus Postos de Troca",
   "command.peqol.shop.price": "Preço definido para %s EMC",
-  "command.peqol.help.shop": "define o preço do Posto de Troca que você está olhando"
+  "command.peqol.help.shop": "define o preço do Posto de Troca que você está olhando",
+  "message.peqol.shop.mode_buy": "Modo: COMPRANDO dos jogadores (eles clicam segurando o produto)",
+  "message.peqol.shop.mode_sell": "Modo: VENDENDO para jogadores (mão vazia para comprar)",
+  "message.peqol.shop.not_buying": "Esta loja não está comprando isso",
+  "message.peqol.shop.owner_away": "O dono da loja precisa estar online para comprar",
+  "message.peqol.shop.owner_broke": "O dono da loja não tem EMC suficiente",
+  "message.peqol.shop.full": "O estoque da loja está cheio",
+  "message.peqol.shop.sold_to": "Vendeu %sx %s por %s EMC",
+  "message.peqol.shop.bought_from": "Sua loja comprou %2$sx %3$s de %1$s por %4$s EMC",
+  "info.peqol.shop.buying": "Compra %s por %s EMC cada"
 }

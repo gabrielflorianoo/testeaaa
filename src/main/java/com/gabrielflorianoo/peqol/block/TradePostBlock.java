@@ -30,12 +30,16 @@ public class TradePostBlock extends OwnedMachineBlock {
     @SuppressWarnings("deprecation")
     public InteractionResult use(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand,
                                  @NotNull BlockHitResult hit) {
-        if (hand == InteractionHand.MAIN_HAND && player.getItemInHand(hand).isEmpty() && level.getBlockEntity(pos) instanceof TradePostBlockEntity post
-                && !post.getOwnerData().isOwner(player)) {
-            if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
-                post.buy(serverPlayer, player.isShiftKeyDown());
+        if (hand == InteractionHand.MAIN_HAND && level.getBlockEntity(pos) instanceof TradePostBlockEntity post && !level.isClientSide
+                && player instanceof ServerPlayer serverPlayer && !post.getOwnerData().isOwner(player)) {
+            if (post.isBuyMode() && !player.getItemInHand(hand).isEmpty()) {
+                post.sellToShop(serverPlayer, player.getItemInHand(hand));
+                return InteractionResult.CONSUME;
             }
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            if (!post.isBuyMode() && player.getItemInHand(hand).isEmpty()) {
+                post.buy(serverPlayer, player.isShiftKeyDown());
+                return InteractionResult.CONSUME;
+            }
         }
         return super.use(state, level, pos, player, hand, hit);
     }

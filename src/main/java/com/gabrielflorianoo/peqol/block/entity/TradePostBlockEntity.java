@@ -36,6 +36,14 @@ public class TradePostBlockEntity extends BlockEntity implements IOwnedMachine {
     private BigInteger pendingEmc = BigInteger.ZERO;
     private long sold;
     private int ticks;
+    /**
+     * false = the shop sells to customers, true = the shop buys from customers.
+     */
+    private boolean buyMode;
+
+    public boolean isBuyMode() {
+        return buyMode;
+    }
 
     public TradePostBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.TRADE_POST.get(), pos, state);
@@ -193,13 +201,68 @@ public class TradePostBlockEntity extends BlockEntity implements IOwnedMachine {
         buyer.level().playSound(null, worldPosition, SoundEvents.VILLAGER_YES, SoundSource.BLOCKS, 0.7F, 1.1F);
     }
 
+    /**
+     * Owner: sneak + empty hand toggles between selling and buying.
+     */
+    @Override
+    public void onSneakUse(ServerPlayer player) {
+        if (!ownerData.isOwner(player) && !player.hasPermissions(2)) {
+            return;
+        }
+        buyMode = !buyMode;
+        setChanged();
+        player.displayClientMessage(Component.translatable(buyMode ? "message.peqol.shop.mode_buy" : "message.peqol.shop.mode_sell")
+                .withStyle(ChatFormatting.AQUA), true);
+    }
+
+    /**
+     * Buy mode: a customer sells the held product to the shop; the owner pays.
+     */
+    public void sellToShop(ServerPlayer customer, ItemStack held) {
+        if (product == null || price.signum() <= 0 || !ItemHandlerHelper.canItemStacksStack(held, product.createStack())) {
+            customer.displayClientMessage(Component.translatable("message.peqol.shop.not_buying").withStyle(ChatFormatting.RED), true);
+            return;
+        }
+        ServerPlayer owner = level == null ? null : EmcUtil.onlinePlayer(level.getServer(), ownerData.getOwner());
+        IItemHandler stock = stock();
+        if (owner == null || stock == null) {
+            customer.displayClientMessage(Component.translatable("message.peqol.shop.owner_away").withStyle(ChatFormatting.RED), true);
+            return;
+        }
+        int affordable = (int) Math.min(held.getCount(), EmcUtil.affordable(EmcUtil.getEmc(owner), price.min(BigInteger.valueOf(Long.MAX_VALUE)).longValue()));
+        if (affordable <= 0) {
+            customer.displayClientMessage(Component.translatable("message.peqol.shop.owner_broke").withStyle(ChatFormatting.RED), true);
+            return;
+        }
+        ItemStack offered = held.copyWithCount(affordable);
+        ItemStack leftover = ItemHandlerHelper.insertItemStacked(stock, offered, false);
+        int accepted = affordable - leftover.getCount();
+        if (accepted <= 0) {
+            customer.displayClientMessage(Component.translatable("message.peqol.shop.full").withStyle(ChatFormatting.RED), true);
+            return;
+        }
+        BigInteger cost = price.multiply(BigInteger.valueOf(accepted));
+        if (!EmcUtil.tryRemoveEmc(owner, cost)) {
+            return;
+        }
+        held.shrink(accepted);
+        EmcUtil.addEmc(customer, cost);
+        sold += accepted;
+        setChanged();
+        customer.displayClientMessage(Component.translatable("message.peqol.shop.sold_to", accepted, offered.getHoverName(), EmcUtil.format(cost)).withStyle(ChatFormatting.GREEN), true);
+        owner.sendSystemMessage(Component.translatable("message.peqol.shop.bought_from", customer.getDisplayName(), accepted, offered.getHoverName(), EmcUtil.format(cost))
+                .withStyle(ChatFormatting.GOLD));
+        customer.level().playSound(null, worldPosition, SoundEvents.VILLAGER_YES, SoundSource.BLOCKS, 0.7F, 0.9F);
+    }
+
     @Override
     public void addInfo(List<Component> lines) {
         lines.add(Component.translatable("info.peqol.owner", ownerData.describe()).withStyle(ChatFormatting.GRAY));
         if (product == null) {
             lines.add(Component.translatable("info.peqol.shop.no_product").withStyle(ChatFormatting.YELLOW));
         } else {
-            lines.add(Component.translatable("info.peqol.shop.product", product.createStack().getHoverName(), EmcUtil.format(price)).withStyle(ChatFormatting.AQUA));
+            lines.add(Component.translatable(buyMode ? "info.peqol.shop.buying" : "info.peqol.shop.product", product.createStack().getHoverName(), EmcUtil.format(price))
+                    .withStyle(ChatFormatting.AQUA));
             lines.add(Component.translatable("info.peqol.shop.stock", stockCount()).withStyle(ChatFormatting.GOLD));
         }
         lines.add(Component.translatable("info.peqol.shop.sold", sold).withStyle(ChatFormatting.GRAY));
@@ -216,6 +279,7 @@ public class TradePostBlockEntity extends BlockEntity implements IOwnedMachine {
         tag.putString("Price", price.toString());
         tag.putString("PendingEmc", pendingEmc.toString());
         tag.putLong("Sold", sold);
+        tag.putBoolean("BuyMode", buyMode);
     }
 
     @Override
@@ -226,6 +290,7 @@ public class TradePostBlockEntity extends BlockEntity implements IOwnedMachine {
         price = parse(tag.getString("Price"));
         pendingEmc = parse(tag.getString("PendingEmc"));
         sold = tag.getLong("Sold");
+        buyMode = tag.getBoolean("BuyMode");
     }
 
     private static BigInteger parse(String text) {

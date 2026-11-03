@@ -388,8 +388,17 @@
   "info.peqol.shop.product": "Sells %s for %s EMC",
   "info.peqol.shop.stock": "Stock: %s",
   "info.peqol.shop.sold": "Sold so far: %s",
-  "info.peqol.shop.hint": "Customers: empty hand to buy, sneak for a stack.",
+  "info.peqol.shop.hint": "Customers: empty hand to buy (sneak: a stack). Owner: sneak + empty hand switches buy/sell.",
   "command.peqol.shop.look": "Look at one of your Trade Posts",
   "command.peqol.shop.price": "Price set to %s EMC",
-  "command.peqol.help.shop": "set the price of the Trade Post you're looking at"
+  "command.peqol.help.shop": "set the price of the Trade Post you're looking at",
+  "message.peqol.shop.mode_buy": "Mode: BUYING from players (they right click holding the product)",
+  "message.peqol.shop.mode_sell": "Mode: SELLING to players (empty hand to buy)",
+  "message.peqol.shop.not_buying": "This shop isn't buying that",
+  "message.peqol.shop.owner_away": "The shop owner must be online to buy",
+  "message.peqol.shop.owner_broke": "The shop owner can't afford it",
+  "message.peqol.shop.full": "The shop's storage is full",
+  "message.peqol.shop.sold_to": "Sold %sx %s for %s EMC",
+  "message.peqol.shop.bought_from": "Your shop bought %2$sx %3$s from %1$s for %4$s EMC",
+  "info.peqol.shop.buying": "Buys %s for %s EMC each"
 }
