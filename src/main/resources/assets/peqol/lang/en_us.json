@@ -424,5 +424,7 @@
   "info.peqol.excavator.status.paused": "Status: paused by redstone",
   "info.peqol.excavator.status.owner_offline": "Status: owner offline",
   "info.peqol.excavator.status.no_emc": "Status: not enough EMC",
-  "info.peqol.excavator.status.unloaded": "Status: area not loaded"
+  "info.peqol.excavator.status.unloaded": "Status: area not loaded",
+  "book.peqol.page13": "§5§lAutomation III§r\n\n§lInterface§r: your knowledge as an inventory for pipes, AE2 and RS.\n§lExcavator§r: EMC quarry.\n§lSpring§r: water/lava from EMC.\n§lMachine Upgrade§r: tiers 1-3 for Exporter, Vacuum, Downlink, Excavator.",
+  "book.peqol.page14": "§5§lServer Life§r\n\n§lTrade Post§r: sell from the chest below for EMC; sneak+empty hand = buy mode.\n§l/peqol home§r named homes.\n§l/peqol fav§r quick buy.\n§l/peqol share§r teach friends.\n§l/peqolclient§r HUD settings."
 }

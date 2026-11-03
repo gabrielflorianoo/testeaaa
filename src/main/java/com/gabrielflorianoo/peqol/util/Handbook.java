@@ -13,7 +13,7 @@ import net.minecraft.world.item.Items;
  */
 public final class Handbook {
 
-    public static final int PAGES = 12;
+    public static final int PAGES = 14;
 
     private Handbook() {
     }
