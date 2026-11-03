@@ -138,6 +138,10 @@ public final class PEQoLCommand {
                 .then(Commands.literal("autostock")
                         .executes(ctx -> autostockList(ctx.getSource()))
                         .then(Commands.literal("list").executes(ctx -> autostockList(ctx.getSource())))
+                        .then(Commands.literal("menu").executes(ctx -> {
+                            com.gabrielflorianoo.peqol.menu.FilterTargets.openAutostock(ctx.getSource().getPlayerOrException());
+                            return 1;
+                        }))
                         .then(Commands.literal("clear").executes(ctx -> autostockClear(ctx.getSource())))
                         .then(Commands.literal("add")
                                 .then(Commands.argument("item", ItemArgument.item(buildContext))

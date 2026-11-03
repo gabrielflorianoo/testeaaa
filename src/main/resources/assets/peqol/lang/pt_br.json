@@ -475,5 +475,7 @@
   "advancements.peqol.farm.title": "Dedo Verde",
   "advancements.peqol.farm.description": "Construa uma Colheitadeira ou Pasto Alquímico",
   "advancements.peqol.hourglass.title": "Senhor do Tempo",
-  "advancements.peqol.hourglass.description": "Consiga uma Ampulheta Celestial"
+  "advancements.peqol.hourglass.description": "Consiga uma Ampulheta Celestial",
+  "gui.peqol.autostock": "Autoestoque (tamanho da pilha = quantidade a manter)",
+  "key.peqol.autostock_menu": "Abrir Menu de Autoestoque"
 }

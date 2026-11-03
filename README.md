@@ -101,7 +101,7 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 | `buy <item> [qtd]` | Cria itens aprendidos com o seu EMC, com autocompletar (ex.: `/peqol buy minecraft:diamond 64`) |
 | `value <item>` | Mostra o valor de qualquer item, se você já o aprendeu e quantos consegue criar |
 | `known [page N \| search <texto>]` | Navega pelos itens aprendidos, com botões **[x1] [x64]** clicáveis no chat para comprar na hora |
-| `autostock add <item> <qtd>` / `remove` / `list` / `clear` | Mantém sempre *qtd* daquele item no inventário (flechas, tochas, comida...), criando o que faltar com EMC. Precisa do Reabastecedor ativo e sobrevive à morte |
+| `autostock add <item> <qtd>` / `remove` / `list` / `clear` / `menu` | Mantém sempre *qtd* daquele item no inventário (flechas, tochas, comida...), criando o que faltar com EMC. Precisa do Reabastecedor ativo e sobrevive à morte. `menu` (ou a tecla) abre uma tela de slots-fantasma em que o tamanho da pilha é a quantidade |
 | `learnall` | Aprende tudo o que ainda não conhece no inventário, queimando **só 1 de cada** item e mantendo o resto (também existe como tecla) |
 | `unlearned` | Lista os itens do inventário com EMC que você ainda não aprendeu |
 | `stars fill\|drain` | Enche as Estrelas de Klein com o seu EMC, ou esvazia todas no seu EMC |

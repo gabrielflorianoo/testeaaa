@@ -475,5 +475,7 @@
   "advancements.peqol.farm.title": "Green Thumb",
   "advancements.peqol.farm.description": "Build an Alchemical Harvester or Pasture",
   "advancements.peqol.hourglass.title": "Master of Time",
-  "advancements.peqol.hourglass.description": "Get a Celestial Hourglass"
+  "advancements.peqol.hourglass.description": "Get a Celestial Hourglass",
+  "gui.peqol.autostock": "Autostock (stack size = amount to keep)",
+  "key.peqol.autostock_menu": "Open Autostock Menu"
 }

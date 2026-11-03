@@ -53,6 +53,7 @@ public final class ServerActions {
             case LEARN_INVENTORY -> learnInventory(player, true);
             case BURN_INVENTORY -> burnInventory(player);
             case TOGGLE_ALL_CHARMS -> toggleAll(player);
+            case AUTOSTOCK_MENU -> com.gabrielflorianoo.peqol.menu.FilterTargets.openAutostock(player);
         }
     }
 
