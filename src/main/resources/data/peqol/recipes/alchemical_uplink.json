@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [" D ", "RTR", " D "],
+  "key": {
+    "D": { "item": "projecte:dark_matter" },
+    "R": { "item": "projecte:relay_mk1" },
+    "T": { "item": "projecte:transmutation_table" }
+  },
+  "result": { "item": "peqol:alchemical_uplink" }
+}

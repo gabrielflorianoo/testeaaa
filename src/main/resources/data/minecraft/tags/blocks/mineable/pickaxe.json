@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "peqol:alchemical_uplink",
+    "peqol:alchemical_importer",
+    "peqol:alchemical_exporter"
+  ]
+}

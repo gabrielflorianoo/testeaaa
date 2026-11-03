@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [" D ", "HTH", " D "],
+  "key": {
+    "D": { "item": "projecte:dark_matter" },
+    "H": { "item": "minecraft:hopper" },
+    "T": { "item": "projecte:transmutation_table" }
+  },
+  "result": { "item": "peqol:alchemical_importer" }
+}

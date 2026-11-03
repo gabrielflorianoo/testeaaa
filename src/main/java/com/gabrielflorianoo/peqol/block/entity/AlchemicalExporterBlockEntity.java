@@ -1,0 +1,233 @@
+package com.gabrielflorianoo.peqol.block.entity;
+
+import com.gabrielflorianoo.peqol.config.PEQoLConfig;
+import com.gabrielflorianoo.peqol.registry.ModBlockEntities;
+import com.gabrielflorianoo.peqol.util.EmcUtil;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
+import moze_intel.projecte.api.ItemInfo;
+import moze_intel.projecte.api.capabilities.IKnowledgeProvider;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
+import org.jetbrains.annotations.NotNull;
+
+/**
+ * Creates the filtered items out of the owner's personal EMC and pushes them into adjacent inventories.
+ * Only works while the owner is online and only for items the owner has learned. A redstone signal pauses it.
+ */
+public class AlchemicalExporterBlockEntity extends BlockEntity implements IOwnedMachine {
+
+    private final OwnerData ownerData = new OwnerData();
+    private final List<ItemInfo> filters = new ArrayList<>();
+    private BigInteger totalSpent = BigInteger.ZERO;
+    private long itemsExported;
+    private int ticks;
+    private Status status = Status.IDLE;
+
+    public enum Status {
+        IDLE, RUNNING, NO_OWNER, OWNER_OFFLINE, NO_EMC, NO_TARGET, PAUSED
+    }
+
+    public AlchemicalExporterBlockEntity(BlockPos pos, BlockState state) {
+        super(ModBlockEntities.ALCHEMICAL_EXPORTER.get(), pos, state);
+    }
+
+    @Override
+    public OwnerData getOwnerData() {
+        return ownerData;
+    }
+
+    public List<ItemInfo> getFilters() {
+        return filters;
+    }
+
+    public static void serverTick(Level level, BlockPos pos, BlockState state, AlchemicalExporterBlockEntity exporter) {
+        if (++exporter.ticks % PEQoLConfig.COMMON.exporterInterval.get() != 0) {
+            return;
+        }
+        exporter.status = exporter.operate(level, pos);
+    }
+
+    private Status operate(Level level, BlockPos pos) {
+        if (filters.isEmpty()) {
+            return Status.IDLE;
+        }
+        if (level.hasNeighborSignal(pos)) {
+            return Status.PAUSED;
+        }
+        if (!ownerData.hasOwner()) {
+            return Status.NO_OWNER;
+        }
+        ServerPlayer owner = EmcUtil.onlinePlayer(level.getServer(), ownerData.getOwner());
+        if (owner == null) {
+            return Status.OWNER_OFFLINE;
+        }
+        IKnowledgeProvider provider = EmcUtil.knowledge(owner).orElse(null);
+        if (provider == null) {
+            return Status.OWNER_OFFLINE;
+        }
+        List<IItemHandler> targets = new ArrayList<>();
+        for (Direction direction : Direction.values()) {
+            BlockPos targetPos = pos.relative(direction);
+            if (!level.isLoaded(targetPos)) {
+                continue;
+            }
+            BlockEntity target = level.getBlockEntity(targetPos);
+            if (target == null || target instanceof AlchemicalExporterBlockEntity || target instanceof AlchemicalImporterBlockEntity) {
+                continue;
+            }
+            target.getCapability(ForgeCapabilities.ITEM_HANDLER, direction.getOpposite()).ifPresent(targets::add);
+        }
+        if (targets.isEmpty()) {
+            return Status.NO_TARGET;
+        }
+        int perOperation = PEQoLConfig.COMMON.exporterItemsPerOperation.get();
+        BigInteger emc = provider.getEmc();
+        BigInteger startEmc = emc;
+        boolean anyEmcShortage = false;
+        for (ItemInfo filter : filters) {
+            long unit = EmcUtil.emc().getValue(filter);
+            if (unit <= 0 || !provider.hasKnowledge(filter)) {
+                continue;
+            }
+            ItemStack template = filter.createStack();
+            int amount = (int) Math.min(Math.min(perOperation, template.getMaxStackSize()), EmcUtil.affordable(emc, unit));
+            if (amount <= 0) {
+                anyEmcShortage = true;
+                continue;
+            }
+            for (IItemHandler target : targets) {
+                if (amount <= 0) {
+                    break;
+                }
+                ItemStack remainder = ItemHandlerHelper.insertItemStacked(target, template.copyWithCount(amount), true);
+                int accepted = amount - remainder.getCount();
+                if (accepted <= 0) {
+                    continue;
+                }
+                remainder = ItemHandlerHelper.insertItemStacked(target, template.copyWithCount(accepted), false);
+                int inserted = accepted - remainder.getCount();
+                if (inserted > 0) {
+                    BigInteger cost = BigInteger.valueOf(unit).multiply(BigInteger.valueOf(inserted));
+                    emc = emc.subtract(cost);
+                    totalSpent = totalSpent.add(cost);
+                    itemsExported += inserted;
+                    amount -= inserted;
+                }
+            }
+        }
+        if (!emc.equals(startEmc)) {
+            provider.setEmc(emc);
+            provider.syncEmc(owner);
+            setChanged();
+            return Status.RUNNING;
+        }
+        return anyEmcShortage ? Status.NO_EMC : Status.IDLE;
+    }
+
+    @Override
+    public boolean onItemUse(ServerPlayer player, InteractionHand hand, ItemStack held) {
+        if (!ownerData.canConfigure(player)) {
+            player.displayClientMessage(Component.translatable("message.peqol.not_owner", ownerData.describe()).withStyle(ChatFormatting.RED), true);
+            return true;
+        }
+        if (!EmcUtil.hasValue(held)) {
+            player.displayClientMessage(Component.translatable("message.peqol.no_emc", held.getHoverName()).withStyle(ChatFormatting.RED), true);
+            return true;
+        }
+        ItemInfo info = EmcUtil.emc().getPersistentInfo(ItemInfo.fromStack(held));
+        if (filters.remove(info)) {
+            player.displayClientMessage(Component.translatable("message.peqol.exporter.removed", held.getHoverName()).withStyle(ChatFormatting.YELLOW), true);
+            player.level().playSound(null, worldPosition, SoundEvents.ITEM_FRAME_REMOVE_ITEM, SoundSource.BLOCKS, 0.6F, 1F);
+        } else {
+            int max = PEQoLConfig.COMMON.exporterMaxFilters.get();
+            if (filters.size() >= max) {
+                player.displayClientMessage(Component.translatable("message.peqol.filter_full", max).withStyle(ChatFormatting.RED), true);
+                return true;
+            }
+            filters.add(info);
+            player.displayClientMessage(Component.translatable("message.peqol.exporter.added", held.getHoverName()).withStyle(ChatFormatting.GREEN), true);
+            player.level().playSound(null, worldPosition, SoundEvents.ITEM_FRAME_ADD_ITEM, SoundSource.BLOCKS, 0.6F, 1F);
+        }
+        setChanged();
+        return true;
+    }
+
+    @Override
+    public void onSneakUse(ServerPlayer player) {
+        if (!ownerData.canConfigure(player)) {
+            player.displayClientMessage(Component.translatable("message.peqol.not_owner", ownerData.describe()).withStyle(ChatFormatting.RED), true);
+            return;
+        }
+        filters.clear();
+        setChanged();
+        player.displayClientMessage(Component.translatable("message.peqol.exporter.cleared").withStyle(ChatFormatting.YELLOW), true);
+    }
+
+    @Override
+    public void addInfo(List<Component> lines) {
+        lines.add(Component.translatable("info.peqol.owner", ownerData.describe()).withStyle(ChatFormatting.GRAY));
+        lines.add(Component.translatable("info.peqol.exporter.status." + status.name().toLowerCase(java.util.Locale.ROOT)).withStyle(ChatFormatting.AQUA));
+        lines.add(Component.translatable("info.peqol.exporter.total", EmcUtil.format(itemsExported), EmcUtil.format(totalSpent)).withStyle(ChatFormatting.GOLD));
+        if (filters.isEmpty()) {
+            lines.add(Component.translatable("info.peqol.exporter.no_filter").withStyle(ChatFormatting.YELLOW));
+        } else {
+            lines.add(Component.translatable("tooltip.peqol.filter", filters.size()).withStyle(ChatFormatting.GOLD));
+            for (ItemInfo info : filters) {
+                lines.add(Component.literal(" - ").append(info.createStack().getHoverName()).withStyle(ChatFormatting.GRAY));
+            }
+        }
+        lines.add(Component.translatable("info.peqol.exporter.hint").withStyle(ChatFormatting.DARK_GRAY));
+    }
+
+    @Override
+    protected void saveAdditional(@NotNull CompoundTag tag) {
+        super.saveAdditional(tag);
+        ownerData.save(tag);
+        ListTag list = new ListTag();
+        for (ItemInfo info : filters) {
+            list.add(info.write(new CompoundTag()));
+        }
+        tag.put("Filters", list);
+        tag.putString("TotalSpent", totalSpent.toString());
+        tag.putLong("ItemsExported", itemsExported);
+    }
+
+    @Override
+    public void load(@NotNull CompoundTag tag) {
+        super.load(tag);
+        ownerData.load(tag);
+        filters.clear();
+        ListTag list = tag.getList("Filters", Tag.TAG_COMPOUND);
+        for (int i = 0; i < list.size(); i++) {
+            ItemInfo info = ItemInfo.read(list.getCompound(i));
+            if (info != null) {
+                filters.add(info);
+            }
+        }
+        try {
+            String spent = tag.getString("TotalSpent");
+            totalSpent = spent.isEmpty() ? BigInteger.ZERO : new BigInteger(spent);
+        } catch (NumberFormatException e) {
+            totalSpent = BigInteger.ZERO;
+        }
+        itemsExported = tag.getLong("ItemsExported");
+    }
+}

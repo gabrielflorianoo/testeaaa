@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [" D ", "PTP", " D "],
+  "key": {
+    "D": { "item": "projecte:dark_matter" },
+    "P": { "item": "minecraft:dropper" },
+    "T": { "item": "projecte:transmutation_table" }
+  },
+  "result": { "item": "peqol:alchemical_exporter" }
+}
