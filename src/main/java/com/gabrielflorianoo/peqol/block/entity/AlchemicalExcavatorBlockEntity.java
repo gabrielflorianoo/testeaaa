@@ -44,6 +44,55 @@ public class AlchemicalExcavatorBlockEntity extends BlockEntity implements IOwne
     private int tier;
     private int ticks;
     private String status = "idle";
+    private boolean silkTouch;
+    private int fortune;
+
+    /**
+     * The virtual pickaxe used for drops (diamond, plus the installed enchantment).
+     */
+    private ItemStack tool() {
+        ItemStack pick = new ItemStack(Items.DIAMOND_PICKAXE);
+        if (silkTouch) {
+            pick.enchant(net.minecraft.world.item.enchantment.Enchantments.SILK_TOUCH, 1);
+        } else if (fortune > 0) {
+            pick.enchant(net.minecraft.world.item.enchantment.Enchantments.BLOCK_FORTUNE, fortune);
+        }
+        return pick;
+    }
+
+    /**
+     * Right click with an enchanted book holding Silk Touch or Fortune to install it (the book is consumed).
+     */
+    @Override
+    public boolean onItemUse(ServerPlayer player, net.minecraft.world.InteractionHand hand, ItemStack held) {
+        if (!(held.getItem() instanceof net.minecraft.world.item.EnchantedBookItem)) {
+            return false;
+        }
+        if (!ownerData.canConfigure(player)) {
+            player.displayClientMessage(Component.translatable("message.peqol.not_owner", ownerData.describe()).withStyle(ChatFormatting.RED), true);
+            return true;
+        }
+        java.util.Map<net.minecraft.world.item.enchantment.Enchantment, Integer> enchants = net.minecraft.world.item.enchantment.EnchantmentHelper.getEnchantments(held);
+        Integer silk = enchants.get(net.minecraft.world.item.enchantment.Enchantments.SILK_TOUCH);
+        Integer luck = enchants.get(net.minecraft.world.item.enchantment.Enchantments.BLOCK_FORTUNE);
+        if (silk != null) {
+            silkTouch = true;
+            fortune = 0;
+        } else if (luck != null) {
+            silkTouch = false;
+            fortune = Math.min(3, luck);
+        } else {
+            player.displayClientMessage(Component.translatable("message.peqol.excavator.bad_book").withStyle(ChatFormatting.RED), true);
+            return true;
+        }
+        if (!player.getAbilities().instabuild) {
+            held.shrink(1);
+        }
+        setChanged();
+        player.displayClientMessage(Component.translatable(silkTouch ? "message.peqol.excavator.silk" : "message.peqol.excavator.fortune", fortune)
+                .withStyle(ChatFormatting.LIGHT_PURPLE), true);
+        return true;
+    }
 
     public AlchemicalExcavatorBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.ALCHEMICAL_EXCAVATOR.get(), pos, state);
@@ -148,7 +197,7 @@ public class AlchemicalExcavatorBlockEntity extends BlockEntity implements IOwne
                 cursor = next == null ? target : next;
                 continue;
             }
-            List<ItemStack> drops = Block.getDrops(state, level, target, level.getBlockEntity(target), fake, new ItemStack(Items.DIAMOND_PICKAXE));
+            List<ItemStack> drops = Block.getDrops(state, level, target, level.getBlockEntity(target), fake, tool());
             level.destroyBlock(target, false, fake);
             handleDrops(level, owner, drops);
             mined++;
@@ -225,6 +274,9 @@ public class AlchemicalExcavatorBlockEntity extends BlockEntity implements IOwne
         }
         lines.add(Component.translatable("info.peqol.excavator.mined", EmcUtil.format(mined), EmcUtil.format(emcGained)).withStyle(ChatFormatting.GOLD));
         lines.add(Component.translatable("info.peqol.tier", tier, MAX_TIER).withStyle(ChatFormatting.LIGHT_PURPLE));
+        if (silkTouch || fortune > 0) {
+            lines.add(Component.translatable(silkTouch ? "message.peqol.excavator.silk" : "message.peqol.excavator.fortune", fortune).withStyle(ChatFormatting.LIGHT_PURPLE));
+        }
         lines.add(Component.translatable("info.peqol.excavator.hint", radius() * 2 + 1).withStyle(ChatFormatting.DARK_GRAY));
     }
 
@@ -239,6 +291,8 @@ public class AlchemicalExcavatorBlockEntity extends BlockEntity implements IOwne
         tag.putString("EmcGained", emcGained.toString());
         tag.putBoolean("Finished", finished);
         tag.putInt("Tier", tier);
+        tag.putBoolean("SilkTouch", silkTouch);
+        tag.putInt("Fortune", fortune);
     }
 
     @Override
@@ -255,5 +309,7 @@ public class AlchemicalExcavatorBlockEntity extends BlockEntity implements IOwne
         }
         finished = tag.getBoolean("Finished");
         tier = Math.max(0, Math.min(MAX_TIER, tag.getInt("Tier")));
+        silkTouch = tag.getBoolean("SilkTouch");
+        fortune = Math.max(0, Math.min(3, tag.getInt("Fortune")));
     }
 }

@@ -413,7 +413,7 @@
   "command.peqol.history.summary": "mín %s / máx %s / variação %s",
   "block.peqol.alchemical_excavator": "Escavadeira Alquímica",
   "block.peqol.alchemical_excavator.desc": "Escava a área abaixo camada por camada, transformando os drops em EMC.",
-  "jei.peqol.info.alchemical_excavator": "Escava uma área quadrada abaixo (9x9 por padrão) até a rocha-mãe, pagando um pouco de EMC por bloco. Drops com EMC viram EMC pessoal do dono, o resto vai para um baú vizinho (ou sai por cima). Pula blocos com inventário, fluidos e inquebráveis, respeita proteções. Precisa do dono online, redstone pausa, agachar com a mão vazia reinicia. Aceita Melhorias de Máquina.",
+  "jei.peqol.info.alchemical_excavator": "Escava uma área quadrada abaixo (9x9 por padrão) até a rocha-mãe, pagando um pouco de EMC por bloco. Drops com EMC viram EMC pessoal do dono, o resto vai para um baú vizinho (ou sai por cima). Pula blocos com inventário, fluidos e inquebráveis, respeita proteções. Precisa do dono online, redstone pausa, agachar com a mão vazia reinicia. Aceita Melhorias de Máquina e livros de Toque Suave / Fortuna (clique direito).",
   "message.peqol.excavator.restart": "Escavadeira reiniciada a partir da camada de cima",
   "info.peqol.excavator.layer": "Camada atual: Y=%s",
   "info.peqol.excavator.mined": "Escavou %s blocos, ganhou %s EMC",
@@ -429,5 +429,8 @@
   "book.peqol.page14": "§5§lServidor§r\n\n§lPosto de Troca§r: venda do baú abaixo por EMC; agachar+mão vazia = modo compra.\n§l/peqol home§r casas.\n§l/peqol fav§r compra rápida.\n§l/peqol share§r ensine amigos.\n§l/peqolclient§r ajustes do HUD.",
   "block.peqol.alchemical_display": "Display Alquímico",
   "block.peqol.alchemical_display.desc": "Mostra seu EMC pessoal como texto flutuante acima dele.",
-  "jei.peqol.info.alchemical_display": "Um letreiro decorativo para a base: mostra o nome do dono, o EMC pessoal e a variação por segundo como texto flutuante acima do bloco. Funciona com o dono offline também."
+  "jei.peqol.info.alchemical_display": "Um letreiro decorativo para a base: mostra o nome do dono, o EMC pessoal e a variação por segundo como texto flutuante acima do bloco. Funciona com o dono offline também.",
+  "message.peqol.excavator.silk": "A escavadeira escava com Toque Suave",
+  "message.peqol.excavator.fortune": "A escavadeira escava com Fortuna %s",
+  "message.peqol.excavator.bad_book": "Só livros de Toque Suave ou Fortuna podem ser instalados"
 }

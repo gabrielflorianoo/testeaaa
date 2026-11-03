@@ -3,7 +3,8 @@
 ## 1.11.0
 - Alchemical Display: floating text with the owner's EMC and EMC/s (block entity renderer)
 - Handbook pages for the newer blocks and server features
-- Alchemical Excavator: EMC-powered quarry (drops with EMC become personal EMC), upgradeable, protection aware
+- Alchemical Excavator: EMC-powered quarry (drops with EMC become personal EMC), upgradeable, protection aware,
+  Silk Touch / Fortune via enchanted books
 
 ## 1.10.0
 - `/peqolclient history`: sparkline of your EMC over the last 10 minutes
