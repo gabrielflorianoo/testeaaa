@@ -1,11 +1,29 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "misc",
-  "pattern": [" M ", "DRD", " M "],
+  "pattern": [
+    " M ",
+    "DRD",
+    " M "
+  ],
   "key": {
-    "M": { "item": "projecte:medium_covalence_dust" },
-    "D": { "item": "projecte:dark_matter" },
-    "R": { "item": "projecte:repair_talisman" }
+    "M": {
+      "item": "projecte:medium_covalence_dust"
+    },
+    "D": {
+      "item": "projecte:dark_matter"
+    },
+    "R": {
+      "item": "projecte:repair_talisman"
+    }
   },
-  "result": { "item": "peqol:mending_charm" }
+  "result": {
+    "item": "peqol:mending_charm"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "mending_charm"
+    }
+  ]
 }

@@ -83,6 +83,9 @@ public final class ModItems {
     public static final RegistryObject<MachineUpgradeItem> MACHINE_UPGRADE = ITEMS.register("machine_upgrade",
             () -> new MachineUpgradeItem(new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
 
+    public static final RegistryObject<OwnedBlockItem> ALCHEMICAL_INTERFACE = ITEMS.register("alchemical_interface",
+            () -> new OwnedBlockItem(ModBlocks.ALCHEMICAL_INTERFACE.get(), new Item.Properties().rarity(Rarity.RARE), "alchemical_interface"));
+
     private ModItems() {
     }
 }

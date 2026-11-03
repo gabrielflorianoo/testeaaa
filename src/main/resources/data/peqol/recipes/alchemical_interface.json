@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["RCR", "IXE", "RCR"],
+  "key": {
+    "R": { "item": "projecte:red_matter" },
+    "C": { "tag": "forge:chests/wooden" },
+    "I": { "item": "peqol:alchemical_importer" },
+    "E": { "item": "peqol:alchemical_exporter" },
+    "X": { "item": "projecte:transmutation_table" }
+  },
+  "result": { "item": "peqol:alchemical_interface" },
+  "conditions": [ { "type": "peqol:recipe_enabled", "item": "alchemical_interface" } ]
+}

@@ -2,10 +2,26 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    { "item": "minecraft:paper" },
-    { "item": "minecraft:paper" },
-    { "item": "minecraft:ink_sac" },
-    { "item": "projecte:medium_covalence_dust" }
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "minecraft:ink_sac"
+    },
+    {
+      "item": "projecte:medium_covalence_dust"
+    }
   ],
-  "result": { "item": "peqol:knowledge_scroll" }
+  "result": {
+    "item": "peqol:knowledge_scroll"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "knowledge_scroll"
+    }
+  ]
 }

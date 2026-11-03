@@ -1,11 +1,29 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "misc",
-  "pattern": ["MDM", "DCD", "MDM"],
+  "pattern": [
+    "MDM",
+    "DCD",
+    "MDM"
+  ],
   "key": {
-    "M": { "item": "projecte:medium_covalence_dust" },
-    "D": { "item": "projecte:dark_matter" },
-    "C": { "tag": "forge:chests/wooden" }
+    "M": {
+      "item": "projecte:medium_covalence_dust"
+    },
+    "D": {
+      "item": "projecte:dark_matter"
+    },
+    "C": {
+      "tag": "forge:chests/wooden"
+    }
   },
-  "result": { "item": "peqol:restocker_talisman" }
+  "result": {
+    "item": "peqol:restocker_talisman"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "restocker_talisman"
+    }
+  ]
 }

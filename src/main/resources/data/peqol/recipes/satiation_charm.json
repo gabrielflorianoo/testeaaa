@@ -1,11 +1,29 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "misc",
-  "pattern": ["LGL", "GBG", "LGL"],
+  "pattern": [
+    "LGL",
+    "GBG",
+    "LGL"
+  ],
   "key": {
-    "L": { "item": "projecte:low_covalence_dust" },
-    "G": { "item": "minecraft:golden_carrot" },
-    "B": { "item": "projecte:iron_band" }
+    "L": {
+      "item": "projecte:low_covalence_dust"
+    },
+    "G": {
+      "item": "minecraft:golden_carrot"
+    },
+    "B": {
+      "item": "projecte:iron_band"
+    }
   },
-  "result": { "item": "peqol:satiation_charm" }
+  "result": {
+    "item": "peqol:satiation_charm"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "satiation_charm"
+    }
+  ]
 }

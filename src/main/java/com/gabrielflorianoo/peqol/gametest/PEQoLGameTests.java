@@ -373,4 +373,27 @@ public class PEQoLGameTests {
         helper.assertTrue(com.gabrielflorianoo.peqol.util.PlayerData.setFavorite(player, diamond, false), "Favorite removed");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void interfaceIsInertWhileOwnerOffline(GameTestHelper helper) {
+        helper.setBlock(POS, ModBlocks.ALCHEMICAL_INTERFACE.get());
+        com.gabrielflorianoo.peqol.block.entity.AlchemicalInterfaceBlockEntity be =
+                (com.gabrielflorianoo.peqol.block.entity.AlchemicalInterfaceBlockEntity) helper.getBlockEntity(POS);
+        be.getOwnerData().set(helper.makeMockPlayer());
+        be.refresh();
+        IItemHandler handler = be.getCapability(ForgeCapabilities.ITEM_HANDLER).orElseThrow(IllegalStateException::new);
+        helper.assertTrue(handler.getSlots() == 1, "Offline owner exposes no items");
+        ItemStack cobble = new ItemStack(Items.COBBLESTONE, 8);
+        helper.assertTrue(handler.insertItem(0, cobble, false).getCount() == 8, "Offline owner: inserts are refused");
+        helper.assertTrue(handler.extractItem(0, 64, false).isEmpty(), "Offline owner: nothing to extract");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void recipesEnabledByDefault(GameTestHelper helper) {
+        helper.assertTrue(new com.gabrielflorianoo.peqol.util.RecipeEnabledCondition("alchemical_anchor").test(null), "Recipes are enabled by default");
+        helper.assertTrue(helper.getLevel().getRecipeManager().byKey(new ResourceLocation("peqol", "alchemical_interface")).isPresent(),
+                "The Interface recipe should be loaded");
+        helper.succeed();
+    }
 }

@@ -1,11 +1,29 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "misc",
-  "pattern": ["LFL", "FBF", "LFL"],
+  "pattern": [
+    "LFL",
+    "FBF",
+    "LFL"
+  ],
   "key": {
-    "L": { "item": "projecte:low_covalence_dust" },
-    "F": { "item": "minecraft:furnace" },
-    "B": { "item": "projecte:iron_band" }
+    "L": {
+      "item": "projecte:low_covalence_dust"
+    },
+    "F": {
+      "item": "minecraft:furnace"
+    },
+    "B": {
+      "item": "projecte:iron_band"
+    }
   },
-  "result": { "item": "peqol:smelting_charm" }
+  "result": {
+    "item": "peqol:smelting_charm"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "smelting_charm"
+    }
+  ]
 }

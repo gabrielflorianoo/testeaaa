@@ -366,5 +366,12 @@
   "command.peqol.fav.removed": "%s removed from favorites",
   "command.peqol.fav.missing": "%s isn't a favorite",
   "command.peqol.help.fav": "favorite items with quick buy buttons",
-  "key.peqol.favorites": "Show Favorites (quick buy)"
+  "key.peqol.favorites": "Show Favorites (quick buy)",
+  "block.peqol.alchemical_interface": "Alchemical Interface",
+  "block.peqol.alchemical_interface.desc": "Exposes all your learned items to pipes and storage mods: pulling creates from EMC, inserting burns.",
+  "jei.peqol.info.alchemical_interface": "Turns your transmutation knowledge into a virtual inventory. Every learned item shows up as a slot (count = how many you can afford). Pipes, hoppers and storage mods (AE2 storage bus, Refined Storage external storage) can pull items, which are created from the owner's EMC, and insert items, which are burned. Works while the owner is online.",
+  "info.peqol.interface.online": "Online: exposing %s learned items",
+  "info.peqol.interface.offline": "Owner offline: nothing is exposed (%s cached)",
+  "info.peqol.interface.stats": "Created %s items, burned %s items",
+  "info.peqol.interface.hint": "Connect an AE2 storage bus, RS external storage, pipes or hoppers."
 }

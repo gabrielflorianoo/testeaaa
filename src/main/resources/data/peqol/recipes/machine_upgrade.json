@@ -1,11 +1,30 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "misc",
-  "pattern": ["HRH", "RDR", "HRH"],
+  "pattern": [
+    "HRH",
+    "RDR",
+    "HRH"
+  ],
   "key": {
-    "H": { "item": "projecte:high_covalence_dust" },
-    "R": { "item": "minecraft:redstone" },
-    "D": { "item": "projecte:dark_matter" }
+    "H": {
+      "item": "projecte:high_covalence_dust"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "D": {
+      "item": "projecte:dark_matter"
+    }
   },
-  "result": { "item": "peqol:machine_upgrade", "count": 2 }
+  "result": {
+    "item": "peqol:machine_upgrade",
+    "count": 2
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "machine_upgrade"
+    }
+  ]
 }

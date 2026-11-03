@@ -1,11 +1,29 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "tools",
-  "pattern": [" S ", "LEL", " L "],
+  "pattern": [
+    " S ",
+    "LEL",
+    " L "
+  ],
   "key": {
-    "S": { "item": "minecraft:string" },
-    "L": { "tag": "forge:leather" },
-    "E": { "item": "minecraft:ender_chest" }
+    "S": {
+      "item": "minecraft:string"
+    },
+    "L": {
+      "tag": "forge:leather"
+    },
+    "E": {
+      "item": "minecraft:ender_chest"
+    }
   },
-  "result": { "item": "peqol:void_pouch" }
+  "result": {
+    "item": "peqol:void_pouch"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "void_pouch"
+    }
+  ]
 }

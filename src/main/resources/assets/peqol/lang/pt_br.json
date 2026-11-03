@@ -366,5 +366,12 @@
   "command.peqol.fav.removed": "%s removido dos favoritos",
   "command.peqol.fav.missing": "%s não é favorito",
   "command.peqol.help.fav": "itens favoritos com botões de compra rápida",
-  "key.peqol.favorites": "Mostrar Favoritos (compra rápida)"
+  "key.peqol.favorites": "Mostrar Favoritos (compra rápida)",
+  "block.peqol.alchemical_interface": "Interface Alquímica",
+  "block.peqol.alchemical_interface.desc": "Expõe todos os itens aprendidos para canos e mods de armazenamento: puxar cria com EMC, inserir queima.",
+  "jei.peqol.info.alchemical_interface": "Transforma seu conhecimento de transmutação num inventário virtual. Cada item aprendido vira um slot (quantidade = quantos você pode pagar). Canos, funis e mods de armazenamento (storage bus do AE2, external storage do RS) podem puxar itens, criados com o EMC do dono, e inserir itens, que são queimados. Funciona com o dono online.",
+  "info.peqol.interface.online": "Online: expondo %s itens aprendidos",
+  "info.peqol.interface.offline": "Dono offline: nada é exposto (%s em cache)",
+  "info.peqol.interface.stats": "Criou %s itens, queimou %s itens",
+  "info.peqol.interface.hint": "Conecte um storage bus do AE2, external storage do RS, canos ou funis."
 }

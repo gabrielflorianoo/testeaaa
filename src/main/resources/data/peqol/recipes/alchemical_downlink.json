@@ -1,11 +1,29 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "misc",
-  "pattern": [" D ", "TUT", " D "],
+  "pattern": [
+    " D ",
+    "TUT",
+    " D "
+  ],
   "key": {
-    "D": { "item": "projecte:dark_matter" },
-    "T": { "item": "minecraft:redstone_torch" },
-    "U": { "item": "peqol:alchemical_uplink" }
+    "D": {
+      "item": "projecte:dark_matter"
+    },
+    "T": {
+      "item": "minecraft:redstone_torch"
+    },
+    "U": {
+      "item": "peqol:alchemical_uplink"
+    }
   },
-  "result": { "item": "peqol:alchemical_downlink" }
+  "result": {
+    "item": "peqol:alchemical_downlink"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "alchemical_downlink"
+    }
+  ]
 }

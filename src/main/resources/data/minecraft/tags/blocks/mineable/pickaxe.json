@@ -6,6 +6,7 @@
     "peqol:alchemical_exporter",
     "peqol:alchemical_vacuum",
     "peqol:alchemical_downlink",
-    "peqol:alchemical_gauge"
+    "peqol:alchemical_gauge",
+    "peqol:alchemical_interface"
   ]
 }

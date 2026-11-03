@@ -41,6 +41,7 @@ public class PEQoL {
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, PEQoLConfig.CLIENT_SPEC);
 
         modBus.addListener(this::commonSetup);
+        net.minecraftforge.common.crafting.CraftingHelper.register(com.gabrielflorianoo.peqol.util.RecipeEnabledCondition.Serializer.INSTANCE);
 
         MinecraftForge.EVENT_BUS.register(CommonEvents.class);
         MinecraftForge.EVENT_BUS.register(KnowledgeStats.class);

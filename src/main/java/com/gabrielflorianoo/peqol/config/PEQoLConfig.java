@@ -130,6 +130,8 @@ public final class PEQoLConfig {
 
         // Blocks
         public final ForgeConfigSpec.LongValue uplinkBufferCapacity;
+        public final ForgeConfigSpec.IntValue interfaceMaxSlots;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> disabledRecipes;
         public final ForgeConfigSpec.BooleanValue importerLearnsItems;
         public final ForgeConfigSpec.IntValue exporterInterval;
         public final ForgeConfigSpec.IntValue exporterItemsPerOperation;
@@ -319,6 +321,10 @@ public final class PEQoLConfig {
             builder.comment("Personal EMC automation blocks").push("blocks");
             uplinkBufferCapacity = builder.comment("EMC an Alchemical Uplink can buffer while its owner is offline.")
                     .defineInRange("uplinkBufferCapacity", 1_000_000_000L, 1L, Long.MAX_VALUE);
+            interfaceMaxSlots = builder.comment("Maximum learned items an Alchemical Interface exposes (large numbers can slow storage mods).")
+                    .defineInRange("interfaceMaxSlots", 4096, 1, 100_000);
+            disabledRecipes = builder.comment("QoL+ recipes to disable (item paths, e.g. [\"alchemical_anchor\", \"alchemical_interface\"]). Needs a world reload.")
+                    .defineListAllowEmpty(List.of("disabledRecipes"), () -> List.<String>of(), o -> o instanceof String);
             importerLearnsItems = builder.comment("Items inserted into an Alchemical Importer are learned by its owner.")
                     .define("importerLearnsItems", true);
             exporterInterval = builder.comment("Ticks between Alchemical Exporter push operations.")

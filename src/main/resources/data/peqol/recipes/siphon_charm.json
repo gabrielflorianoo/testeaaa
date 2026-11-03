@@ -1,11 +1,29 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "misc",
-  "pattern": ["LHL", "HBH", "LHL"],
+  "pattern": [
+    "LHL",
+    "HBH",
+    "LHL"
+  ],
   "key": {
-    "L": { "item": "projecte:low_covalence_dust" },
-    "H": { "item": "minecraft:hopper" },
-    "B": { "item": "projecte:iron_band" }
+    "L": {
+      "item": "projecte:low_covalence_dust"
+    },
+    "H": {
+      "item": "minecraft:hopper"
+    },
+    "B": {
+      "item": "projecte:iron_band"
+    }
   },
-  "result": { "item": "peqol:siphon_charm" }
+  "result": {
+    "item": "peqol:siphon_charm"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "siphon_charm"
+    }
+  ]
 }

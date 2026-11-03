@@ -1,11 +1,29 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "misc",
-  "pattern": [" D ", "HTH", " D "],
+  "pattern": [
+    " D ",
+    "HTH",
+    " D "
+  ],
   "key": {
-    "D": { "item": "projecte:dark_matter" },
-    "H": { "item": "minecraft:hopper" },
-    "T": { "item": "projecte:transmutation_table" }
+    "D": {
+      "item": "projecte:dark_matter"
+    },
+    "H": {
+      "item": "minecraft:hopper"
+    },
+    "T": {
+      "item": "projecte:transmutation_table"
+    }
   },
-  "result": { "item": "peqol:alchemical_importer" }
+  "result": {
+    "item": "peqol:alchemical_importer"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "alchemical_importer"
+    }
+  ]
 }

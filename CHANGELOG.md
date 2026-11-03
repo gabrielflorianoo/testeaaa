@@ -1,5 +1,9 @@
 # ProjectE QoL+ changelog
 
+## 1.8.0
+- Alchemical Interface: every learned item exposed as an item handler slot (extract creates from EMC, insert burns) for pipes, AE2 and RS
+- `blocks.disabledRecipes` config + `peqol:recipe_enabled` recipe condition on every QoL+ recipe
+
 ## 1.7.0
 - Jade integration: QoL+ machine info and ProjectE EMC block info inside Jade's tooltip (own panel hides when Jade is present)
 - Named homes: `/peqol home set|del|list|<name>` with EMC-paid teleports and clickable list

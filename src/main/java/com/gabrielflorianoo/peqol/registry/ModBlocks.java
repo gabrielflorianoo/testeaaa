@@ -4,6 +4,7 @@ import com.gabrielflorianoo.peqol.PEQoL;
 import com.gabrielflorianoo.peqol.block.AlchemicalDownlinkBlock;
 import com.gabrielflorianoo.peqol.block.AlchemicalExporterBlock;
 import com.gabrielflorianoo.peqol.block.AlchemicalGaugeBlock;
+import com.gabrielflorianoo.peqol.block.AlchemicalInterfaceBlock;
 import com.gabrielflorianoo.peqol.block.AlchemicalImporterBlock;
 import com.gabrielflorianoo.peqol.block.AlchemicalUplinkBlock;
 import com.gabrielflorianoo.peqol.block.AlchemicalVacuumBlock;
@@ -34,6 +35,9 @@ public final class ModBlocks {
 
     public static final RegistryObject<AlchemicalGaugeBlock> ALCHEMICAL_GAUGE = BLOCKS.register("alchemical_gauge",
             () -> new AlchemicalGaugeBlock(machineProperties(MapColor.COLOR_YELLOW)));
+
+    public static final RegistryObject<AlchemicalInterfaceBlock> ALCHEMICAL_INTERFACE = BLOCKS.register("alchemical_interface",
+            () -> new AlchemicalInterfaceBlock(machineProperties(MapColor.COLOR_LIGHT_BLUE)));
 
     private ModBlocks() {
     }

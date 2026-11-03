@@ -106,7 +106,8 @@ public class AlchemicalExporterBlockEntity extends BlockEntity implements IOwned
                 continue;
             }
             BlockEntity target = level.getBlockEntity(targetPos);
-            if (target == null || target instanceof AlchemicalExporterBlockEntity || target instanceof AlchemicalImporterBlockEntity) {
+            if (target == null || target instanceof AlchemicalExporterBlockEntity || target instanceof AlchemicalImporterBlockEntity
+                    || target instanceof AlchemicalInterfaceBlockEntity) {
                 continue;
             }
             target.getCapability(ForgeCapabilities.ITEM_HANDLER, direction.getOpposite()).ifPresent(targets::add);

@@ -1,11 +1,29 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "tools",
-  "pattern": [" G ", "GPG", "S  "],
+  "pattern": [
+    " G ",
+    "GPG",
+    "S  "
+  ],
   "key": {
-    "G": { "item": "minecraft:gold_ingot" },
-    "P": { "tag": "forge:glass_panes" },
-    "S": { "item": "projecte:low_covalence_dust" }
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "P": {
+      "tag": "forge:glass_panes"
+    },
+    "S": {
+      "item": "projecte:low_covalence_dust"
+    }
   },
-  "result": { "item": "peqol:appraisal_lens" }
+  "result": {
+    "item": "peqol:appraisal_lens"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "appraisal_lens"
+    }
+  ]
 }

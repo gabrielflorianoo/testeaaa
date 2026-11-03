@@ -1,11 +1,29 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "tools",
-  "pattern": ["  D", " B ", "M  "],
+  "pattern": [
+    "  D",
+    " B ",
+    "M  "
+  ],
   "key": {
-    "D": { "item": "projecte:dark_matter" },
-    "B": { "item": "minecraft:blaze_rod" },
-    "M": { "item": "projecte:medium_covalence_dust" }
+    "D": {
+      "item": "projecte:dark_matter"
+    },
+    "B": {
+      "item": "minecraft:blaze_rod"
+    },
+    "M": {
+      "item": "projecte:medium_covalence_dust"
+    }
   },
-  "result": { "item": "peqol:construction_wand" }
+  "result": {
+    "item": "peqol:construction_wand"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "construction_wand"
+    }
+  ]
 }

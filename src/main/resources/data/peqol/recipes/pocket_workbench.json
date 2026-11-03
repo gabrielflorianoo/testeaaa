@@ -2,9 +2,23 @@
   "type": "minecraft:crafting_shapeless",
   "category": "tools",
   "ingredients": [
-    { "item": "minecraft:crafting_table" },
-    { "item": "projecte:low_covalence_dust" },
-    { "tag": "forge:leather" }
+    {
+      "item": "minecraft:crafting_table"
+    },
+    {
+      "item": "projecte:low_covalence_dust"
+    },
+    {
+      "tag": "forge:leather"
+    }
   ],
-  "result": { "item": "peqol:pocket_workbench" }
+  "result": {
+    "item": "peqol:pocket_workbench"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "pocket_workbench"
+    }
+  ]
 }

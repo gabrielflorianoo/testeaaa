@@ -1,11 +1,29 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "tools",
-  "pattern": [" I ", " DI", "M  "],
+  "pattern": [
+    " I ",
+    " DI",
+    "M  "
+  ],
   "key": {
-    "I": { "item": "minecraft:iron_ingot" },
-    "D": { "item": "projecte:dark_matter" },
-    "M": { "item": "projecte:medium_covalence_dust" }
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "D": {
+      "item": "projecte:dark_matter"
+    },
+    "M": {
+      "item": "projecte:medium_covalence_dust"
+    }
   },
-  "result": { "item": "peqol:philosophers_wrench" }
+  "result": {
+    "item": "peqol:philosophers_wrench"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "philosophers_wrench"
+    }
+  ]
 }

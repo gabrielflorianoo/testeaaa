@@ -1,12 +1,32 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "tools",
-  "pattern": [" S ", " G ", "LDL"],
+  "pattern": [
+    " S ",
+    " G ",
+    "LDL"
+  ],
   "key": {
-    "S": { "item": "minecraft:string" },
-    "G": { "item": "minecraft:gold_nugget" },
-    "L": { "item": "projecte:low_covalence_dust" },
-    "D": { "item": "minecraft:diamond" }
+    "S": {
+      "item": "minecraft:string"
+    },
+    "G": {
+      "item": "minecraft:gold_nugget"
+    },
+    "L": {
+      "item": "projecte:low_covalence_dust"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    }
   },
-  "result": { "item": "peqol:prospector" }
+  "result": {
+    "item": "peqol:prospector"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "prospector"
+    }
+  ]
 }
