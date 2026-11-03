@@ -407,5 +407,8 @@
   "message.peqol.spring.mode": "Now supplying %s",
   "info.peqol.spring.fluid": "Fluid: %s (%s EMC per bucket)",
   "info.peqol.spring.delivered": "Delivered %s buckets",
-  "info.peqol.spring.hint": "Sneak + empty hand switches water/lava. Redstone pauses it."
+  "info.peqol.spring.hint": "Sneak + empty hand switches water/lava. Redstone pauses it.",
+  "command.peqol.history.empty": "Not enough data yet (one sample every 10 seconds)",
+  "command.peqol.history.header": "Your EMC over the last %s min:",
+  "command.peqol.history.summary": "min %s / max %s / change %s"
 }

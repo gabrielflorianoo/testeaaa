@@ -38,6 +38,15 @@ public final class EmcHudOverlay implements IGuiOverlay {
     private boolean fullKnowledge;
     private final List<Component> activeCharms = new ArrayList<>();
     private BigInteger kleinStarEmc = BigInteger.ZERO;
+    /**
+     * EMC sampled every 10 seconds for /peqolclient history (last 10 minutes).
+     */
+    private final java.util.ArrayDeque<BigInteger> history = new java.util.ArrayDeque<>();
+    private static final int HISTORY_SIZE = 60;
+
+    public java.util.List<BigInteger> history() {
+        return new java.util.ArrayList<>(history);
+    }
     private java.util.Set<moze_intel.projecte.api.ItemInfo> knownItems;
 
     private EmcHudOverlay() {
@@ -49,6 +58,7 @@ public final class EmcHudOverlay implements IGuiOverlay {
     }
 
     public void reset() {
+        history.clear();
         knownItems = null;
         knowledge = 0;
         sampleIndex = 0;
@@ -66,6 +76,12 @@ public final class EmcHudOverlay implements IGuiOverlay {
         currentEmc = provider.getEmc();
         if (samplesTaken >= SAMPLE_TICKS && PEQoLConfig.CLIENT.milestoneToasts.get()) {
             checkMilestone(previous, currentEmc);
+        }
+        if (player.tickCount % 200 == 0) {
+            history.addLast(currentEmc);
+            while (history.size() > HISTORY_SIZE) {
+                history.removeFirst();
+            }
         }
         if (player.tickCount % 20 == 0) {
             int newKnowledge = provider.getKnowledge().size();

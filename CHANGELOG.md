@@ -1,6 +1,7 @@
 # ProjectE QoL+ changelog
 
 ## 1.10.0
+- `/peqolclient history`: sparkline of your EMC over the last 10 minutes
 - Alchemical Spring: infinite water or lava paid with EMC, pushed into adjacent tanks/pipes or drained
 
 ## 1.9.0

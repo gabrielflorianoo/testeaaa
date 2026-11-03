@@ -159,7 +159,8 @@ Comandos só do cliente, que salvam na config na hora:
 - `/peqolclient hud compact|rate|charms|held|stars|background` (liga/desliga cada parte do HUD)
 - `/peqolclient tooltips affordable|sellvalue|contents|noemc`
 - `/peqolclient goal <item> [qtd]` / `goal clear`
-- `/peqolclient machineinfo|learntoasts|milestones`
+- `/peqolclient history`: mini-gráfico do seu EMC nos últimos 10 minutos
+- `/peqolclient machineinfo|learntoasts|milestones|markunlearned`
 
 ## Configuração
 - `config/peqol-common.toml`: permite desativar `pay`, `withdraw`, `burn` e a queima rápida, e definir se é preciso ter a Tábua. Também controla o intervalo e o limite do Reabastecedor, o buffer da Conexão, a velocidade do Exportador, o aprender ao coletar (desligado por padrão) e outras opções.

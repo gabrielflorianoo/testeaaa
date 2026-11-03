@@ -58,10 +58,43 @@ public final class ClientCommands {
                                 .then(Commands.argument("count", IntegerArgumentType.integer(1, 1_000_000))
                                         .executes(ctx -> setGoal(ctx.getSource(), net.minecraft.commands.arguments.item.ItemArgument.getItem(ctx, "item").getItem(),
                                                 IntegerArgumentType.getInteger(ctx, "count"))))))
+                .then(Commands.literal("history").executes(ctx -> history(ctx.getSource())))
                 .then(toggle("machineinfo", PEQoLConfig.CLIENT.machineInfo))
                 .then(toggle("markunlearned", PEQoLConfig.CLIENT.markUnlearned))
                 .then(toggle("learntoasts", PEQoLConfig.CLIENT.learnToasts))
                 .then(toggle("milestones", PEQoLConfig.CLIENT.milestoneToasts)));
+    }
+
+    private static final String BARS = "\u2581\u2582\u2583\u2584\u2585\u2586\u2587\u2588";
+
+    /**
+     * Prints a sparkline of the last 10 minutes of personal EMC.
+     */
+    private static int history(CommandSourceStack source) {
+        java.util.List<java.math.BigInteger> samples = EmcHudOverlay.INSTANCE.history();
+        if (samples.size() < 2) {
+            source.sendFailure(Component.translatable("command.peqol.history.empty"));
+            return 0;
+        }
+        java.math.BigInteger min = samples.stream().reduce(java.math.BigInteger::min).orElse(java.math.BigInteger.ZERO);
+        java.math.BigInteger max = samples.stream().reduce(java.math.BigInteger::max).orElse(java.math.BigInteger.ZERO);
+        java.math.BigInteger range = max.subtract(min);
+        StringBuilder line = new StringBuilder();
+        for (java.math.BigInteger sample : samples) {
+            int index = range.signum() == 0 ? 3 : sample.subtract(min).multiply(java.math.BigInteger.valueOf(BARS.length() - 1)).divide(range).intValue();
+            line.append(BARS.charAt(Math.max(0, Math.min(BARS.length() - 1, index))));
+        }
+        java.math.BigInteger first = samples.get(0);
+        java.math.BigInteger last = samples.get(samples.size() - 1);
+        java.math.BigInteger change = last.subtract(first);
+        boolean up = change.signum() >= 0;
+        int minutes = Math.max(1, (samples.size() - 1) / 6);
+        source.sendSuccess(() -> Component.translatable("command.peqol.history.header", minutes).withStyle(ChatFormatting.LIGHT_PURPLE), false);
+        source.sendSuccess(() -> Component.literal(line.toString()).withStyle(up ? ChatFormatting.GREEN : ChatFormatting.RED), false);
+        source.sendSuccess(() -> Component.translatable("command.peqol.history.summary",
+                com.gabrielflorianoo.peqol.util.EmcUtil.compact(min), com.gabrielflorianoo.peqol.util.EmcUtil.compact(max),
+                (up ? "+" : "") + com.gabrielflorianoo.peqol.util.EmcUtil.compact(change)).withStyle(ChatFormatting.GRAY), false);
+        return samples.size();
     }
 
     private static int setGoal(CommandSourceStack source, net.minecraft.world.item.Item item, int count) {

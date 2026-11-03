@@ -407,5 +407,8 @@
   "message.peqol.spring.mode": "Agora fornecendo %s",
   "info.peqol.spring.fluid": "Fluido: %s (%s EMC por balde)",
   "info.peqol.spring.delivered": "Entregou %s baldes",
-  "info.peqol.spring.hint": "Agache com a mão vazia para trocar água/lava. Redstone pausa."
+  "info.peqol.spring.hint": "Agache com a mão vazia para trocar água/lava. Redstone pausa.",
+  "command.peqol.history.empty": "Ainda não há dados suficientes (uma amostra a cada 10 segundos)",
+  "command.peqol.history.header": "Seu EMC nos últimos %s min:",
+  "command.peqol.history.summary": "mín %s / máx %s / variação %s"
 }
