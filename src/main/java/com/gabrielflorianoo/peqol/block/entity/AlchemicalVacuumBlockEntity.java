@@ -130,9 +130,7 @@ public class AlchemicalVacuumBlockEntity extends AlchemicalImporterBlockEntity i
             player.displayClientMessage(Component.translatable("message.peqol.not_owner", getOwnerData().describe()).withStyle(ChatFormatting.RED), true);
             return;
         }
-        filter.clear();
-        setChanged();
-        player.displayClientMessage(Component.translatable("message.peqol.exporter.cleared").withStyle(ChatFormatting.YELLOW), true);
+        com.gabrielflorianoo.peqol.menu.FilterTargets.openVacuum(player, this, getBlockState().getBlock().getName());
     }
 
     @Override

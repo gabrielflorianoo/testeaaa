@@ -5,7 +5,7 @@
   "item.peqol.restocker_talisman.desc2": "Só itens aprendidos, reabastece com %s ou menos. Clique direito para ligar/desligar.",
   "item.peqol.siphon_charm": "Amuleto de Sifão",
   "item.peqol.siphon_charm.desc": "Itens coletados que estão no filtro viram EMC pessoal.",
-  "item.peqol.siphon_charm.desc2": "Agache + clique direito com um item na outra mão para (des)filtrá-lo; com a outra mão vazia: modo lixo.",
+  "item.peqol.siphon_charm.desc2": "Agache + clique direito: abre o filtro (ou (des)filtra o item da outra mão).",
   "item.peqol.emc_cheque": "Cheque de EMC",
   "item.peqol.emc_cheque.amount": "Cheque de EMC (%s EMC)",
   "item.peqol.emc_cheque.desc": "Clique direito para resgatar, agache para resgatar a pilha toda.",
@@ -84,7 +84,7 @@
   "info.peqol.importer.hint": "Alimente com funis ou canos. Itens sem EMC são recusados.",
   "info.peqol.exporter.total": "Exportou %s itens por %s EMC",
   "info.peqol.exporter.no_filter": "Sem filtro: clique direito nele com um item",
-  "info.peqol.exporter.hint": "Clique direito com um item para (des)filtrar, agache com a mão vazia para limpar. Redstone pausa.",
+  "info.peqol.exporter.hint": "Clique direito com um item para (des)filtrar, agache com a mão vazia para abrir a tela de filtro. Redstone pausa.",
   "info.peqol.exporter.status.idle": "Estado: ocioso",
   "info.peqol.exporter.status.running": "Estado: exportando",
   "info.peqol.exporter.status.no_owner": "Estado: sem dono",
@@ -450,5 +450,8 @@
   "message.peqol.hourglass.day_already": "Já é dia",
   "message.peqol.hourglass.clear_already": "O céu já está limpo",
   "message.peqol.hourglass.morning": "%s transformou a noite em manhã",
-  "message.peqol.hourglass.cleared": "%s limpou os céus"
+  "message.peqol.hourglass.cleared": "%s limpou os céus",
+  "gui.peqol.junk.on": "Modo lixo: LIGADO",
+  "gui.peqol.junk.off": "Modo lixo: DESLIGADO",
+  "gui.peqol.junk.tooltip": "Também sifona pedregulho, terra, cascalho, netherrack... (#peqol:siphon_junk)"
 }

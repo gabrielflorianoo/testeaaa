@@ -484,4 +484,37 @@ public class PEQoLGameTests {
         pig.discard();
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void filterMenuGhostSlots(GameTestHelper helper) {
+        Player player = helper.makeMockPlayer();
+        java.util.List<ItemStack> saved = new java.util.ArrayList<>();
+        com.gabrielflorianoo.peqol.menu.FilterTarget target = new com.gabrielflorianoo.peqol.menu.FilterTarget() {
+            @Override
+            public java.util.List<ItemStack> load() {
+                return java.util.List.of(new ItemStack(Items.COBBLESTONE));
+            }
+
+            @Override
+            public void save(java.util.List<ItemStack> filter) {
+                saved.addAll(filter);
+            }
+
+            @Override
+            public boolean stillValid(Player viewer) {
+                return true;
+            }
+        };
+        com.gabrielflorianoo.peqol.menu.FilterMenu menu = new com.gabrielflorianoo.peqol.menu.FilterMenu(1, player.getInventory(), target, false, -1);
+        helper.assertTrue(menu.getSlot(0).getItem().is(Items.COBBLESTONE), "Stored filter is loaded");
+        ItemStack diamonds = new ItemStack(Items.DIAMOND, 5);
+        menu.setCarried(diamonds);
+        menu.clicked(3, 0, net.minecraft.world.inventory.ClickType.PICKUP, player);
+        helper.assertTrue(diamonds.getCount() == 5, "Ghost slots never consume items");
+        menu.setCarried(ItemStack.EMPTY);
+        menu.clicked(0, 0, net.minecraft.world.inventory.ClickType.PICKUP, player);
+        menu.removed(player);
+        helper.assertTrue(saved.size() == 1 && saved.get(0).is(Items.DIAMOND), "Only the diamond should remain, got " + saved);
+        helper.succeed();
+    }
 }

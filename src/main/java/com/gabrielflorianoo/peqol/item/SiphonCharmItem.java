@@ -86,8 +86,12 @@ public class SiphonCharmItem extends ToggleableItem {
             return InteractionResultHolder.success(stack);
         }
         ItemStack other = player.getItemInHand(hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
+        if (other.isEmpty() && player instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
+            //Empty other hand: open the filter screen
+            com.gabrielflorianoo.peqol.menu.FilterTargets.openSiphon(serverPlayer, hand);
+            return InteractionResultHolder.success(stack);
+        }
         if (other.isEmpty()) {
-            //Empty other hand: toggle junk mode and list the filter
             boolean junk = !isJunkMode(stack);
             stack.getOrCreateTag().putBoolean(TAG_JUNK, junk);
             player.displayClientMessage(Component.translatable(junk ? "message.peqol.siphon.junk_on" : "message.peqol.siphon.junk_off")

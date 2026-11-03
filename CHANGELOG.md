@@ -1,5 +1,8 @@
 # ProjectE QoL+ changelog
 
+## 1.13.0
+- Filter screens with 27 ghost slots for the Siphon Charm (with a junk mode button) and the Alchemical Vacuum
+
 ## 1.12.0
 - Alchemical Pasture: breeds nearby animal pairs paying their food with EMC, with a population cap
 - Celestial Hourglass: skip to morning / clear the weather for EMC (server toggle)

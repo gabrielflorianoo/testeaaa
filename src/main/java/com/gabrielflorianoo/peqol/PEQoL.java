@@ -36,6 +36,7 @@ public class PEQoL {
         ModBlockEntities.BLOCK_ENTITIES.register(modBus);
         ModCreativeTab.TABS.register(modBus);
         ModStats.STATS.register(modBus);
+        com.gabrielflorianoo.peqol.registry.ModMenus.MENUS.register(modBus);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, PEQoLConfig.COMMON_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, PEQoLConfig.CLIENT_SPEC);

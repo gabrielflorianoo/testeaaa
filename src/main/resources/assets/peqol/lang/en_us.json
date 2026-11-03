@@ -5,7 +5,7 @@
   "item.peqol.restocker_talisman.desc2": "Learned items only, refills at %s or less. Right click to toggle.",
   "item.peqol.siphon_charm": "Siphon Charm",
   "item.peqol.siphon_charm.desc": "Picked up items in the filter turn into personal EMC.",
-  "item.peqol.siphon_charm.desc2": "Sneak + right click with an item in the other hand to (un)filter it; with an empty other hand: junk mode.",
+  "item.peqol.siphon_charm.desc2": "Sneak + right click: open the filter (or (un)filter the item held in the other hand).",
   "item.peqol.emc_cheque": "EMC Cheque",
   "item.peqol.emc_cheque.amount": "EMC Cheque (%s EMC)",
   "item.peqol.emc_cheque.desc": "Right click to redeem, sneak to redeem the whole stack.",
@@ -84,7 +84,7 @@
   "info.peqol.importer.hint": "Feed it with hoppers or pipes. Items without EMC are refused.",
   "info.peqol.exporter.total": "Exported %s items for %s EMC",
   "info.peqol.exporter.no_filter": "No filter set: right click it with an item",
-  "info.peqol.exporter.hint": "Right click with an item to (un)filter, sneak + empty hand to clear. Redstone pauses it.",
+  "info.peqol.exporter.hint": "Right click with an item to (un)filter, sneak + empty hand opens the filter screen. Redstone pauses it.",
   "info.peqol.exporter.status.idle": "Status: idle",
   "info.peqol.exporter.status.running": "Status: exporting",
   "info.peqol.exporter.status.no_owner": "Status: no owner",
@@ -450,5 +450,8 @@
   "message.peqol.hourglass.day_already": "It's already day",
   "message.peqol.hourglass.clear_already": "The sky is already clear",
   "message.peqol.hourglass.morning": "%s turned the night into morning",
-  "message.peqol.hourglass.cleared": "%s cleared the skies"
+  "message.peqol.hourglass.cleared": "%s cleared the skies",
+  "gui.peqol.junk.on": "Junk mode: ON",
+  "gui.peqol.junk.off": "Junk mode: OFF",
+  "gui.peqol.junk.tooltip": "Also siphon cobblestone, dirt, gravel, netherrack... (#peqol:siphon_junk)"
 }
