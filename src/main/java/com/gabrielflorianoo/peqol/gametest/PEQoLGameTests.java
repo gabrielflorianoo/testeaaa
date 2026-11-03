@@ -72,7 +72,7 @@ public class PEQoLGameTests {
     @GameTest(template = "empty")
     public static void importerRejectsWithoutOwner(GameTestHelper helper) {
         helper.setBlock(POS, ModBlocks.ALCHEMICAL_IMPORTER.get());
-        AlchemicalImporterBlockEntity importer = helper.getBlockEntity(POS);
+        AlchemicalImporterBlockEntity importer = (AlchemicalImporterBlockEntity) helper.getBlockEntity(POS);
         IItemHandler handler = importer.getCapability(ForgeCapabilities.ITEM_HANDLER).orElseThrow(IllegalStateException::new);
         ItemStack stack = new ItemStack(Items.COBBLESTONE, 10);
         helper.assertTrue(handler.insertItem(0, stack, false).getCount() == 10, "Ownerless importer must not eat items");
@@ -82,7 +82,7 @@ public class PEQoLGameTests {
     @GameTest(template = "empty")
     public static void importerBuffersForOfflineOwner(GameTestHelper helper) {
         helper.setBlock(POS, ModBlocks.ALCHEMICAL_IMPORTER.get());
-        AlchemicalImporterBlockEntity importer = helper.getBlockEntity(POS);
+        AlchemicalImporterBlockEntity importer = (AlchemicalImporterBlockEntity) helper.getBlockEntity(POS);
         //The mock player is not in the server player list, so it counts as an offline owner
         importer.getOwnerData().set(helper.makeMockPlayer());
         IItemHandler handler = importer.getCapability(ForgeCapabilities.ITEM_HANDLER).orElseThrow(IllegalStateException::new);
@@ -96,7 +96,7 @@ public class PEQoLGameTests {
     @GameTest(template = "empty")
     public static void uplinkAcceptsCollectorEmc(GameTestHelper helper) {
         helper.setBlock(POS, ModBlocks.ALCHEMICAL_UPLINK.get());
-        AlchemicalUplinkBlockEntity uplink = helper.getBlockEntity(POS);
+        AlchemicalUplinkBlockEntity uplink = (AlchemicalUplinkBlockEntity) helper.getBlockEntity(POS);
         helper.assertTrue(uplink.insertEmc(500, IEmcStorage.EmcAction.EXECUTE) == 500, "Uplink should accept EMC");
         helper.assertTrue(uplink.extractEmc(100, IEmcStorage.EmcAction.EXECUTE) == 0, "Uplink should not hand EMC to other blocks");
         helper.assertTrue(uplink.getStoredEmc() == 500, "Uplink should buffer without an owner");
