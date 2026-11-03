@@ -109,6 +109,7 @@ public final class PEQoLConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> starterKnowledge;
         public final ForgeConfigSpec.BooleanValue learnOnCraft;
         public final ForgeConfigSpec.BooleanValue giftEnabled;
+        public final ForgeConfigSpec.BooleanValue giveHandbook;
 
         // Blacklist
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> blacklist;
@@ -276,6 +277,8 @@ public final class PEQoLConfig {
                     .defineListAllowEmpty(List.of("starterKnowledge"), () -> List.<String>of(), o -> o instanceof String);
             learnOnCraft = builder.comment("Crafting an item with EMC also learns it (no burning needed).")
                     .define("learnOnCraft", false);
+            giveHandbook = builder.comment("Give the Alchemist's Handbook (a guide book) to players on their first join.")
+                    .define("giveHandbook", true);
             giftEnabled = builder.comment("Allow /peqol gift (create an item from your EMC directly in another player's inventory).")
                     .define("giftEnabled", true);
             builder.pop();

@@ -77,6 +77,11 @@ public final class CommonEvents {
             return;
         }
         net.minecraft.nbt.CompoundTag persisted = player.getPersistentData().getCompound(net.minecraft.world.entity.player.Player.PERSISTED_NBT_TAG);
+        if (!persisted.getBoolean("peqol_handbook_given") && PEQoLConfig.COMMON.giveHandbook.get()) {
+            persisted.putBoolean("peqol_handbook_given", true);
+            player.getPersistentData().put(net.minecraft.world.entity.player.Player.PERSISTED_NBT_TAG, persisted);
+            InventoryUtil.giveOrDrop(player, com.gabrielflorianoo.peqol.util.Handbook.create());
+        }
         if (persisted.getBoolean("peqol_starter_given")) {
             return;
         }

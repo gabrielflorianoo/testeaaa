@@ -10,7 +10,8 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
 - **HUD de EMC**: seu EMC pessoal, ganho/perda por segundo (média de 5 s) e quantos itens você aprendeu. Por padrão aparece só quando você carrega uma Tábua de Transmutação. Dá para mudar o canto, o deslocamento, o formato compacto (`1.25M`) e o fundo. A tecla **H** mostra/esconde.
 - **Estrelas de Klein no HUD**: mostra o total de EMC guardado nas estrelas que você carrega.
 - **Valor da mão no HUD**: mostra quanto vale a pilha que você está segurando.
-- **Info ao mirar** (um "Jade-lite"): mirando numa máquina do QoL+ ou num bloco de EMC do ProjectE (coletor, relé, condensador...), aparece um painel ao lado da mira com o dono, o EMC armazenado, a taxa e o estado.
+- **Info ao mirar** (um "Jade-lite"): mirando numa máquina do QoL+ ou num bloco de EMC do ProjectE (coletor, relé, condensador...), aparece um painel ao lado da mira com o dono, o EMC armazenado, a variação em EMC/s e o estado. Nos condensadores mostra o alvo e o progresso; nos coletores, a luz.
+- **Manual do Alquimista**: um livro dentro do jogo, traduzido, que explica tudo. É dado no primeiro login, e `/peqol handbook` dá outro.
 - **Toasts de aprendizado**: uma notificação aparece quando você aprende itens novos.
 - **Toasts de marco**: uma notificação aparece quando o seu EMC passa de 1K, 10K, 100K, 1M e assim por diante.
 - **Amuletos ativos no HUD**: os amuletos ligados aparecem listados embaixo do EMC.
@@ -147,6 +148,7 @@ A quality-of-life addon for ProjectE on Forge 1.20.1. It includes:
 - A Siphon Charm that turns filtered pickups into EMC.
 - Tradeable EMC Cheques and Knowledge Scrolls for sharing knowledge.
 - Uplink, Importer and Exporter blocks that bridge automation and personal EMC.
+- Alchemist's Handbook (in-game guide book), richer look-at info (condenser target/progress, collector light, EMC/s).
 - Alchemical Prospector, `/peqol gift`, starter knowledge and learn-on-craft server options.
 - Pocket Workbench, Void Pouch, `/peqol back`, Siphon catching mob drops.
 - Look-at machine info panel, `/peqol learnall` (+ keybind), lens container burning with confirmation.

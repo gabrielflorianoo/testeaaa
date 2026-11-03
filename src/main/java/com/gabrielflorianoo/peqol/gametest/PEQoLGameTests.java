@@ -317,4 +317,13 @@ public class PEQoLGameTests {
         helper.assertTrue(report.total().signum() > 0, "Ores should be worth EMC");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void handbookHasAllPages(GameTestHelper helper) {
+        ItemStack book = com.gabrielflorianoo.peqol.util.Handbook.create();
+        helper.assertTrue(book.is(Items.WRITTEN_BOOK), "Handbook should be a written book");
+        helper.assertTrue(book.getTag() != null && book.getTag().getList("pages", 8).size() == com.gabrielflorianoo.peqol.util.Handbook.PAGES,
+                "Handbook should have all pages");
+        helper.succeed();
+    }
 }

@@ -4,6 +4,8 @@ import com.gabrielflorianoo.peqol.block.entity.IOwnedMachine;
 import com.gabrielflorianoo.peqol.util.EmcUtil;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
 import java.util.function.Supplier;
 import moze_intel.projecte.api.capabilities.PECapabilities;
 import moze_intel.projecte.api.capabilities.block_entity.IEmcStorage;
@@ -39,6 +41,44 @@ public record MachineInfoRequestPacket(BlockPos pos) {
         context.get().setPacketHandled(true);
     }
 
+    /**
+     * Last (stored EMC, game time) seen per block entity, to compute an EMC/s rate between requests.
+     */
+    private static final Map<BlockEntity, long[]> SAMPLES = new WeakHashMap<>();
+
+    private static long sampleRate(BlockEntity be, long stored) {
+        if (be.getLevel() == null) {
+            return 0;
+        }
+        long now = be.getLevel().getGameTime();
+        long[] previous = SAMPLES.put(be, new long[]{stored, now});
+        if (previous == null || now <= previous[1] || now - previous[1] > 100) {
+            return 0;
+        }
+        return (stored - previous[0]) * 20 / (now - previous[1]);
+    }
+
+    private static void describeProjectE(BlockEntity be, List<Component> lines) {
+        if (be instanceof moze_intel.projecte.gameObjs.block_entities.CondenserBlockEntity condenser) {
+            moze_intel.projecte.api.ItemInfo lock = condenser.getLockInfo();
+            if (lock == null) {
+                lines.add(Component.translatable("info.peqol.condenser.no_target").withStyle(ChatFormatting.GRAY));
+            } else {
+                lines.add(Component.translatable("info.peqol.condenser.target", lock.createStack().getHoverName()).withStyle(ChatFormatting.AQUA));
+                if (condenser.requiredEmc > 0) {
+                    long percent = Math.min(100, condenser.getStoredEmc() * 100 / condenser.requiredEmc);
+                    lines.add(Component.translatable("info.peqol.condenser.progress", percent).withStyle(ChatFormatting.GOLD));
+                }
+            }
+        } else if (be instanceof moze_intel.projecte.gameObjs.block_entities.CollectorMK1BlockEntity collector && be.getLevel() != null) {
+            lines.add(Component.translatable("info.peqol.collector.sun", collector.getSunLevel() - 1).withStyle(ChatFormatting.GOLD));
+            long toGoal = collector.getEmcToNextGoal();
+            if (toGoal > 0) {
+                lines.add(Component.translatable("info.peqol.collector.goal", EmcUtil.format(toGoal)).withStyle(ChatFormatting.GRAY));
+            }
+        }
+    }
+
     public static List<Component> describe(BlockEntity be) {
         List<Component> lines = new ArrayList<>();
         if (be == null) {
@@ -54,6 +94,16 @@ public record MachineInfoRequestPacket(BlockPos pos) {
         if (storage != null) {
             lines.add(Component.translatable("message.peqol.lens.storage", EmcUtil.format(storage.getStoredEmc()), EmcUtil.format(storage.getMaximumEmc(), true))
                     .withStyle(ChatFormatting.YELLOW));
+            long rate = sampleRate(be, storage.getStoredEmc());
+            if (rate != 0) {
+                lines.add(Component.translatable("info.peqol.rate", (rate > 0 ? "+" : "") + EmcUtil.format(rate))
+                        .withStyle(rate > 0 ? ChatFormatting.GREEN : ChatFormatting.RED));
+            }
+        }
+        try {
+            describeProjectE(be, lines);
+        } catch (Throwable ignored) {
+            //Internal ProjectE classes changed: only the generic info is shown
         }
         return lines;
     }

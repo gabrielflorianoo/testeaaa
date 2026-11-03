@@ -87,6 +87,10 @@ public final class PEQoLCommand {
                                         .executes(ctx -> xpFromEmc(ctx.getSource(), IntegerArgumentType.getInteger(ctx, "points"))))))
                 .then(Commands.literal("stats").executes(ctx -> stats(ctx.getSource())))
                 .then(Commands.literal("back").executes(ctx -> back(ctx.getSource())))
+                .then(Commands.literal("handbook").executes(ctx -> {
+                    InventoryUtil.giveOrDrop(ctx.getSource().getPlayerOrException(), com.gabrielflorianoo.peqol.util.Handbook.create());
+                    return 1;
+                }))
                 .then(Commands.literal("gift")
                         .then(Commands.argument("player", EntityArgument.player())
                                 .then(Commands.argument("item", ItemArgument.item(buildContext))
@@ -152,7 +156,7 @@ public final class PEQoLCommand {
 
     private static int help(CommandSourceStack source) {
         source.sendSuccess(() -> Component.translatable("command.peqol.help.header").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD), false);
-        String[] entries = {"balance", "pay", "withdraw", "buy", "sell", "value", "known", "autostock", "learnall", "gift", "back", "xp", "stats", "worth", "burn", "missing", "unlearned", "stars", "knowledge", "top"};
+        String[] entries = {"balance", "pay", "withdraw", "buy", "sell", "value", "known", "autostock", "learnall", "gift", "back", "xp", "stats", "handbook", "worth", "burn", "missing", "unlearned", "stars", "knowledge", "top"};
         for (String entry : entries) {
             source.sendSuccess(() -> Component.literal("/peqol " + entry).withStyle(ChatFormatting.GOLD)
                     .append(Component.literal(" - ").withStyle(ChatFormatting.DARK_GRAY))
