@@ -53,14 +53,11 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
-    exclusiveContent {
-        forRepository {
-            maven {
-                name = 'CurseMaven'
-                url = 'https://cursemaven.com'
-            }
-        }
-        filter {
+    // Note: not exclusiveContent, ForgeGradle serves the remapped (fg.deobf) jar from its own local repo
+    maven {
+        name = 'CurseMaven'
+        url = 'https://cursemaven.com'
+        content {
             includeGroup 'curse.maven'
         }
     }
