@@ -10,6 +10,7 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
 - **HUD de EMC**: seu EMC pessoal, ganho/perda por segundo (média de 5 s) e quantos itens você aprendeu. Por padrão aparece só quando você carrega uma Tábua de Transmutação. Dá para mudar o canto, o deslocamento, o formato compacto (`1.25M`) e o fundo. A tecla **H** mostra/esconde.
 - **Estrelas de Klein no HUD**: mostra o total de EMC guardado nas estrelas que você carrega.
 - **Valor da mão no HUD**: mostra quanto vale a pilha que você está segurando.
+- **Info ao mirar** (um "Jade-lite"): mirando numa máquina do QoL+ ou num bloco de EMC do ProjectE (coletor, relé, condensador...), aparece um painel ao lado da mira com o dono, o EMC armazenado, a taxa e o estado.
 - **Toasts de aprendizado**: uma notificação aparece quando você aprende itens novos.
 - **Toasts de marco**: uma notificação aparece quando o seu EMC passa de 1K, 10K, 100K, 1M e assim por diante.
 - **Amuletos ativos no HUD**: os amuletos ligados aparecem listados embaixo do EMC.
@@ -38,7 +39,7 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
 - **Elo Estelar**: mantém as Estrelas de Klein do inventário (e dos slots do Curios) carregadas com o seu EMC pessoal.
 - **Amuleto da Iluminação**: coloca tochas aos seus pés em lugares escuros. Usa as tochas do inventário primeiro e depois EMC. O item colocado é configurável (por exemplo, tocha de alma).
 - **Varinha de Construção Alquímica**: clique numa face e ela estende todos os blocos iguais conectados naquela face, de 1 a 81 blocos. Agache e clique no ar para mudar o tamanho. Mostra uma prévia em contorno lilás, usa os blocos do inventário e depois EMC, e respeita proteções de área.
-- **Lente de Avaliação Alquímica**: clique num baú (ou qualquer inventário) para ver quanto vale o conteúdo e os 5 itens mais valiosos. Em coletores, relés e condensadores, mostra o EMC armazenado. No ar, avalia o seu inventário.
+- **Lente de Avaliação Alquímica**: clique num baú (ou qualquer inventário) para ver quanto vale o conteúdo e os 5 itens mais valiosos. Em coletores, relés e condensadores, mostra o EMC armazenado. No ar, avalia o seu inventário. Agachar e clicar **duas vezes** (em até 3 s) num baú **queima o conteúdo** em EMC.
 - **Amuleto da Fundição**: os minérios e materiais brutos coletados chegam já fundidos. Cada item custa 16 EMC (configurável).
 - **Âncora Alquímica**: agache e clique num bloco para ancorar o ponto; clique com o botão direito para teleportar até lá pagando EMC (base + distância, mais caro entre dimensões). Funciona entre dimensões e tem cooldown.
 - **Chave do Filósofo**: agache e clique com o botão direito em qualquer máquina do ProjectE (condensador, coletor, relé, baú alquímico...) ou do QoL+ para pegá-la com o **EMC, o inventário e as configurações intactos**. O tooltip do item mostra o EMC guardado. Respeita proteções de área.
@@ -73,6 +74,7 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 | `value <item>` | Mostra o valor de qualquer item, se você já o aprendeu e quantos consegue criar |
 | `known [page N \| search <texto>]` | Navega pelos itens aprendidos, com botões **[x1] [x64]** clicáveis no chat para comprar na hora |
 | `autostock add <item> <qtd>` / `remove` / `list` / `clear` | Mantém sempre *qtd* daquele item no inventário (flechas, tochas, comida...), criando o que faltar com EMC. Precisa do Reabastecedor ativo e sobrevive à morte |
+| `learnall` | Aprende tudo o que ainda não conhece no inventário, queimando **só 1 de cada** item e mantendo o resto (também existe como tecla) |
 | `unlearned` | Lista os itens do inventário com EMC que você ainda não aprendeu |
 | `stars fill\|drain` | Enche as Estrelas de Klein com o seu EMC, ou esvazia todas no seu EMC |
 | `help` | Lista os comandos |
@@ -135,6 +137,7 @@ A quality-of-life addon for ProjectE on Forge 1.20.1. It includes:
 - A Siphon Charm that turns filtered pickups into EMC.
 - Tradeable EMC Cheques and Knowledge Scrolls for sharing knowledge.
 - Uplink, Importer and Exporter blocks that bridge automation and personal EMC.
+- Look-at machine info panel, `/peqol learnall` (+ keybind), lens container burning with confirmation.
 - Alchemical Gauge (comparator by EMC magnitude), `/peqol sell|xp|stats`, sneak quick-burn, learn toasts.
 - Philosopher's Wrench (pick up ProjectE machines with EMC/contents), Alchemical Downlink, `/peqol autostock`.
 - Alchemical Vacuum, Alchemical Anchor (EMC teleport), Charm of Smelting, broken-tool replacement, custom statistics, advancements and a server blacklist.

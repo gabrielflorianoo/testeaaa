@@ -35,8 +35,11 @@ public final class ModKeys {
     public static final KeyMapping TOGGLE_SMELTING = new KeyMapping("key.peqol.toggle_smelting", KeyConflictContext.IN_GAME,
             InputConstants.UNKNOWN, CATEGORY);
 
+    public static final KeyMapping LEARN_INVENTORY = new KeyMapping("key.peqol.learn_inventory", KeyConflictContext.IN_GAME,
+            InputConstants.UNKNOWN, CATEGORY);
+
     public static final KeyMapping[] ALL = {OPEN_TABLET, OPEN_BAG, QUICK_BURN, TOGGLE_HUD, TOGGLE_RESTOCKER, TOGGLE_SIPHON,
-            TOGGLE_MENDING, TOGGLE_SATIATION, TOGGLE_STELLAR, TOGGLE_ILLUMINATION, TOGGLE_SMELTING};
+            TOGGLE_MENDING, TOGGLE_SATIATION, TOGGLE_STELLAR, TOGGLE_ILLUMINATION, TOGGLE_SMELTING, LEARN_INVENTORY};
 
     private ModKeys() {
     }

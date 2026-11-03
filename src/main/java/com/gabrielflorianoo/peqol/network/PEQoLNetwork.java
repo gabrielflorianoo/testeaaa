@@ -24,6 +24,16 @@ public final class PEQoLNetwork {
                 .decoder(PickBlockPacket::decode)
                 .consumerMainThread(PickBlockPacket::handle)
                 .add();
+        CHANNEL.messageBuilder(MachineInfoRequestPacket.class, 2, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(MachineInfoRequestPacket::encode)
+                .decoder(MachineInfoRequestPacket::decode)
+                .consumerMainThread(MachineInfoRequestPacket::handle)
+                .add();
+        CHANNEL.messageBuilder(MachineInfoPacket.class, 3, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(MachineInfoPacket::encode)
+                .decoder(MachineInfoPacket::decode)
+                .consumerMainThread(MachineInfoPacket::handle)
+                .add();
     }
 
     public static void sendToServer(Object packet) {

@@ -39,6 +39,7 @@ public final class ClientForgeEvents {
             return;
         }
         EmcHudOverlay.INSTANCE.tick(mc.player);
+        MachineInfoOverlay.INSTANCE.tick(mc);
         if (mc.screen != null) {
             return;
         }
@@ -52,6 +53,7 @@ public final class ClientForgeEvents {
         send(ModKeys.TOGGLE_STELLAR, KeyAction.TOGGLE_STELLAR);
         send(ModKeys.TOGGLE_ILLUMINATION, KeyAction.TOGGLE_ILLUMINATION);
         send(ModKeys.TOGGLE_SMELTING, KeyAction.TOGGLE_SMELTING);
+        send(ModKeys.LEARN_INVENTORY, KeyAction.LEARN_INVENTORY);
         while (ModKeys.TOGGLE_HUD.consumeClick()) {
             boolean visible = EmcHudOverlay.INSTANCE.toggle();
             mc.player.displayClientMessage(Component.translatable(visible ? "message.peqol.hud_on" : "message.peqol.hud_off")

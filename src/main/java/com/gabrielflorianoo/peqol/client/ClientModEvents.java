@@ -24,5 +24,6 @@ public final class ClientModEvents {
     @SubscribeEvent
     public static void registerOverlays(RegisterGuiOverlaysEvent event) {
         event.registerAboveAll("emc_hud", EmcHudOverlay.INSTANCE);
+        event.registerAboveAll("machine_info", MachineInfoOverlay.INSTANCE);
     }
 }

@@ -261,5 +261,11 @@
   "command.peqol.help.xp": "convert experience to EMC and back",
   "command.peqol.help.stats": "your QoL+ statistics",
   "toast.peqol.learned.title": "New knowledge!",
-  "toast.peqol.learned.many": "Learned %s new items"
+  "toast.peqol.learned.many": "Learned %s new items",
+  "item.peqol.appraisal_lens.desc3": "Sneak + right click a container twice: burn its contents into EMC.",
+  "message.peqol.lens.confirm": "Sneak + right click again within 3s to BURN everything with EMC inside",
+  "message.peqol.learned_inventory": "Learned %s new items (burned one of each for %s EMC)",
+  "message.peqol.learned_inventory.none": "Nothing new to learn in your inventory",
+  "key.peqol.learn_inventory": "Learn Inventory (burn 1 of each unlearned item)",
+  "command.peqol.help.learnall": "learn everything in your inventory, burning only 1 of each"
 }

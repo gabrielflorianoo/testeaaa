@@ -280,4 +280,18 @@ public class PEQoLGameTests {
             helper.succeed();
         });
     }
+
+    @GameTest(template = "empty")
+    public static void machineInfoDescribesBlocks(GameTestHelper helper) {
+        helper.setBlock(POS, ModBlocks.ALCHEMICAL_UPLINK.get());
+        List<net.minecraft.network.chat.Component> uplink = com.gabrielflorianoo.peqol.network.MachineInfoRequestPacket.describe(helper.getBlockEntity(POS));
+        helper.assertTrue(uplink.size() >= 3, "Uplink should describe owner, buffer and rate, got " + uplink.size());
+        Block relay = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("projecte", "relay_mk1"));
+        BlockPos relayPos = new BlockPos(0, 1, 0);
+        helper.setBlock(relayPos, relay);
+        List<net.minecraft.network.chat.Component> relayInfo = com.gabrielflorianoo.peqol.network.MachineInfoRequestPacket.describe(helper.getBlockEntity(relayPos));
+        helper.assertTrue(relayInfo.size() == 1, "Relay should show its stored EMC, got " + relayInfo.size());
+        helper.assertTrue(com.gabrielflorianoo.peqol.network.MachineInfoRequestPacket.describe(null).isEmpty(), "No block entity = no info");
+        helper.succeed();
+    }
 }

@@ -49,6 +49,9 @@ public class AppraisalLensItem extends Item {
         if (level.isClientSide) {
             return InteractionResult.SUCCESS;
         }
+        if (player.isShiftKeyDown() && player instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
+            return burnContainer(serverPlayer, context.getItemInHand(), be, context);
+        }
         boolean any = false;
         Component name = level.getBlockState(context.getClickedPos()).getBlock().getName();
         player.sendSystemMessage(Component.translatable("message.peqol.lens.header", name).withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD));
@@ -73,6 +76,65 @@ public class AppraisalLensItem extends Item {
         if (!any) {
             player.sendSystemMessage(Component.translatable("message.peqol.lens.nothing").withStyle(ChatFormatting.GRAY));
         }
+        return InteractionResult.CONSUME;
+    }
+
+    private static final String TAG_CONFIRM_POS = "ConfirmPos";
+    private static final String TAG_CONFIRM_TIME = "ConfirmTime";
+    private static final int CONFIRM_TICKS = 60;
+
+    /**
+     * Sneak + right click twice (within 3 seconds) on a container: burn every item with EMC inside into personal EMC.
+     */
+    private static InteractionResult burnContainer(net.minecraft.server.level.ServerPlayer player, ItemStack lens, BlockEntity be, UseOnContext context) {
+        if (!com.gabrielflorianoo.peqol.config.PEQoLConfig.COMMON.burnCommandEnabled.get()) {
+            player.displayClientMessage(Component.translatable("message.peqol.disabled").withStyle(ChatFormatting.RED), true);
+            return InteractionResult.FAIL;
+        }
+        if (com.gabrielflorianoo.peqol.config.PEQoLConfig.COMMON.burnCommandRequiresTablet.get() && !EmcUtil.hasTablet(player)) {
+            player.displayClientMessage(Component.translatable("message.peqol.need_tablet").withStyle(ChatFormatting.RED), true);
+            return InteractionResult.FAIL;
+        }
+        if (!player.level().mayInteract(player, context.getClickedPos())) {
+            return InteractionResult.FAIL;
+        }
+        IItemHandler handler = be.getCapability(ForgeCapabilities.ITEM_HANDLER, context.getClickedFace()).resolve()
+                .or(() -> be.getCapability(ForgeCapabilities.ITEM_HANDLER).resolve()).orElse(null);
+        if (handler == null) {
+            return InteractionResult.PASS;
+        }
+        long now = player.level().getGameTime();
+        long pos = context.getClickedPos().asLong();
+        net.minecraft.nbt.CompoundTag tag = lens.getOrCreateTag();
+        if (tag.getLong(TAG_CONFIRM_POS) != pos || now - tag.getLong(TAG_CONFIRM_TIME) > CONFIRM_TICKS) {
+            tag.putLong(TAG_CONFIRM_POS, pos);
+            tag.putLong(TAG_CONFIRM_TIME, now);
+            player.displayClientMessage(Component.translatable("message.peqol.lens.confirm").withStyle(ChatFormatting.GOLD), true);
+            return InteractionResult.CONSUME;
+        }
+        tag.remove(TAG_CONFIRM_POS);
+        tag.remove(TAG_CONFIRM_TIME);
+        boolean skipNbt = com.gabrielflorianoo.peqol.config.PEQoLConfig.COMMON.burnSkipsItemsWithNbt.get();
+        BigInteger total = BigInteger.ZERO;
+        int items = 0;
+        for (int slot = 0; slot < handler.getSlots(); slot++) {
+            ItemStack stack = handler.getStackInSlot(slot);
+            if (stack.isEmpty() || !EmcUtil.hasValue(stack) || EmcUtil.isEmcHolder(stack) || EmcUtil.isTablet(stack) || (skipNbt && stack.hasTag())) {
+                continue;
+            }
+            ItemStack extracted = handler.extractItem(slot, stack.getCount(), false);
+            if (extracted.isEmpty()) {
+                continue;
+            }
+            items += extracted.getCount();
+            total = total.add(EmcUtil.burn(player, extracted, true));
+        }
+        if (items == 0) {
+            player.displayClientMessage(Component.translatable("command.peqol.burn.nothing").withStyle(ChatFormatting.YELLOW), true);
+            return InteractionResult.FAIL;
+        }
+        player.displayClientMessage(Component.translatable("command.peqol.burn.inventory", items, EmcUtil.format(total)).withStyle(ChatFormatting.GOLD), true);
+        player.level().playSound(null, context.getClickedPos(), net.minecraft.sounds.SoundEvents.FIRECHARGE_USE, net.minecraft.sounds.SoundSource.BLOCKS, 0.6F, 1.2F);
         return InteractionResult.CONSUME;
     }
 
@@ -127,5 +189,6 @@ public class AppraisalLensItem extends Item {
     public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
         tooltip.add(Component.translatable("item.peqol.appraisal_lens.desc").withStyle(ChatFormatting.GRAY));
         tooltip.add(Component.translatable("item.peqol.appraisal_lens.desc2").withStyle(ChatFormatting.DARK_GRAY));
+        tooltip.add(Component.translatable("item.peqol.appraisal_lens.desc3").withStyle(ChatFormatting.DARK_GRAY));
     }
 }

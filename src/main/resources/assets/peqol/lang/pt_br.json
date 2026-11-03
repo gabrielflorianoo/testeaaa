@@ -261,5 +261,11 @@
   "command.peqol.help.xp": "converte experiência em EMC e vice-versa",
   "command.peqol.help.stats": "suas estatísticas do QoL+",
   "toast.peqol.learned.title": "Novo conhecimento!",
-  "toast.peqol.learned.many": "Aprendeu %s itens novos"
+  "toast.peqol.learned.many": "Aprendeu %s itens novos",
+  "item.peqol.appraisal_lens.desc3": "Agache + clique direito num baú duas vezes: queima o conteúdo em EMC.",
+  "message.peqol.lens.confirm": "Agache + clique direito de novo em 3s para QUEIMAR tudo com EMC lá dentro",
+  "message.peqol.learned_inventory": "Aprendeu %s itens novos (queimou um de cada por %s EMC)",
+  "message.peqol.learned_inventory.none": "Nada novo para aprender no seu inventário",
+  "key.peqol.learn_inventory": "Aprender Inventário (queima 1 de cada item não aprendido)",
+  "command.peqol.help.learnall": "aprende tudo do inventário, queimando só 1 de cada"
 }

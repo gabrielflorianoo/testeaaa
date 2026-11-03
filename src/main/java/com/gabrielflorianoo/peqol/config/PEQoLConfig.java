@@ -311,6 +311,7 @@ public final class PEQoLConfig {
         public final ForgeConfigSpec.BooleanValue milestoneToasts;
         public final ForgeConfigSpec.BooleanValue hudShowKleinStars;
         public final ForgeConfigSpec.BooleanValue learnToasts;
+        public final ForgeConfigSpec.BooleanValue machineInfo;
 
         public final ForgeConfigSpec.BooleanValue tooltipAffordable;
         public final ForgeConfigSpec.BooleanValue tooltipSellValue;
@@ -336,6 +337,8 @@ public final class PEQoLConfig {
                     .define("showActiveCharms", true);
             hudShowHeldValue = builder.comment("Show the EMC value of the held stack.")
                     .define("showHeldValue", true);
+            machineInfo = builder.comment("Show a small info panel when looking at QoL+ machines and ProjectE EMC blocks.")
+                    .define("machineInfo", true);
             learnToasts = builder.comment("Show a toast when you learn new items.")
                     .define("learnToasts", true);
             hudShowKleinStars = builder.comment("Show the total EMC stored in the Klein Stars you carry.")

@@ -86,6 +86,10 @@ public final class PEQoLCommand {
                                 .then(Commands.argument("points", IntegerArgumentType.integer(1, 1_000_000))
                                         .executes(ctx -> xpFromEmc(ctx.getSource(), IntegerArgumentType.getInteger(ctx, "points"))))))
                 .then(Commands.literal("stats").executes(ctx -> stats(ctx.getSource())))
+                .then(Commands.literal("learnall").executes(ctx -> {
+                    int learned = com.gabrielflorianoo.peqol.network.ServerActions.learnInventory(ctx.getSource().getPlayerOrException(), true);
+                    return Math.max(learned, 0);
+                }))
                 .then(Commands.literal("autostock")
                         .executes(ctx -> autostockList(ctx.getSource()))
                         .then(Commands.literal("list").executes(ctx -> autostockList(ctx.getSource())))
@@ -141,7 +145,7 @@ public final class PEQoLCommand {
 
     private static int help(CommandSourceStack source) {
         source.sendSuccess(() -> Component.translatable("command.peqol.help.header").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD), false);
-        String[] entries = {"balance", "pay", "withdraw", "buy", "sell", "value", "known", "autostock", "xp", "stats", "worth", "burn", "missing", "unlearned", "stars", "knowledge", "top"};
+        String[] entries = {"balance", "pay", "withdraw", "buy", "sell", "value", "known", "autostock", "learnall", "xp", "stats", "worth", "burn", "missing", "unlearned", "stars", "knowledge", "top"};
         for (String entry : entries) {
             source.sendSuccess(() -> Component.literal("/peqol " + entry).withStyle(ChatFormatting.GOLD)
                     .append(Component.literal(" - ").withStyle(ChatFormatting.DARK_GRAY))

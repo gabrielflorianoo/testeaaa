@@ -50,6 +50,7 @@ public final class ServerActions {
             case TOGGLE_STELLAR -> toggle(player, StellarLinkItem.class);
             case TOGGLE_ILLUMINATION -> toggle(player, IlluminationCharmItem.class);
             case TOGGLE_SMELTING -> toggle(player, SmeltingCharmItem.class);
+            case LEARN_INVENTORY -> learnInventory(player, true);
         }
     }
 
@@ -132,6 +133,52 @@ public final class ServerActions {
         }
         player.displayClientMessage(Component.translatable("message.peqol.burned", count, name, EmcUtil.format(gained)).withStyle(ChatFormatting.GOLD), true);
         player.level().playSound(null, player.blockPosition(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 0.4F, 1.4F);
+    }
+
+    /**
+     * Burns exactly one of every not-yet-learned item with EMC in the main inventory, so it becomes learned
+     * while the rest of the stack is kept.
+     *
+     * @return the amount of newly learned items.
+     */
+    public static int learnInventory(ServerPlayer player, boolean feedback) {
+        if (PEQoLConfig.COMMON.burnCommandRequiresTablet.get() && !EmcUtil.hasTablet(player)) {
+            if (feedback) {
+                player.displayClientMessage(Component.translatable("message.peqol.need_tablet").withStyle(ChatFormatting.RED), true);
+            }
+            return 0;
+        }
+        moze_intel.projecte.api.capabilities.IKnowledgeProvider provider = EmcUtil.knowledge(player).orElse(null);
+        if (provider == null) {
+            return 0;
+        }
+        int learned = 0;
+        BigInteger gained = BigInteger.ZERO;
+        for (int i = 0; i < player.getInventory().items.size(); i++) {
+            ItemStack stack = player.getInventory().items.get(i);
+            if (stack.isEmpty() || EmcUtil.isTablet(stack) || stack.getItem() instanceof EmcChequeItem || EmcUtil.isEmcHolder(stack)
+                    || !EmcUtil.hasValue(stack) || provider.hasKnowledge(stack)) {
+                continue;
+            }
+            ItemStack one = stack.split(1);
+            if (EmcUtil.tryLearn(player, one)) {
+                learned++;
+                gained = gained.add(EmcUtil.burn(player, one, false));
+            } else {
+                //Learning was refused (e.g. by another mod), give it back
+                stack.grow(1);
+            }
+        }
+        if (feedback) {
+            if (learned > 0) {
+                player.displayClientMessage(Component.translatable("message.peqol.learned_inventory", learned, EmcUtil.format(gained))
+                        .withStyle(ChatFormatting.LIGHT_PURPLE), true);
+                player.level().playSound(null, player.blockPosition(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 0.7F, 1.3F);
+            } else {
+                player.displayClientMessage(Component.translatable("message.peqol.learned_inventory.none").withStyle(ChatFormatting.YELLOW), true);
+            }
+        }
+        return learned;
     }
 
     private static void toggle(ServerPlayer player, Class<? extends ToggleableItem> type) {
