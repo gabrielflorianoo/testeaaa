@@ -33,6 +33,7 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
 | *(sem tecla)* | **Queima rápida** (segurando agachar, queima também todas as pilhas iguais do inventário): converte a pilha da mão em EMC pessoal e aprende o item |
 | **H** | Mostra/esconde o HUD de EMC |
 | *(sem tecla)* | Liga/desliga o Reabastecedor, o Sifão, o Reparo, a Saciedade e o Elo Estelar (uma tecla para cada) |
+| *(sem tecla)* | **Chave geral dos amuletos**: desliga todos os amuletos ativos e, ao apertar de novo, religa os mesmos |
 | **Botão do meio** | **Pick block alquímico**: se você não tem o bloco, ele é criado com o seu EMC (exige o Reabastecedor ativo) |
 
 ### Itens

@@ -453,5 +453,8 @@
   "message.peqol.hourglass.cleared": "%s cleared the skies",
   "gui.peqol.junk.on": "Junk mode: ON",
   "gui.peqol.junk.off": "Junk mode: OFF",
-  "gui.peqol.junk.tooltip": "Also siphon cobblestone, dirt, gravel, netherrack... (#peqol:siphon_junk)"
+  "gui.peqol.junk.tooltip": "Also siphon cobblestone, dirt, gravel, netherrack... (#peqol:siphon_junk)",
+  "key.peqol.toggle_all_charms": "Toggle All Charms (master switch)",
+  "message.peqol.charms_off": "Turned %s charms off",
+  "message.peqol.charms_on": "Turned %s charms back on"
 }

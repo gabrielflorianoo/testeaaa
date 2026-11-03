@@ -57,6 +57,7 @@ public final class ClientForgeEvents {
         send(ModKeys.TOGGLE_ILLUMINATION, KeyAction.TOGGLE_ILLUMINATION);
         send(ModKeys.TOGGLE_SMELTING, KeyAction.TOGGLE_SMELTING);
         send(ModKeys.LEARN_INVENTORY, KeyAction.LEARN_INVENTORY);
+        send(ModKeys.TOGGLE_ALL_CHARMS, KeyAction.TOGGLE_ALL_CHARMS);
         while (ModKeys.FAVORITES.consumeClick()) {
             mc.player.connection.sendCommand("peqol fav");
         }

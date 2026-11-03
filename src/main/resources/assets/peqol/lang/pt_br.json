@@ -453,5 +453,8 @@
   "message.peqol.hourglass.cleared": "%s limpou os céus",
   "gui.peqol.junk.on": "Modo lixo: LIGADO",
   "gui.peqol.junk.off": "Modo lixo: DESLIGADO",
-  "gui.peqol.junk.tooltip": "Também sifona pedregulho, terra, cascalho, netherrack... (#peqol:siphon_junk)"
+  "gui.peqol.junk.tooltip": "Também sifona pedregulho, terra, cascalho, netherrack... (#peqol:siphon_junk)",
+  "key.peqol.toggle_all_charms": "Alternar Todos os Amuletos (chave geral)",
+  "message.peqol.charms_off": "Desligou %s amuletos",
+  "message.peqol.charms_on": "Religou %s amuletos"
 }

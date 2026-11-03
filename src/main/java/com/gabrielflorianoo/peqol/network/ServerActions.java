@@ -52,6 +52,7 @@ public final class ServerActions {
             case TOGGLE_SMELTING -> toggle(player, SmeltingCharmItem.class);
             case LEARN_INVENTORY -> learnInventory(player, true);
             case BURN_INVENTORY -> burnInventory(player);
+            case TOGGLE_ALL_CHARMS -> toggleAll(player);
         }
     }
 
@@ -213,6 +214,45 @@ public final class ServerActions {
         }
         player.displayClientMessage(Component.translatable("command.peqol.burn.inventory", items, EmcUtil.format(total)).withStyle(ChatFormatting.GOLD), true);
         player.level().playSound(null, player.blockPosition(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 0.4F, 1.4F);
+    }
+
+    private static final String TAG_WAS_ACTIVE = "PeqolWasActive";
+
+    /**
+     * Master switch: turns every active charm off (remembering which), or turns the remembered ones back on.
+     */
+    public static void toggleAll(ServerPlayer player) {
+        java.util.List<ItemStack> charms = new java.util.ArrayList<>();
+        InventoryUtil.forEachStack(player, stack -> {
+            if (stack.getItem() instanceof ToggleableItem) {
+                charms.add(stack);
+            }
+        });
+        if (charms.isEmpty()) {
+            player.displayClientMessage(Component.translatable("message.peqol.item_not_found").withStyle(ChatFormatting.RED), true);
+            return;
+        }
+        boolean anyActive = charms.stream().anyMatch(ToggleableItem::isActive);
+        int changed = 0;
+        for (ItemStack charm : charms) {
+            if (anyActive) {
+                boolean active = ToggleableItem.isActive(charm);
+                charm.getOrCreateTag().putBoolean(TAG_WAS_ACTIVE, active);
+                if (active) {
+                    ToggleableItem.setActive(charm, false);
+                    changed++;
+                }
+            } else {
+                boolean restore = !charm.hasTag() || !charm.getTag().contains(TAG_WAS_ACTIVE) || charm.getTag().getBoolean(TAG_WAS_ACTIVE);
+                if (restore) {
+                    ToggleableItem.setActive(charm, true);
+                    changed++;
+                }
+            }
+        }
+        player.displayClientMessage(Component.translatable(anyActive ? "message.peqol.charms_off" : "message.peqol.charms_on", changed)
+                .withStyle(anyActive ? ChatFormatting.RED : ChatFormatting.GREEN), true);
+        player.level().playSound(null, player.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 0.5F, anyActive ? 0.5F : 1.4F);
     }
 
     private static void toggle(ServerPlayer player, Class<? extends ToggleableItem> type) {
