@@ -7,6 +7,15 @@ import com.gabrielflorianoo.peqol.item.EmcChequeItem;
 import com.gabrielflorianoo.peqol.item.MendingCharmItem;
 import com.gabrielflorianoo.peqol.item.SatiationCharmItem;
 import com.gabrielflorianoo.peqol.item.SiphonCharmItem;
+import com.gabrielflorianoo.peqol.item.PhilosophersWrenchItem;
+import com.gabrielflorianoo.peqol.block.entity.AlchemicalDownlinkBlockEntity;
+import com.gabrielflorianoo.peqol.util.AutoStock;
+import moze_intel.projecte.api.capabilities.PECapabilities;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import com.gabrielflorianoo.peqol.item.SmeltingCharmItem;
 import com.gabrielflorianoo.peqol.block.entity.AlchemicalVacuumBlockEntity;
 import com.gabrielflorianoo.peqol.registry.ModStats;
@@ -213,5 +222,45 @@ public class PEQoLGameTests {
             helper.assertTrue(vacuum.getPendingEmc().signum() > 0, "Vacuum should have buffered EMC for its offline owner");
             helper.assertFalse(dropped.isAlive(), "The item entity should be gone");
         });
+    }
+
+    @GameTest(template = "empty")
+    public static void wrenchKeepsRelayEmc(GameTestHelper helper) {
+        Block relay = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("projecte", "relay_mk1"));
+        helper.assertTrue(relay != null && relay != Blocks.AIR, "ProjectE relay should exist");
+        helper.setBlock(POS, relay);
+        BlockEntity be = helper.getBlockEntity(POS);
+        IEmcStorage storage = be.getCapability(PECapabilities.EMC_STORAGE_CAPABILITY).orElseThrow(IllegalStateException::new);
+        long inserted = storage.insertEmc(1000, IEmcStorage.EmcAction.EXECUTE);
+        helper.assertTrue(inserted > 0, "Relay should accept EMC");
+        ItemStack picked = PhilosophersWrenchItem.pickUp(helper.getLevel(), helper.absolutePos(POS), helper.makeMockPlayer());
+        helper.assertFalse(picked.isEmpty(), "Wrench should pick the relay up");
+        CompoundTag data = BlockItem.getBlockEntityData(picked);
+        helper.assertTrue(data != null && data.getLong("EMC") == inserted, "Picked relay should keep its EMC, data: " + data);
+        helper.assertBlockPresent(Blocks.AIR, POS);
+        helper.assertFalse(PhilosophersWrenchItem.canWrench(Blocks.CHEST.defaultBlockState(), null), "Vanilla blocks are not wrenchable");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void downlinkOnlyTakesPersonalEmc(GameTestHelper helper) {
+        helper.setBlock(POS, ModBlocks.ALCHEMICAL_DOWNLINK.get());
+        AlchemicalDownlinkBlockEntity downlink = (AlchemicalDownlinkBlockEntity) helper.getBlockEntity(POS);
+        helper.assertTrue(downlink.insertEmc(500, IEmcStorage.EmcAction.EXECUTE) == 0, "Downlink must not accept EMC from other blocks");
+        helper.assertTrue(downlink.getStoredEmc() == 0, "Downlink starts empty");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void autostockRoundTrip(GameTestHelper helper) {
+        Player player = helper.makeMockPlayer();
+        ResourceLocation arrow = new ResourceLocation("minecraft", "arrow");
+        AutoStock.set(player, arrow, 64);
+        helper.assertTrue(AutoStock.get(player).getOrDefault(arrow, 0) == 64, "Autostock entry should be saved");
+        player.getInventory().add(new ItemStack(Items.ARROW, 10));
+        helper.assertTrue(AutoStock.count(player.getInventory(), Items.ARROW) == 10, "Should count 10 arrows");
+        AutoStock.set(player, arrow, 0);
+        helper.assertTrue(AutoStock.get(player).isEmpty(), "Entry should be removed");
+        helper.succeed();
     }
 }

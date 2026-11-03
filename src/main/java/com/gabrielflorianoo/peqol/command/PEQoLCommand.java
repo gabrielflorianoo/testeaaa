@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import com.gabrielflorianoo.peqol.util.AutoStock;
 import com.gabrielflorianoo.peqol.util.KnowledgeStats;
 import com.gabrielflorianoo.peqol.registry.ModStats;
 import moze_intel.projecte.api.ItemInfo;
@@ -71,6 +72,17 @@ public final class PEQoLCommand {
                         .then(Commands.argument("item", ItemArgument.item(buildContext))
                                 .executes(PEQoLCommand::value)))
                 .then(Commands.literal("unlearned").executes(ctx -> unlearned(ctx.getSource())))
+                .then(Commands.literal("autostock")
+                        .executes(ctx -> autostockList(ctx.getSource()))
+                        .then(Commands.literal("list").executes(ctx -> autostockList(ctx.getSource())))
+                        .then(Commands.literal("clear").executes(ctx -> autostockClear(ctx.getSource())))
+                        .then(Commands.literal("add")
+                                .then(Commands.argument("item", ItemArgument.item(buildContext))
+                                        .then(Commands.argument("count", IntegerArgumentType.integer(1, 2304))
+                                                .executes(ctx -> autostockSet(ctx, IntegerArgumentType.getInteger(ctx, "count"))))))
+                        .then(Commands.literal("remove")
+                                .then(Commands.argument("item", ItemArgument.item(buildContext))
+                                        .executes(ctx -> autostockSet(ctx, 0)))))
                 .then(Commands.literal("known")
                         .executes(ctx -> known(ctx.getSource(), "", 1))
                         .then(Commands.literal("page")
@@ -115,7 +127,7 @@ public final class PEQoLCommand {
 
     private static int help(CommandSourceStack source) {
         source.sendSuccess(() -> Component.translatable("command.peqol.help.header").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD), false);
-        String[] entries = {"balance", "pay", "withdraw", "buy", "value", "known", "worth", "burn", "missing", "unlearned", "stars", "knowledge", "top"};
+        String[] entries = {"balance", "pay", "withdraw", "buy", "value", "known", "autostock", "worth", "burn", "missing", "unlearned", "stars", "knowledge", "top"};
         for (String entry : entries) {
             source.sendSuccess(() -> Component.literal("/peqol " + entry).withStyle(ChatFormatting.GOLD)
                     .append(Component.literal(" - ").withStyle(ChatFormatting.DARK_GRAY))
@@ -212,6 +224,47 @@ public final class PEQoLCommand {
                     .withStyle(ChatFormatting.GRAY), false);
         }
         return unknown.size();
+    }
+
+    private static int autostockList(CommandSourceStack source) throws CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+        Map<net.minecraft.resources.ResourceLocation, Integer> entries = AutoStock.get(player);
+        if (entries.isEmpty()) {
+            source.sendSuccess(() -> Component.translatable("command.peqol.autostock.empty").withStyle(ChatFormatting.YELLOW), false);
+            return 0;
+        }
+        source.sendSuccess(() -> Component.translatable("command.peqol.autostock.header", entries.size()).withStyle(ChatFormatting.GOLD), false);
+        for (Map.Entry<net.minecraft.resources.ResourceLocation, Integer> entry : entries.entrySet()) {
+            Item item = ForgeRegistries.ITEMS.getValue(entry.getKey());
+            Component name = item == null ? Component.literal(entry.getKey().toString()) : item.getDescription();
+            int have = item == null ? 0 : AutoStock.count(player.getInventory(), item);
+            source.sendSuccess(() -> Component.literal(" - ").append(name).append(Component.literal(" " + have + "/" + entry.getValue())
+                    .withStyle(have >= entry.getValue() ? ChatFormatting.GREEN : ChatFormatting.YELLOW)).withStyle(ChatFormatting.GRAY), false);
+        }
+        return entries.size();
+    }
+
+    private static int autostockClear(CommandSourceStack source) throws CommandSyntaxException {
+        AutoStock.clear(source.getPlayerOrException());
+        source.sendSuccess(() -> Component.translatable("command.peqol.autostock.cleared").withStyle(ChatFormatting.YELLOW), false);
+        return 1;
+    }
+
+    private static int autostockSet(CommandContext<CommandSourceStack> ctx, int count) throws CommandSyntaxException {
+        ServerPlayer player = ctx.getSource().getPlayerOrException();
+        ItemStack template = ItemArgument.getItem(ctx, "item").createItemStack(1, false);
+        net.minecraft.resources.ResourceLocation id = ForgeRegistries.ITEMS.getKey(template.getItem());
+        if (id == null) {
+            return 0;
+        }
+        AutoStock.set(player, id, count);
+        Component name = template.getHoverName();
+        if (count > 0) {
+            ctx.getSource().sendSuccess(() -> Component.translatable("command.peqol.autostock.added", name, count).withStyle(ChatFormatting.GREEN), false);
+        } else {
+            ctx.getSource().sendSuccess(() -> Component.translatable("command.peqol.autostock.removed", name).withStyle(ChatFormatting.YELLOW), false);
+        }
+        return 1;
     }
 
     private static final int PAGE_SIZE = 10;

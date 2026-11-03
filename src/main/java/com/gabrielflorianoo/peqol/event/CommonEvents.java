@@ -12,6 +12,7 @@ import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 import com.gabrielflorianoo.peqol.item.StellarLinkItem;
 import com.gabrielflorianoo.peqol.item.ToggleableItem;
 import com.gabrielflorianoo.peqol.util.EmcUtil;
+import com.gabrielflorianoo.peqol.util.AutoStock;
 import com.gabrielflorianoo.peqol.util.InventoryUtil;
 import java.math.BigInteger;
 import net.minecraft.ChatFormatting;
@@ -42,6 +43,7 @@ public final class CommonEvents {
         int tick = player.tickCount;
         if (tick % PEQoLConfig.COMMON.restockerInterval.get() == 0 && hasActive(player, RestockerTalismanItem.class)) {
             RestockerTalismanItem.restock(player);
+            AutoStock.tick(player);
         }
         if (tick % PEQoLConfig.COMMON.mendingInterval.get() == 0 && hasActive(player, MendingCharmItem.class)) {
             MendingCharmItem.mend(player);

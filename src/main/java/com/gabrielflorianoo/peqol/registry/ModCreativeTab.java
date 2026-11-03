@@ -31,6 +31,8 @@ public final class ModCreativeTab {
                 output.accept(ModItems.ALCHEMICAL_IMPORTER.get());
                 output.accept(ModItems.ALCHEMICAL_EXPORTER.get());
                 output.accept(ModItems.ALCHEMICAL_VACUUM.get());
+                output.accept(ModItems.ALCHEMICAL_DOWNLINK.get());
+                output.accept(ModItems.PHILOSOPHERS_WRENCH.get());
             })
             .build());
 

@@ -29,6 +29,10 @@ public final class TooltipHandler {
             return;
         }
         List<Component> tooltip = event.getToolTip();
+        CompoundTag beData = BlockItem.getBlockEntityData(stack);
+        if (beData != null && beData.contains("EMC", Tag.TAG_LONG) && beData.getLong("EMC") > 0) {
+            tooltip.add(Component.translatable("tooltip.peqol.wrenched_emc", EmcUtil.format(beData.getLong("EMC"))).withStyle(ChatFormatting.YELLOW));
+        }
         long value = EmcUtil.value(stack);
         if (value <= 0) {
             if (PEQoLConfig.CLIENT.tooltipNoEmcWarning.get()) {

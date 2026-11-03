@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [" D ", "TUT", " D "],
+  "key": {
+    "D": { "item": "projecte:dark_matter" },
+    "T": { "item": "minecraft:redstone_torch" },
+    "U": { "item": "peqol:alchemical_uplink" }
+  },
+  "result": { "item": "peqol:alchemical_downlink" }
+}

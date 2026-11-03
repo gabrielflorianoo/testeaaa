@@ -1,6 +1,7 @@
 package com.gabrielflorianoo.peqol.registry;
 
 import com.gabrielflorianoo.peqol.PEQoL;
+import com.gabrielflorianoo.peqol.block.entity.AlchemicalDownlinkBlockEntity;
 import com.gabrielflorianoo.peqol.block.entity.AlchemicalExporterBlockEntity;
 import com.gabrielflorianoo.peqol.block.entity.AlchemicalImporterBlockEntity;
 import com.gabrielflorianoo.peqol.block.entity.AlchemicalUplinkBlockEntity;
@@ -27,6 +28,10 @@ public final class ModBlockEntities {
     @SuppressWarnings("DataFlowIssue")
     public static final RegistryObject<BlockEntityType<AlchemicalVacuumBlockEntity>> ALCHEMICAL_VACUUM = BLOCK_ENTITIES.register("alchemical_vacuum",
             () -> BlockEntityType.Builder.of(AlchemicalVacuumBlockEntity::new, ModBlocks.ALCHEMICAL_VACUUM.get()).build(null));
+
+    @SuppressWarnings("DataFlowIssue")
+    public static final RegistryObject<BlockEntityType<AlchemicalDownlinkBlockEntity>> ALCHEMICAL_DOWNLINK = BLOCK_ENTITIES.register("alchemical_downlink",
+            () -> BlockEntityType.Builder.of(AlchemicalDownlinkBlockEntity::new, ModBlocks.ALCHEMICAL_DOWNLINK.get()).build(null));
 
     private ModBlockEntities() {
     }

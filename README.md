@@ -40,6 +40,7 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
 - **Lente de Avaliação Alquímica**: clique num baú (ou qualquer inventário) para ver quanto vale o conteúdo e os 5 itens mais valiosos. Em coletores, relés e condensadores, mostra o EMC armazenado. No ar, avalia o seu inventário.
 - **Amuleto da Fundição**: os minérios e materiais brutos coletados chegam já fundidos. Cada item custa 16 EMC (configurável).
 - **Âncora Alquímica**: agache e clique num bloco para ancorar o ponto; clique com o botão direito para teleportar até lá pagando EMC (base + distância, mais caro entre dimensões). Funciona entre dimensões e tem cooldown.
+- **Chave do Filósofo**: agache e clique com o botão direito em qualquer máquina do ProjectE (condensador, coletor, relé, baú alquímico...) ou do QoL+ para pegá-la com o **EMC, o inventário e as configurações intactos**. O tooltip do item mostra o EMC guardado. Respeita proteções de área.
 - **Cheque de EMC**: o `/peqol withdraw` transforma EMC em um item que pode ser trocado entre jogadores. Clique com o botão direito para resgatar; agachado, você resgata a pilha inteira. O cheque não tem valor de EMC, então não dá para queimá-lo e duplicar EMC.
 - **Pergaminho do Conhecimento**: grava tudo o que você aprendeu. Outro jogador clica com o botão direito e aprende tudo o que está gravado, ótimo para servidores. Agachar e clicar com o botão direito apaga o pergaminho.
 
@@ -49,6 +50,7 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
 - **Exportador Alquímico**: clique nele com um item para filtrar. Ele cria os itens filtrados com o seu EMC e os empurra para os inventários vizinhos. Um sinal de redstone pausa o bloco.
   - **Modo estoque**: agache e clique com o botão direito segurando *N* itens. O exportador mantém exatamente *N* deles nos inventários vizinhos, repondo só o que for usado.
 - **Aspirador Alquímico**: suga os itens soltos num raio de 6 blocos e os transforma em EMC, com filtro opcional. Ideal para farms de mobs e de árvores. Guarda o EMC se você estiver offline, e redstone pausa.
+- **Descida Alquímica**: o contrário da Conexão. Puxa o seu EMC pessoal e o envia para os relés, coletores e outros blocos de EMC vizinhos, o que permite carregar Estrelas de Klein num relé usando o EMC pessoal. Redstone pausa.
 - A **Conexão Alquímica** emite sinal de comparador proporcional ao buffer.
 
 Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
@@ -65,6 +67,7 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 | `buy <item> [qtd]` | Cria itens aprendidos com o seu EMC, com autocompletar (ex.: `/peqol buy minecraft:diamond 64`) |
 | `value <item>` | Mostra o valor de qualquer item, se você já o aprendeu e quantos consegue criar |
 | `known [page N \| search <texto>]` | Navega pelos itens aprendidos, com botões **[x1] [x64]** clicáveis no chat para comprar na hora |
+| `autostock add <item> <qtd>` / `remove` / `list` / `clear` | Mantém sempre *qtd* daquele item no inventário (flechas, tochas, comida...), criando o que faltar com EMC. Precisa do Reabastecedor ativo e sobrevive à morte |
 | `unlearned` | Lista os itens do inventário com EMC que você ainda não aprendeu |
 | `stars fill\|drain` | Enche as Estrelas de Klein com o seu EMC, ou esvazia todas no seu EMC |
 | `help` | Lista os comandos |
@@ -89,6 +92,8 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 
 | Aspirador Alquímico | Faixa do Buraco Negro, Funil ×2, Importador Alquímico, Matéria Escura |
 | Âncora Alquímica | Pérola do Ender, Pó de Covalência Médio ×2, Bússola, Matéria Escura |
+| Descida Alquímica | Matéria Escura ×2, Tocha de Redstone ×2, Conexão Alquímica |
+| Chave do Filósofo | Ferro ×2, Matéria Escura, Pó de Covalência Médio |
 | Amuleto da Fundição | Pó de Covalência Baixo ×4, Fornalha ×4, Faixa de Ferro |
 
 ## Extras
@@ -124,6 +129,7 @@ A quality-of-life addon for ProjectE on Forge 1.20.1. It includes:
 - A Siphon Charm that turns filtered pickups into EMC.
 - Tradeable EMC Cheques and Knowledge Scrolls for sharing knowledge.
 - Uplink, Importer and Exporter blocks that bridge automation and personal EMC.
+- Philosopher's Wrench (pick up ProjectE machines with EMC/contents), Alchemical Downlink, `/peqol autostock`.
 - Alchemical Vacuum, Alchemical Anchor (EMC teleport), Charm of Smelting, broken-tool replacement, custom statistics, advancements and a server blacklist.
 - Construction Wand with preview, Charm of Illumination, Appraisal Lens.
 - `/peqol known` with clickable buy buttons, knowledge progress %, held-item value on the HUD and EMC milestone toasts.

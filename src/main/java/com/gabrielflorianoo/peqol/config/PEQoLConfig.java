@@ -91,6 +91,10 @@ public final class PEQoLConfig {
         // Restocker extras
         public final ForgeConfigSpec.BooleanValue restockerReplacesTools;
 
+        // Wrench / downlink
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> wrenchNamespaces;
+        public final ForgeConfigSpec.LongValue downlinkRate;
+
         // Blacklist
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> blacklist;
 
@@ -223,6 +227,16 @@ public final class PEQoLConfig {
                     .defineInRange("costPerItem", 16L, 0L, Long.MAX_VALUE);
             smeltingOnlyOres = builder.comment("Only smelt ores and raw materials (forge:ores / forge:raw_materials). If false, anything with a smelting recipe is smelted.")
                     .define("onlyOres", true);
+            builder.pop();
+
+            builder.comment("Philosopher's Wrench").push("wrench");
+            wrenchNamespaces = builder.comment("Mod ids whose blocks (with block entities) can be picked up with their contents.")
+                    .defineListAllowEmpty(List.of("namespaces"), () -> List.of("projecte", "peqol"), o -> o instanceof String);
+            builder.pop();
+
+            builder.comment("Alchemical Downlink").push("downlink");
+            downlinkRate = builder.comment("Maximum EMC per half second drawn from personal EMC and pushed into adjacent blocks (also the buffer size).")
+                    .defineInRange("rate", 50_000L, 1L, Long.MAX_VALUE);
             builder.pop();
 
             builder.comment("Blacklist for every feature that CREATES items from personal EMC (buy, pick block, restocker, exporter, wand...).",

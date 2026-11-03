@@ -3,6 +3,7 @@ package com.gabrielflorianoo.peqol.registry;
 import com.gabrielflorianoo.peqol.PEQoL;
 import com.gabrielflorianoo.peqol.item.AlchemicalAnchorItem;
 import com.gabrielflorianoo.peqol.item.AppraisalLensItem;
+import com.gabrielflorianoo.peqol.item.PhilosophersWrenchItem;
 import com.gabrielflorianoo.peqol.item.SmeltingCharmItem;
 import com.gabrielflorianoo.peqol.item.ConstructionWandItem;
 import com.gabrielflorianoo.peqol.item.EmcChequeItem;
@@ -58,6 +59,11 @@ public final class ModItems {
 
     public static final RegistryObject<OwnedBlockItem> ALCHEMICAL_VACUUM = ITEMS.register("alchemical_vacuum",
             () -> new OwnedBlockItem(ModBlocks.ALCHEMICAL_VACUUM.get(), new Item.Properties().rarity(Rarity.UNCOMMON), "alchemical_vacuum"));
+
+    public static final RegistryObject<OwnedBlockItem> ALCHEMICAL_DOWNLINK = ITEMS.register("alchemical_downlink",
+            () -> new OwnedBlockItem(ModBlocks.ALCHEMICAL_DOWNLINK.get(), new Item.Properties().rarity(Rarity.UNCOMMON), "alchemical_downlink"));
+    public static final RegistryObject<PhilosophersWrenchItem> PHILOSOPHERS_WRENCH = ITEMS.register("philosophers_wrench",
+            () -> new PhilosophersWrenchItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
 
     private ModItems() {
     }

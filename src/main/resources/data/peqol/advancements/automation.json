@@ -51,13 +51,26 @@
           }
         ]
       }
+    },
+    "has_alchemical_downlink": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "peqol:alchemical_downlink"
+            ]
+          }
+        ]
+      }
     }
   },
   "requirements": [
     [
       "has_alchemical_uplink",
       "has_alchemical_importer",
-      "has_alchemical_exporter"
+      "has_alchemical_exporter",
+      "has_alchemical_downlink"
     ]
   ]
 }

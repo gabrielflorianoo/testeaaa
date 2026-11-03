@@ -232,5 +232,19 @@
   "advancements.peqol.anchor.title": "Home Is Where the Anchor Is",
   "advancements.peqol.anchor.description": "Get an Alchemical Anchor",
   "advancements.peqol.lens.title": "Appraiser",
-  "advancements.peqol.lens.description": "Get an Appraisal Lens"
+  "advancements.peqol.lens.description": "Get an Appraisal Lens",
+  "block.peqol.alchemical_downlink": "Alchemical Downlink",
+  "block.peqol.alchemical_downlink.desc": "Feeds your personal EMC into adjacent relays, collectors and other EMC blocks.",
+  "info.peqol.downlink.hint": "Pushes into adjacent EMC acceptors. Redstone pauses it.",
+  "item.peqol.philosophers_wrench": "Philosopher's Wrench",
+  "item.peqol.philosophers_wrench.desc": "Sneak + right click a ProjectE machine to pick it up.",
+  "item.peqol.philosophers_wrench.desc2": "Stored EMC, inventory and settings are kept in the item.",
+  "message.peqol.wrench.picked": "Picked up %s",
+  "tooltip.peqol.wrenched_emc": "Stored EMC: %s",
+  "command.peqol.autostock.empty": "Autostock list is empty. Use /peqol autostock add <item> <count>",
+  "command.peqol.autostock.header": "Autostock (%s items, needs an active Restocker):",
+  "command.peqol.autostock.added": "Will always keep %s x%s",
+  "command.peqol.autostock.removed": "No longer keeping %s",
+  "command.peqol.autostock.cleared": "Autostock list cleared",
+  "command.peqol.help.autostock": "always keep N of an item in your inventory"
 }

@@ -1,6 +1,7 @@
 package com.gabrielflorianoo.peqol.registry;
 
 import com.gabrielflorianoo.peqol.PEQoL;
+import com.gabrielflorianoo.peqol.block.AlchemicalDownlinkBlock;
 import com.gabrielflorianoo.peqol.block.AlchemicalExporterBlock;
 import com.gabrielflorianoo.peqol.block.AlchemicalImporterBlock;
 import com.gabrielflorianoo.peqol.block.AlchemicalUplinkBlock;
@@ -26,6 +27,9 @@ public final class ModBlocks {
 
     public static final RegistryObject<AlchemicalVacuumBlock> ALCHEMICAL_VACUUM = BLOCKS.register("alchemical_vacuum",
             () -> new AlchemicalVacuumBlock(machineProperties(MapColor.COLOR_CYAN)));
+
+    public static final RegistryObject<AlchemicalDownlinkBlock> ALCHEMICAL_DOWNLINK = BLOCKS.register("alchemical_downlink",
+            () -> new AlchemicalDownlinkBlock(machineProperties(MapColor.COLOR_ORANGE)));
 
     private ModBlocks() {
     }

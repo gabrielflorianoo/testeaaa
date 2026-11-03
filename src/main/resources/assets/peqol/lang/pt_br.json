@@ -232,5 +232,19 @@
   "advancements.peqol.anchor.title": "Lar É Onde a Âncora Está",
   "advancements.peqol.anchor.description": "Consiga uma Âncora Alquímica",
   "advancements.peqol.lens.title": "Avaliador",
-  "advancements.peqol.lens.description": "Consiga uma Lente de Avaliação"
+  "advancements.peqol.lens.description": "Consiga uma Lente de Avaliação",
+  "block.peqol.alchemical_downlink": "Descida Alquímica",
+  "block.peqol.alchemical_downlink.desc": "Alimenta relés, coletores e outros blocos de EMC vizinhos com seu EMC pessoal.",
+  "info.peqol.downlink.hint": "Envia para blocos de EMC vizinhos. Redstone pausa.",
+  "item.peqol.philosophers_wrench": "Chave do Filósofo",
+  "item.peqol.philosophers_wrench.desc": "Agache + clique direito numa máquina do ProjectE para pegá-la.",
+  "item.peqol.philosophers_wrench.desc2": "EMC armazenado, inventário e configurações ficam guardados no item.",
+  "message.peqol.wrench.picked": "Pegou %s",
+  "tooltip.peqol.wrenched_emc": "EMC armazenado: %s",
+  "command.peqol.autostock.empty": "A lista de autoestoque está vazia. Use /peqol autostock add <item> <quantidade>",
+  "command.peqol.autostock.header": "Autoestoque (%s itens, precisa do Reabastecedor ativo):",
+  "command.peqol.autostock.added": "Vai sempre manter %s x%s",
+  "command.peqol.autostock.removed": "Não mantém mais %s",
+  "command.peqol.autostock.cleared": "Lista de autoestoque limpa",
+  "command.peqol.help.autostock": "sempre manter N de um item no inventário"
 }

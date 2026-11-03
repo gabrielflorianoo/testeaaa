@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "pattern": [" I ", " DI", "M  "],
+  "key": {
+    "I": { "item": "minecraft:iron_ingot" },
+    "D": { "item": "projecte:dark_matter" },
+    "M": { "item": "projecte:medium_covalence_dust" }
+  },
+  "result": { "item": "peqol:philosophers_wrench" }
+}
