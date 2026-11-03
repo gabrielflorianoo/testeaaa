@@ -32,6 +32,12 @@ import org.jetbrains.annotations.Nullable;
 public class SiphonCharmItem extends ToggleableItem {
 
     public static final String TAG_FILTER = "Filter";
+    public static final String TAG_JUNK = "JunkMode";
+    public static final net.minecraft.tags.TagKey<Item> JUNK = net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, com.gabrielflorianoo.peqol.PEQoL.rl("siphon_junk"));
+
+    public static boolean isJunkMode(ItemStack charm) {
+        return charm.hasTag() && charm.getTag().getBoolean(TAG_JUNK);
+    }
 
     public SiphonCharmItem(Properties properties) {
         super(properties);
@@ -53,6 +59,9 @@ public class SiphonCharmItem extends ToggleableItem {
     }
 
     public static boolean matches(ItemStack charm, ItemStack candidate) {
+        if (isJunkMode(charm) && !candidate.isEmpty() && candidate.is(JUNK)) {
+            return true;
+        }
         CompoundTag tag = charm.getTag();
         if (tag == null || candidate.isEmpty() || !tag.contains(TAG_FILTER, Tag.TAG_LIST)) {
             return false;
@@ -78,6 +87,11 @@ public class SiphonCharmItem extends ToggleableItem {
         }
         ItemStack other = player.getItemInHand(hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
         if (other.isEmpty()) {
+            //Empty other hand: toggle junk mode and list the filter
+            boolean junk = !isJunkMode(stack);
+            stack.getOrCreateTag().putBoolean(TAG_JUNK, junk);
+            player.displayClientMessage(Component.translatable(junk ? "message.peqol.siphon.junk_on" : "message.peqol.siphon.junk_off")
+                    .withStyle(junk ? ChatFormatting.GREEN : ChatFormatting.YELLOW), false);
             List<ResourceLocation> filter = getFilter(stack);
             if (filter.isEmpty()) {
                 player.displayClientMessage(Component.translatable("message.peqol.siphon.empty").withStyle(ChatFormatting.YELLOW), false);
@@ -125,6 +139,9 @@ public class SiphonCharmItem extends ToggleableItem {
     public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
         super.appendHoverText(stack, level, tooltip, flag);
         tooltip.add(Component.translatable("item.peqol.siphon_charm.desc2").withStyle(ChatFormatting.DARK_GRAY));
+        if (isJunkMode(stack)) {
+            tooltip.add(Component.translatable("tooltip.peqol.siphon.junk").withStyle(ChatFormatting.GREEN));
+        }
         List<ResourceLocation> filter = getFilter(stack);
         if (!filter.isEmpty()) {
             tooltip.add(Component.translatable("tooltip.peqol.filter", filter.size()).withStyle(ChatFormatting.GOLD));

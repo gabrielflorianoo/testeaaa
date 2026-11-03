@@ -326,4 +326,15 @@ public class PEQoLGameTests {
                 "Handbook should have all pages");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void siphonJunkMode(GameTestHelper helper) {
+        ItemStack charm = new ItemStack(ModItems.SIPHON_CHARM.get());
+        helper.assertFalse(SiphonCharmItem.matches(charm, new ItemStack(Items.COBBLESTONE)), "Junk mode is off by default");
+        charm.getOrCreateTag().putBoolean(SiphonCharmItem.TAG_JUNK, true);
+        helper.assertTrue(SiphonCharmItem.matches(charm, new ItemStack(Items.COBBLESTONE)), "Junk mode should take cobblestone");
+        helper.assertTrue(SiphonCharmItem.matches(charm, new ItemStack(Items.NETHERRACK)), "Junk mode should take netherrack");
+        helper.assertFalse(SiphonCharmItem.matches(charm, new ItemStack(Items.DIAMOND)), "Junk mode must not take diamonds");
+        helper.succeed();
+    }
 }

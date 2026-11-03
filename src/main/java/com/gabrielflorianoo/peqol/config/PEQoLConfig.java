@@ -346,6 +346,7 @@ public final class PEQoLConfig {
         public final ForgeConfigSpec.BooleanValue hudShowKleinStars;
         public final ForgeConfigSpec.BooleanValue learnToasts;
         public final ForgeConfigSpec.BooleanValue machineInfo;
+        public final ForgeConfigSpec.BooleanValue markUnlearned;
         public final ForgeConfigSpec.ConfigValue<String> goalItem;
         public final ForgeConfigSpec.IntValue goalCount;
 
@@ -376,6 +377,8 @@ public final class PEQoLConfig {
             goalItem = builder.comment("EMC goal shown on the HUD (item id, empty = none). Set it in game with /peqolclient goal <item> [count].")
                     .define("goalItem", "");
             goalCount = builder.defineInRange("goalCount", 1, 1, 1_000_000);
+            markUnlearned = builder.comment("Mark inventory slots holding items that have EMC but aren't learned yet with a small purple dot.")
+                    .define("markUnlearned", true);
             machineInfo = builder.comment("Show a small info panel when looking at QoL+ machines and ProjectE EMC blocks.")
                     .define("machineInfo", true);
             learnToasts = builder.comment("Show a toast when you learn new items.")

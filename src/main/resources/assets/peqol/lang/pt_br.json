@@ -5,7 +5,7 @@
   "item.peqol.restocker_talisman.desc2": "Só itens aprendidos, reabastece com %s ou menos. Clique direito para ligar/desligar.",
   "item.peqol.siphon_charm": "Amuleto de Sifão",
   "item.peqol.siphon_charm.desc": "Itens coletados que estão no filtro viram EMC pessoal.",
-  "item.peqol.siphon_charm.desc2": "Agache + clique direito com um item na outra mão para (des)filtrá-lo.",
+  "item.peqol.siphon_charm.desc2": "Agache + clique direito com um item na outra mão para (des)filtrá-lo; com a outra mão vazia: modo lixo.",
   "item.peqol.emc_cheque": "Cheque de EMC",
   "item.peqol.emc_cheque.amount": "Cheque de EMC (%s EMC)",
   "item.peqol.emc_cheque.desc": "Clique direito para resgatar, agache para resgatar a pilha toda.",
@@ -339,5 +339,8 @@
   "gui.peqol.learn_inventory.tooltip": "Queima um de cada item não aprendido do inventário para aprendê-lo, mantendo o resto.",
   "gui.peqol.burn_inventory": "Queimar Inventário",
   "gui.peqol.burn_inventory.tooltip": "Queima o inventário principal em EMC. Hotbar, armadura, mão secundária, Estrelas de Klein e itens com NBT são mantidos.",
-  "hud.peqol.goal": "Meta: %sx %s"
+  "hud.peqol.goal": "Meta: %sx %s",
+  "message.peqol.siphon.junk_on": "Modo lixo LIGADO: pedregulho, terra, cascalho, netherrack... também são sifonados",
+  "message.peqol.siphon.junk_off": "Modo lixo DESLIGADO",
+  "tooltip.peqol.siphon.junk": "Modo lixo: ligado"
 }

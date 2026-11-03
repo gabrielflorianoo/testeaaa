@@ -59,6 +59,7 @@ public final class ClientCommands {
                                         .executes(ctx -> setGoal(ctx.getSource(), net.minecraft.commands.arguments.item.ItemArgument.getItem(ctx, "item").getItem(),
                                                 IntegerArgumentType.getInteger(ctx, "count"))))))
                 .then(toggle("machineinfo", PEQoLConfig.CLIENT.machineInfo))
+                .then(toggle("markunlearned", PEQoLConfig.CLIENT.markUnlearned))
                 .then(toggle("learntoasts", PEQoLConfig.CLIENT.learnToasts))
                 .then(toggle("milestones", PEQoLConfig.CLIENT.milestoneToasts)));
     }

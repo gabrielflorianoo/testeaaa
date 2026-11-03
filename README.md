@@ -10,6 +10,7 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
 - **HUD de EMC**: seu EMC pessoal, ganho/perda por segundo (média de 5 s) e quantos itens você aprendeu. Por padrão aparece só quando você carrega uma Tábua de Transmutação. Dá para mudar o canto, o deslocamento, o formato compacto (`1.25M`) e o fundo. A tecla **H** mostra/esconde.
 - **Estrelas de Klein no HUD**: mostra o total de EMC guardado nas estrelas que você carrega.
 - **Valor da mão no HUD**: mostra quanto vale a pilha que você está segurando.
+- **Itens não aprendidos marcados**: em qualquer inventário, os itens com EMC que você ainda não aprendeu ganham um pontinho roxo no canto do slot.
 - **Botões na tela de transmutação**: ao lado da GUI do ProjectE aparecem **Aprender Inventário** e **Queimar Inventário**.
 - **Meta de EMC**: com `/peqolclient goal minecraft:diamond_block 64`, o HUD mostra uma barra de progresso até você conseguir pagar por aquilo. `/peqolclient goal clear` remove a meta.
 - **Info ao mirar** (um "Jade-lite"): mirando numa máquina do QoL+ ou num bloco de EMC do ProjectE (coletor, relé, condensador...), aparece um painel ao lado da mira com o dono, o EMC armazenado, a variação em EMC/s e o estado. Nos condensadores mostra o alvo e o progresso; nos coletores, a luz.
@@ -36,7 +37,7 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
 
 ### Itens
 - **Reabastecedor Alquímico**: se uma ferramenta aprendida quebrar na sua mão, ele cria uma nova com EMC. Enquanto está ativo no inventário, completa as pilhas de blocos da hotbar (e da mão secundária) usando o seu EMC. Só funciona com itens aprendidos e sem NBT. Ideal para construir.
-- **Amuleto de Sifão**: itens coletados que estão no filtro viram EMC pessoal na hora (e são aprendidos), mesmo com o inventário cheio. Também pega os drops filtrados dos mobs que você mata. Para adicionar ou remover um item do filtro, agache e clique com o botão direito segurando o item na outra mão. Agachar e clicar com a outra mão vazia lista o filtro.
+- **Amuleto de Sifão**: itens coletados que estão no filtro viram EMC pessoal na hora (e são aprendidos), mesmo com o inventário cheio. Também pega os drops filtrados dos mobs que você mata. Agache e clique com a outra mão vazia para ligar o **modo lixo**, que sifona automaticamente pedregulho, terra, cascalho, netherrack etc. (tag `#peqol:siphon_junk`, extensível por datapack). Para adicionar ou remover um item do filtro, agache e clique com o botão direito segurando o item na outra mão. Agachar e clicar com a outra mão vazia lista o filtro.
 - **Amuleto de Reparo Alquímico**: repara as ferramentas e armaduras danificadas usando EMC. Um reparo completo custa cerca do valor do item.
 - **Amuleto da Saciedade**: escolha uma comida aprendida (agache e clique com o botão direito segurando a comida na outra mão). Ele come automaticamente quando a fome cairia sem desperdício, pagando com EMC.
 - **Elo Estelar**: mantém as Estrelas de Klein do inventário (e dos slots do Curios) carregadas com o seu EMC pessoal.
@@ -148,6 +149,9 @@ Comandos só do cliente, que salvam na config na hora:
 - `config/peqol-common.toml`: permite desativar `pay`, `withdraw`, `burn` e a queima rápida, e definir se é preciso ter a Tábua. Também controla o intervalo e o limite do Reabastecedor, o buffer da Conexão, a velocidade do Exportador, o aprender ao coletar (desligado por padrão) e outras opções.
 - `config/peqol-client.toml`: HUD e tooltips.
 
+## Releases
+Ao enviar uma tag `v*` (por exemplo `git tag v1.5.0 && git push origin v1.5.0`), o GitHub Actions compila e publica o jar como uma release. O [CHANGELOG](CHANGELOG.md) lista as mudanças de cada versão.
+
 ## Compilando
 ```bash
 ./gradlew build
@@ -166,6 +170,7 @@ A quality-of-life addon for ProjectE on Forge 1.20.1. It includes:
 - A Siphon Charm that turns filtered pickups into EMC.
 - Tradeable EMC Cheques and Knowledge Scrolls for sharing knowledge.
 - Uplink, Importer and Exporter blocks that bridge automation and personal EMC.
+- Unlearned-item slot markers, Siphon junk mode, CHANGELOG and tag-based releases.
 - Buttons on the transmutation screen (learn/burn inventory), EMC goal progress bar on the HUD.
 - JEI info pages for every item, `/peqol tablet` and `/peqol bag [color]`.
 - `/peqol share` + `/peqol accept` (knowledge sharing with consent), `/peqolclient` to tweak HUD and tooltips in game.

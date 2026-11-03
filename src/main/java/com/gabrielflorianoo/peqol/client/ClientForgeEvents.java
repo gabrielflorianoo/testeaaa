@@ -12,6 +12,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RegisterClientCommandsEvent;
 import net.minecraftforge.client.event.ScreenEvent;
+import net.minecraftforge.client.event.ContainerScreenEvent;
 import net.minecraftforge.client.event.RenderHighlightEvent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
@@ -99,6 +100,11 @@ public final class ClientForgeEvents {
     @SubscribeEvent
     public static void onHighlight(RenderHighlightEvent.Block event) {
         WandPreview.render(event);
+    }
+
+    @SubscribeEvent
+    public static void onContainerForeground(ContainerScreenEvent.Render.Foreground event) {
+        UnlearnedMarker.render(event);
     }
 
     @SubscribeEvent
