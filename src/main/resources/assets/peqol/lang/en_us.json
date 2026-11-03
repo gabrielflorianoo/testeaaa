@@ -461,5 +461,19 @@
   "command.peqol.shops.header": "%s Trade Posts (click coordinates to copy them):",
   "command.peqol.shops.sells": "[SELLS]",
   "command.peqol.shops.buys": "[BUYS]",
-  "command.peqol.help.shops": "list every Trade Post on the server (optionally for one item)"
+  "command.peqol.help.shops": "list every Trade Post on the server (optionally for one item)",
+  "message.peqol.gauge.threshold": "Threshold mode: signal 15 when EMC >= %s",
+  "message.peqol.gauge.digits": "Digits mode: signal = digits of your EMC",
+  "command.peqol.gauge.look": "Look at one of your Alchemical Gauges",
+  "command.peqol.help.gauge": "set the threshold of the Gauge you're looking at",
+  "advancements.peqol.excavator.title": "Strip Mine",
+  "advancements.peqol.excavator.description": "Build an Alchemical Excavator",
+  "advancements.peqol.trade_post.title": "Open for Business",
+  "advancements.peqol.trade_post.description": "Build an Alchemical Trade Post",
+  "advancements.peqol.interface.title": "Infinite Storage",
+  "advancements.peqol.interface.description": "Build an Alchemical Interface",
+  "advancements.peqol.farm.title": "Green Thumb",
+  "advancements.peqol.farm.description": "Build an Alchemical Harvester or Pasture",
+  "advancements.peqol.hourglass.title": "Master of Time",
+  "advancements.peqol.hourglass.description": "Get a Celestial Hourglass"
 }

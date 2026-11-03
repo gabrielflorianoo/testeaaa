@@ -1,0 +1,37 @@
+{
+  "display": {
+    "icon": {
+      "item": "peqol:alchemical_interface"
+    },
+    "title": {
+      "translate": "advancements.peqol.interface.title"
+    },
+    "description": {
+      "translate": "advancements.peqol.interface.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "peqol:automation",
+  "criteria": {
+    "has_alchemical_interface": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "peqol:alchemical_interface"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_alchemical_interface"
+    ]
+  ]
+}

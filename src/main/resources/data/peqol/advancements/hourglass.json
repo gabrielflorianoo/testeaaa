@@ -1,0 +1,37 @@
+{
+  "display": {
+    "icon": {
+      "item": "peqol:celestial_hourglass"
+    },
+    "title": {
+      "translate": "advancements.peqol.hourglass.title"
+    },
+    "description": {
+      "translate": "advancements.peqol.hourglass.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "peqol:root",
+  "criteria": {
+    "has_celestial_hourglass": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "peqol:celestial_hourglass"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_celestial_hourglass"
+    ]
+  ]
+}

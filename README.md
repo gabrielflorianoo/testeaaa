@@ -62,7 +62,7 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
   - **Modo estoque**: agache e clique com o botão direito segurando *N* itens. O exportador mantém exatamente *N* deles nos inventários vizinhos, repondo só o que for usado.
 - **Aspirador Alquímico**: suga os itens soltos num raio de 6 blocos e os transforma em EMC, com filtro opcional. Ideal para farms de mobs e de árvores. Agache e clique com a mão vazia para abrir a tela de filtro. Guarda o EMC se você estiver offline, e redstone pausa.
 - **Descida Alquímica**: o contrário da Conexão. Puxa o seu EMC pessoal e o envia para os relés, coletores e outros blocos de EMC vizinhos, o que permite carregar Estrelas de Klein num relé usando o EMC pessoal. Redstone pausa.
-- **Medidor Alquímico**: emite um sinal de comparador igual ao número de dígitos do seu EMC pessoal (1–9 EMC = 1, 1M = 7, 100T ou mais = 15). Serve para ligar e desligar farms ou máquinas conforme o seu saldo, e funciona com você offline.
+- **Medidor Alquímico**: emite um sinal de comparador igual ao número de dígitos do seu EMC pessoal (1–9 EMC = 1, 1M = 7, 100T ou mais = 15). Serve para ligar e desligar farms ou máquinas conforme o seu saldo, e funciona com você offline. Agache e clique com a mão vazia para trocar para o **modo limiar**, que dá sinal 15 quando o seu EMC passa de um valor (defina com `/peqol gauge threshold <EMC>`, olhando para o medidor).
 - **Colheitadeira Alquímica**: colhe e replanta as plantações maduras ao redor (trigo, cenoura, batata, beterraba, fungo do Nether, melancia, abóbora, cana, cacto, bambu). A produção com EMC vira o seu EMC, e o resto vai para um baú vizinho. Aceita Melhorias (raio), e redstone pausa.
 - **Pasto Alquímico**: de tempos em tempos coloca pares de animais adultos próximos no modo amor, pagando a comida deles com o seu EMC. Para num limite de população.
 - **Display Alquímico**: um letreiro para a base que mostra flutuando acima do bloco o nome do dono, o EMC dele e a variação por segundo.
@@ -91,6 +91,7 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 | `bag [cor]` | Abre uma bolsa alquímica, opcionalmente escolhendo a cor (ex.: `/peqol bag red`) |
 | `home set\|del <nome>` / `home [list]` / `home <nome>` | Casas com nome (até 5, configurável). A lista tem botões clicáveis e o teleporte custa EMC como a Âncora |
 | `fav add\|remove <item>` / `fav` | Itens favoritos com botões de compra rápida (também existe tecla) |
+| `gauge threshold <EMC>` | Define o limiar do Medidor Alquímico que você está olhando |
 | `shops [item]` | Lista todos os Postos de Troca do servidor (vende/compra, preço, dono, coordenadas clicáveis) |
 | `shop price <EMC>` | Define o preço do Posto de Troca que você está olhando |
 | `back` | Teleporta para onde você morreu por último, pagando EMC (mesma fórmula da Âncora). Procura um lugar seguro, sem lava |
@@ -144,7 +145,7 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 
 ## Extras
 - **Estatísticas**: em Estatísticas → Geral aparecem os itens queimados, os itens criados com EMC, os blocos construídos com a varinha, os itens fundidos, os reparados, as luzes colocadas, os teleportes e as refeições alquímicas.
-- **Conquistas**: tem uma aba própria "ProjectE QoL+" com 11 conquistas.
+- **Conquistas**: tem uma aba própria "ProjectE QoL+" com 16 conquistas.
 - **Placar de EMC**: o objetivo `peqol_emc` é atualizado com o EMC de cada jogador. Para exibir: `/scoreboard objectives setdisplay sidebar peqol_emc`.
 - **Conhecimento inicial**: `server.starterKnowledge` é uma lista de itens que todo jogador já conhece ao entrar pela primeira vez.
 - **Aprender ao fabricar** (`server.learnOnCraft`, desligado por padrão): fabricar um item com EMC também o aprende.

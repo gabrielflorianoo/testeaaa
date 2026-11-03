@@ -461,5 +461,19 @@
   "command.peqol.shops.header": "%s Postos de Troca (clique nas coordenadas para copiar):",
   "command.peqol.shops.sells": "[VENDE]",
   "command.peqol.shops.buys": "[COMPRA]",
-  "command.peqol.help.shops": "lista todos os Postos de Troca do servidor (opcionalmente de um item)"
+  "command.peqol.help.shops": "lista todos os Postos de Troca do servidor (opcionalmente de um item)",
+  "message.peqol.gauge.threshold": "Modo limiar: sinal 15 quando EMC >= %s",
+  "message.peqol.gauge.digits": "Modo dígitos: sinal = dígitos do seu EMC",
+  "command.peqol.gauge.look": "Olhe para um dos seus Medidores Alquímicos",
+  "command.peqol.help.gauge": "define o limiar do Medidor que você está olhando",
+  "advancements.peqol.excavator.title": "Mineração a Céu Aberto",
+  "advancements.peqol.excavator.description": "Construa uma Escavadeira Alquímica",
+  "advancements.peqol.trade_post.title": "Aberto para Negócios",
+  "advancements.peqol.trade_post.description": "Construa um Posto de Troca Alquímico",
+  "advancements.peqol.interface.title": "Armazém Infinito",
+  "advancements.peqol.interface.description": "Construa uma Interface Alquímica",
+  "advancements.peqol.farm.title": "Dedo Verde",
+  "advancements.peqol.farm.description": "Construa uma Colheitadeira ou Pasto Alquímico",
+  "advancements.peqol.hourglass.title": "Senhor do Tempo",
+  "advancements.peqol.hourglass.description": "Consiga uma Ampulheta Celestial"
 }

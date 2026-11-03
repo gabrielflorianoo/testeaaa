@@ -87,6 +87,10 @@ public final class PEQoLCommand {
                                         .executes(ctx -> xpFromEmc(ctx.getSource(), IntegerArgumentType.getInteger(ctx, "points"))))))
                 .then(Commands.literal("stats").executes(ctx -> stats(ctx.getSource())))
                 .then(Commands.literal("back").executes(ctx -> back(ctx.getSource())))
+                .then(Commands.literal("gauge")
+                        .then(Commands.literal("threshold")
+                                .then(Commands.argument("amount", StringArgumentType.word())
+                                        .executes(PEQoLCommand::gaugeThreshold))))
                 .then(Commands.literal("shops")
                         .executes(ctx -> shops(ctx.getSource(), null))
                         .then(Commands.argument("item", ItemArgument.item(buildContext))
@@ -186,7 +190,7 @@ public final class PEQoLCommand {
 
     private static int help(CommandSourceStack source) {
         source.sendSuccess(() -> Component.translatable("command.peqol.help.header").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD), false);
-        String[] entries = {"balance", "pay", "withdraw", "buy", "sell", "value", "known", "tablet", "bag", "fav", "home", "shop", "shops", "autostock", "learnall", "gift", "share", "back", "xp", "stats", "handbook", "worth", "burn", "missing", "unlearned", "stars", "knowledge", "top"};
+        String[] entries = {"balance", "pay", "withdraw", "buy", "sell", "value", "known", "tablet", "bag", "fav", "home", "shop", "shops", "gauge", "autostock", "learnall", "gift", "share", "back", "xp", "stats", "handbook", "worth", "burn", "missing", "unlearned", "stars", "knowledge", "top"};
         for (String entry : entries) {
             source.sendSuccess(() -> Component.literal("/peqol " + entry).withStyle(ChatFormatting.GOLD)
                     .append(Component.literal(" - ").withStyle(ChatFormatting.DARK_GRAY))
@@ -628,6 +632,24 @@ public final class PEQoLCommand {
                             .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal(entry.pos().dimension().location().toString()))))), false);
         }
         return shown.size();
+    }
+
+    private static int gaugeThreshold(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        ServerPlayer player = ctx.getSource().getPlayerOrException();
+        BigInteger amount = parseAmount(ctx);
+        net.minecraft.world.phys.HitResult hit = player.pick(6, 0, false);
+        if (!(hit instanceof net.minecraft.world.phys.BlockHitResult blockHit) || hit.getType() != net.minecraft.world.phys.HitResult.Type.BLOCK
+                || !(player.level().getBlockEntity(blockHit.getBlockPos()) instanceof com.gabrielflorianoo.peqol.block.entity.AlchemicalGaugeBlockEntity gauge)) {
+            ctx.getSource().sendFailure(Component.translatable("command.peqol.gauge.look"));
+            return 0;
+        }
+        if (!gauge.getOwnerData().canConfigure(player)) {
+            ctx.getSource().sendFailure(Component.translatable("message.peqol.not_owner", gauge.getOwnerData().describe()));
+            return 0;
+        }
+        gauge.setThreshold(amount);
+        ctx.getSource().sendSuccess(() -> Component.translatable("message.peqol.gauge.threshold", EmcUtil.format(amount)).withStyle(ChatFormatting.GREEN), false);
+        return 1;
     }
 
     private static int shopPrice(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {

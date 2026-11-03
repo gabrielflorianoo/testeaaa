@@ -1,0 +1,37 @@
+{
+  "display": {
+    "icon": {
+      "item": "peqol:trade_post"
+    },
+    "title": {
+      "translate": "advancements.peqol.trade_post.title"
+    },
+    "description": {
+      "translate": "advancements.peqol.trade_post.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "peqol:cheque",
+  "criteria": {
+    "has_trade_post": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "peqol:trade_post"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_trade_post"
+    ]
+  ]
+}
