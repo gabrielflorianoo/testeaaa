@@ -334,5 +334,10 @@
   "jei.peqol.info.void_pouch": "Clique direito para abrir seu baú do ender em qualquer lugar, por uma pequena taxa de EMC.",
   "jei.peqol.info.prospector": "Clique direito para escanear os minérios ao redor e ver seu valor total em EMC.",
   "command.peqol.help.tablet": "abre a transmutação",
-  "command.peqol.help.bag": "abre uma bolsa alquímica (opcionalmente por cor)"
+  "command.peqol.help.bag": "abre uma bolsa alquímica (opcionalmente por cor)",
+  "gui.peqol.learn_inventory": "Aprender Inventário",
+  "gui.peqol.learn_inventory.tooltip": "Queima um de cada item não aprendido do inventário para aprendê-lo, mantendo o resto.",
+  "gui.peqol.burn_inventory": "Queimar Inventário",
+  "gui.peqol.burn_inventory.tooltip": "Queima o inventário principal em EMC. Hotbar, armadura, mão secundária, Estrelas de Klein e itens com NBT são mantidos.",
+  "hud.peqol.goal": "Meta: %sx %s"
 }

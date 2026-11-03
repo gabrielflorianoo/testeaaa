@@ -131,6 +131,36 @@ public final class EmcHudOverlay implements IGuiOverlay {
         }
     }
 
+    /**
+     * "Goal: 64x Diamond Block [||||||....] 60%" for the EMC goal set with /peqolclient goal.
+     */
+    @org.jetbrains.annotations.Nullable
+    private Component goalLine() {
+        String id = PEQoLConfig.CLIENT.goalItem.get();
+        if (id.isEmpty()) {
+            return null;
+        }
+        net.minecraft.resources.ResourceLocation rl = net.minecraft.resources.ResourceLocation.tryParse(id);
+        net.minecraft.world.item.Item item = rl == null ? null : net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(rl);
+        if (item == null || item == net.minecraft.world.item.Items.AIR) {
+            return null;
+        }
+        ItemStack stack = new ItemStack(item);
+        long unit = EmcUtil.value(stack);
+        if (unit <= 0) {
+            return null;
+        }
+        int count = PEQoLConfig.CLIENT.goalCount.get();
+        BigInteger target = BigInteger.valueOf(unit).multiply(BigInteger.valueOf(count));
+        int percent = currentEmc.compareTo(target) >= 0 ? 100 : currentEmc.multiply(BigInteger.valueOf(100)).divide(target).intValue();
+        int filled = percent / 10;
+        net.minecraft.network.chat.MutableComponent bar = Component.literal("|".repeat(filled)).withStyle(ChatFormatting.GREEN)
+                .append(Component.literal("|".repeat(10 - filled)).withStyle(ChatFormatting.DARK_GRAY));
+        return Component.translatable("hud.peqol.goal", count, stack.getHoverName()).withStyle(ChatFormatting.GOLD)
+                .append(" [").append(bar).append("] ")
+                .append(Component.literal(percent + "%").withStyle(percent >= 100 ? ChatFormatting.GREEN : ChatFormatting.WHITE));
+    }
+
     private boolean shouldRender(Minecraft mc) {
         if (hiddenByKey || mc.options.hideGui || mc.options.renderDebug || mc.player == null) {
             return false;
@@ -162,6 +192,10 @@ public final class EmcHudOverlay implements IGuiOverlay {
                     : Component.translatable("hud.peqol.knowledge", knowledge).withStyle(ChatFormatting.AQUA));
         }
 
+        Component goal = goalLine();
+        if (goal != null) {
+            lines.add(goal);
+        }
         if (PEQoLConfig.CLIENT.hudShowKleinStars.get() && kleinStarEmc.signum() > 0) {
             lines.add(Component.translatable("hud.peqol.klein_stars", EmcUtil.format(kleinStarEmc, compact)).withStyle(ChatFormatting.DARK_AQUA));
         }

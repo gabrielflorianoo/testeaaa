@@ -11,6 +11,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RegisterClientCommandsEvent;
+import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.client.event.RenderHighlightEvent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
@@ -101,8 +102,13 @@ public final class ClientForgeEvents {
     }
 
     @SubscribeEvent
+    public static void onScreenInit(ScreenEvent.Init.Post event) {
+        TransmutationScreenButtons.onInit(event);
+    }
+
+    @SubscribeEvent
     public static void onClientCommands(RegisterClientCommandsEvent event) {
-        ClientCommands.register(event.getDispatcher());
+        ClientCommands.register(event.getDispatcher(), event.getBuildContext());
     }
 
     @SubscribeEvent

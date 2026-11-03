@@ -346,6 +346,8 @@ public final class PEQoLConfig {
         public final ForgeConfigSpec.BooleanValue hudShowKleinStars;
         public final ForgeConfigSpec.BooleanValue learnToasts;
         public final ForgeConfigSpec.BooleanValue machineInfo;
+        public final ForgeConfigSpec.ConfigValue<String> goalItem;
+        public final ForgeConfigSpec.IntValue goalCount;
 
         public final ForgeConfigSpec.BooleanValue tooltipAffordable;
         public final ForgeConfigSpec.BooleanValue tooltipSellValue;
@@ -371,6 +373,9 @@ public final class PEQoLConfig {
                     .define("showActiveCharms", true);
             hudShowHeldValue = builder.comment("Show the EMC value of the held stack.")
                     .define("showHeldValue", true);
+            goalItem = builder.comment("EMC goal shown on the HUD (item id, empty = none). Set it in game with /peqolclient goal <item> [count].")
+                    .define("goalItem", "");
+            goalCount = builder.defineInRange("goalCount", 1, 1, 1_000_000);
             machineInfo = builder.comment("Show a small info panel when looking at QoL+ machines and ProjectE EMC blocks.")
                     .define("machineInfo", true);
             learnToasts = builder.comment("Show a toast when you learn new items.")

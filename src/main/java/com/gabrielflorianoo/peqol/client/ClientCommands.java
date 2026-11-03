@@ -19,7 +19,7 @@ public final class ClientCommands {
     private ClientCommands() {
     }
 
-    public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher, net.minecraft.commands.CommandBuildContext buildContext) {
         LiteralArgumentBuilder<CommandSourceStack> corner = Commands.literal("corner");
         for (PEQoLConfig.HudCorner value : PEQoLConfig.HudCorner.values()) {
             corner.then(Commands.literal(value.name().toLowerCase(Locale.ROOT)).executes(ctx -> set(ctx.getSource(), PEQoLConfig.CLIENT.hudCorner, value)));
@@ -51,9 +51,26 @@ public final class ClientCommands {
                         .then(toggle("sellvalue", PEQoLConfig.CLIENT.tooltipSellValue))
                         .then(toggle("contents", PEQoLConfig.CLIENT.tooltipContainerContents))
                         .then(toggle("noemc", PEQoLConfig.CLIENT.tooltipNoEmcWarning)))
+                .then(Commands.literal("goal")
+                        .then(Commands.literal("clear").executes(ctx -> set(ctx.getSource(), PEQoLConfig.CLIENT.goalItem, "")))
+                        .then(Commands.argument("item", net.minecraft.commands.arguments.item.ItemArgument.item(buildContext))
+                                .executes(ctx -> setGoal(ctx.getSource(), net.minecraft.commands.arguments.item.ItemArgument.getItem(ctx, "item").getItem(), 1))
+                                .then(Commands.argument("count", IntegerArgumentType.integer(1, 1_000_000))
+                                        .executes(ctx -> setGoal(ctx.getSource(), net.minecraft.commands.arguments.item.ItemArgument.getItem(ctx, "item").getItem(),
+                                                IntegerArgumentType.getInteger(ctx, "count"))))))
                 .then(toggle("machineinfo", PEQoLConfig.CLIENT.machineInfo))
                 .then(toggle("learntoasts", PEQoLConfig.CLIENT.learnToasts))
                 .then(toggle("milestones", PEQoLConfig.CLIENT.milestoneToasts)));
+    }
+
+    private static int setGoal(CommandSourceStack source, net.minecraft.world.item.Item item, int count) {
+        net.minecraft.resources.ResourceLocation id = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(item);
+        if (id == null) {
+            return 0;
+        }
+        PEQoLConfig.CLIENT.goalCount.set(count);
+        PEQoLConfig.CLIENT.goalCount.save();
+        return set(source, PEQoLConfig.CLIENT.goalItem, id.toString());
     }
 
     private static LiteralArgumentBuilder<CommandSourceStack> toggle(String name, ForgeConfigSpec.BooleanValue value) {

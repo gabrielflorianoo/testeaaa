@@ -334,5 +334,10 @@
   "jei.peqol.info.void_pouch": "Right click to open your ender chest anywhere, for a small EMC fee.",
   "jei.peqol.info.prospector": "Right click to scan the ores around you and see their total EMC value.",
   "command.peqol.help.tablet": "open the transmutation GUI",
-  "command.peqol.help.bag": "open an alchemical bag (optionally by color)"
+  "command.peqol.help.bag": "open an alchemical bag (optionally by color)",
+  "gui.peqol.learn_inventory": "Learn Inventory",
+  "gui.peqol.learn_inventory.tooltip": "Burns one of each unlearned item in your inventory so you learn it, keeping the rest.",
+  "gui.peqol.burn_inventory": "Burn Inventory",
+  "gui.peqol.burn_inventory.tooltip": "Burns your main inventory into EMC. The hotbar, armor, offhand, Klein Stars and items with NBT are kept.",
+  "hud.peqol.goal": "Goal: %sx %s"
 }

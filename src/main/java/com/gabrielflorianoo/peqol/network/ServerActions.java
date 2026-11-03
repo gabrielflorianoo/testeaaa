@@ -51,6 +51,7 @@ public final class ServerActions {
             case TOGGLE_ILLUMINATION -> toggle(player, IlluminationCharmItem.class);
             case TOGGLE_SMELTING -> toggle(player, SmeltingCharmItem.class);
             case LEARN_INVENTORY -> learnInventory(player, true);
+            case BURN_INVENTORY -> burnInventory(player);
         }
     }
 
@@ -183,6 +184,35 @@ public final class ServerActions {
             }
         }
         return learned;
+    }
+
+    /**
+     * Burns the main inventory (not hotbar, armor or offhand), like /peqol burn inventory.
+     */
+    public static void burnInventory(ServerPlayer player) {
+        if (!PEQoLConfig.COMMON.burnCommandEnabled.get()) {
+            player.displayClientMessage(Component.translatable("message.peqol.disabled").withStyle(ChatFormatting.RED), true);
+            return;
+        }
+        boolean skipNbt = PEQoLConfig.COMMON.burnSkipsItemsWithNbt.get();
+        BigInteger total = BigInteger.ZERO;
+        int items = 0;
+        for (int i = net.minecraft.world.entity.player.Inventory.getSelectionSize(); i < player.getInventory().items.size(); i++) {
+            ItemStack stack = player.getInventory().items.get(i);
+            if (stack.isEmpty() || EmcUtil.isTablet(stack) || stack.getItem() instanceof EmcChequeItem || EmcUtil.isEmcHolder(stack)
+                    || !EmcUtil.hasValue(stack) || (skipNbt && stack.hasTag())) {
+                continue;
+            }
+            items += stack.getCount();
+            total = total.add(EmcUtil.burn(player, stack, true));
+            player.getInventory().items.set(i, ItemStack.EMPTY);
+        }
+        if (items == 0) {
+            player.displayClientMessage(Component.translatable("command.peqol.burn.nothing").withStyle(ChatFormatting.YELLOW), true);
+            return;
+        }
+        player.displayClientMessage(Component.translatable("command.peqol.burn.inventory", items, EmcUtil.format(total)).withStyle(ChatFormatting.GOLD), true);
+        player.level().playSound(null, player.blockPosition(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 0.4F, 1.4F);
     }
 
     private static void toggle(ServerPlayer player, Class<? extends ToggleableItem> type) {
