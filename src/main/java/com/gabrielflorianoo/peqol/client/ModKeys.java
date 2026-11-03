@@ -29,8 +29,11 @@ public final class ModKeys {
     public static final KeyMapping TOGGLE_STELLAR = new KeyMapping("key.peqol.toggle_stellar", KeyConflictContext.IN_GAME,
             InputConstants.UNKNOWN, CATEGORY);
 
+    public static final KeyMapping TOGGLE_ILLUMINATION = new KeyMapping("key.peqol.toggle_illumination", KeyConflictContext.IN_GAME,
+            InputConstants.UNKNOWN, CATEGORY);
+
     public static final KeyMapping[] ALL = {OPEN_TABLET, OPEN_BAG, QUICK_BURN, TOGGLE_HUD, TOGGLE_RESTOCKER, TOGGLE_SIPHON,
-            TOGGLE_MENDING, TOGGLE_SATIATION, TOGGLE_STELLAR};
+            TOGGLE_MENDING, TOGGLE_SATIATION, TOGGLE_STELLAR, TOGGLE_ILLUMINATION};
 
     private ModKeys() {
     }

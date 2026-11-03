@@ -8,6 +8,8 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
 
 ### HUD e tooltips (cliente)
 - **HUD de EMC**: seu EMC pessoal, ganho/perda por segundo (média de 5 s) e quantos itens você aprendeu. Por padrão aparece só quando você carrega uma Tábua de Transmutação. Dá para mudar o canto, o deslocamento, o formato compacto (`1.25M`) e o fundo. A tecla **H** mostra/esconde.
+- **Valor da mão no HUD**: mostra quanto vale a pilha que você está segurando.
+- **Toasts de marco**: uma notificação aparece quando o seu EMC passa de 1K, 10K, 100K, 1M e assim por diante.
 - **Amuletos ativos no HUD**: os amuletos ligados aparecem listados embaixo do EMC.
 - **Tooltips extras** (segure SHIFT):
   - *Você pode transmutar: N (X pilhas)*: quantos você consegue criar com o EMC atual.
@@ -32,6 +34,9 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
 - **Amuleto de Reparo Alquímico**: repara as ferramentas e armaduras danificadas usando EMC. Um reparo completo custa cerca do valor do item.
 - **Amuleto da Saciedade**: escolha uma comida aprendida (agache e clique com o botão direito segurando a comida na outra mão). Ele come automaticamente quando a fome cairia sem desperdício, pagando com EMC.
 - **Elo Estelar**: mantém as Estrelas de Klein do inventário (e dos slots do Curios) carregadas com o seu EMC pessoal.
+- **Amuleto da Iluminação**: coloca tochas aos seus pés em lugares escuros. Usa as tochas do inventário primeiro e depois EMC. O item colocado é configurável (por exemplo, tocha de alma).
+- **Varinha de Construção Alquímica**: clique numa face e ela estende todos os blocos iguais conectados naquela face, de 1 a 81 blocos. Agache e clique no ar para mudar o tamanho. Mostra uma prévia em contorno lilás, usa os blocos do inventário e depois EMC, e respeita proteções de área.
+- **Lente de Avaliação Alquímica**: clique num baú (ou qualquer inventário) para ver quanto vale o conteúdo e os 5 itens mais valiosos. Em coletores, relés e condensadores, mostra o EMC armazenado. No ar, avalia o seu inventário.
 - **Cheque de EMC**: o `/peqol withdraw` transforma EMC em um item que pode ser trocado entre jogadores. Clique com o botão direito para resgatar; agachado, você resgata a pilha inteira. O cheque não tem valor de EMC, então não dá para queimá-lo e duplicar EMC.
 - **Pergaminho do Conhecimento**: grava tudo o que você aprendeu. Outro jogador clica com o botão direito e aprende tudo o que está gravado, ótimo para servidores. Agachar e clicar com o botão direito apaga o pergaminho.
 
@@ -48,13 +53,14 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 | Comando | Descrição |
 |---|---|
 | `balance [jogador]` | Mostra o EMC (ver o de outro jogador exige OP) |
-| `knowledge [jogador]` | Mostra quantos itens o jogador aprendeu |
+| `knowledge [jogador]` | Mostra quantos itens o jogador aprendeu e o progresso em % do total de itens com EMC |
 | `pay <jogador> <quantia>` | Envia EMC para outro jogador. Aceita `1.5k`, `20M`, `3B`... |
 | `withdraw <quantia> [cheques]` | Saca o EMC em Cheques de EMC |
 | `worth [hand\|inventory]` | Mostra quanto vale a mão ou o inventário |
 | `burn hand\|inventory` | Queima a mão ou o inventário principal. A hotbar, a armadura, a mão secundária, os itens com NBT e as Estrelas de Klein são preservados |
 | `buy <item> [qtd]` | Cria itens aprendidos com o seu EMC, com autocompletar (ex.: `/peqol buy minecraft:diamond 64`) |
 | `value <item>` | Mostra o valor de qualquer item, se você já o aprendeu e quantos consegue criar |
+| `known [page N \| search <texto>]` | Navega pelos itens aprendidos, com botões **[x1] [x64]** clicáveis no chat para comprar na hora |
 | `unlearned` | Lista os itens do inventário com EMC que você ainda não aprendeu |
 | `stars fill\|drain` | Enche as Estrelas de Klein com o seu EMC, ou esvazia todas no seu EMC |
 | `help` | Lista os comandos |
@@ -72,11 +78,14 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 | Exportador Alquímico | Matéria Escura ×2, Liberador ×2, Mesa de Transmutação |
 | Amuleto de Reparo Alquímico | Pó de Covalência Médio ×2, Matéria Escura ×2, Talismã de Reparo |
 | Amuleto da Saciedade | Pó de Covalência Baixo ×4, Cenoura Dourada ×4, Faixa de Ferro |
+| Varinha de Construção | Matéria Escura, Vara de Blaze, Pó de Covalência Médio (na diagonal) |
+| Amuleto da Iluminação | Pó de Covalência Baixo ×4, Tocha ×4, Faixa de Ferro |
+| Lente de Avaliação | Ouro ×3, Painel de Vidro, Pó de Covalência Baixo |
 | Elo Estelar | Pó de Covalência Alto ×2, Estrela de Klein Ein ×2, Faixa de Ferro |
 
 ## Curios (opcional)
 Se o [Curios](https://www.curseforge.com/minecraft/mc-mods/curios) estiver instalado, os itens podem ficar nos slots dele e continuam funcionando:
-- **Cinto**: Reabastecedor e Tábua de Transmutação.
+- **Cinto**: Reabastecedor, Iluminação e Tábua de Transmutação.
 - **Colar**: Sifão e Saciedade.
 - **Anel**: Reparo e Elo Estelar.
 
@@ -102,6 +111,8 @@ A quality-of-life addon for ProjectE on Forge 1.20.1. It includes:
 - A Siphon Charm that turns filtered pickups into EMC.
 - Tradeable EMC Cheques and Knowledge Scrolls for sharing knowledge.
 - Uplink, Importer and Exporter blocks that bridge automation and personal EMC.
+- Construction Wand with preview, Charm of Illumination, Appraisal Lens.
+- `/peqol known` with clickable buy buttons, knowledge progress %, held-item value on the HUD and EMC milestone toasts.
 - Alchemical pick block (middle click creates the block from EMC).
 - Mending, Satiation and Stellar Link charms.
 - Stock-keeping mode for the Exporter and a comparator output for the Uplink.

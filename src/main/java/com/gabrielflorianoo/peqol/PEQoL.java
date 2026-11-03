@@ -8,6 +8,7 @@ import com.gabrielflorianoo.peqol.registry.ModBlockEntities;
 import com.gabrielflorianoo.peqol.registry.ModBlocks;
 import com.gabrielflorianoo.peqol.registry.ModCreativeTab;
 import com.gabrielflorianoo.peqol.registry.ModItems;
+import com.gabrielflorianoo.peqol.util.KnowledgeStats;
 import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
@@ -40,6 +41,7 @@ public class PEQoL {
         modBus.addListener(this::commonSetup);
 
         MinecraftForge.EVENT_BUS.register(CommonEvents.class);
+        MinecraftForge.EVENT_BUS.register(KnowledgeStats.class);
         MinecraftForge.EVENT_BUS.addListener(this::registerCommands);
     }
 

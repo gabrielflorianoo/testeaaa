@@ -3,6 +3,7 @@ package com.gabrielflorianoo.peqol.network;
 import com.gabrielflorianoo.peqol.config.PEQoLConfig;
 import com.gabrielflorianoo.peqol.item.EmcChequeItem;
 import com.gabrielflorianoo.peqol.item.RestockerTalismanItem;
+import com.gabrielflorianoo.peqol.item.IlluminationCharmItem;
 import com.gabrielflorianoo.peqol.item.MendingCharmItem;
 import com.gabrielflorianoo.peqol.item.SatiationCharmItem;
 import com.gabrielflorianoo.peqol.item.SiphonCharmItem;
@@ -46,6 +47,7 @@ public final class ServerActions {
             case TOGGLE_MENDING -> toggle(player, MendingCharmItem.class);
             case TOGGLE_SATIATION -> toggle(player, SatiationCharmItem.class);
             case TOGGLE_STELLAR -> toggle(player, StellarLinkItem.class);
+            case TOGGLE_ILLUMINATION -> toggle(player, IlluminationCharmItem.class);
         }
     }
 

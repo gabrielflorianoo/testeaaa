@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["LTL", "TBT", "LTL"],
+  "key": {
+    "L": { "item": "projecte:low_covalence_dust" },
+    "T": { "item": "minecraft:torch" },
+    "B": { "item": "projecte:iron_band" }
+  },
+  "result": { "item": "peqol:illumination_charm" }
+}

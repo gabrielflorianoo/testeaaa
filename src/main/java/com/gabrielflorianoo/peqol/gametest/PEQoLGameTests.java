@@ -7,6 +7,11 @@ import com.gabrielflorianoo.peqol.item.EmcChequeItem;
 import com.gabrielflorianoo.peqol.item.MendingCharmItem;
 import com.gabrielflorianoo.peqol.item.SatiationCharmItem;
 import com.gabrielflorianoo.peqol.item.SiphonCharmItem;
+import com.gabrielflorianoo.peqol.item.WandPlacement;
+import com.gabrielflorianoo.peqol.util.KnowledgeStats;
+import java.util.List;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Blocks;
 import com.gabrielflorianoo.peqol.registry.ModBlocks;
 import com.gabrielflorianoo.peqol.registry.ModItems;
 import com.gabrielflorianoo.peqol.util.EmcUtil;
@@ -147,6 +152,32 @@ public class PEQoLGameTests {
         helper.assertTrue(uplink.getComparatorSignal() == 0, "Empty uplink gives no signal");
         uplink.insertEmc(1, IEmcStorage.EmcAction.EXECUTE);
         helper.assertTrue(uplink.getComparatorSignal() >= 1, "Any EMC gives at least signal 1");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void constructionWandFindsFace(GameTestHelper helper) {
+        for (int x = 0; x < 3; x++) {
+            helper.setBlock(new BlockPos(x, 1, 1), Blocks.STONE);
+        }
+        BlockPos middle = helper.absolutePos(new BlockPos(1, 1, 1));
+        List<BlockPos> targets = WandPlacement.findTargets(helper.getLevel(), middle, Direction.UP, 9);
+        helper.assertTrue(targets.size() == 3, "Expected 3 targets on top of the row, got " + targets.size());
+        helper.assertTrue(targets.get(0).equals(middle.above()), "Closest target first");
+        //Block one of the spots
+        helper.setBlock(new BlockPos(2, 2, 1), Blocks.DIRT);
+        targets = WandPlacement.findTargets(helper.getLevel(), middle, Direction.UP, 9);
+        helper.assertTrue(targets.size() == 2, "Expected 2 targets with one obstructed, got " + targets.size());
+        helper.assertTrue(WandPlacement.findTargets(helper.getLevel(), middle, Direction.UP, 1).size() == 1, "Size limit");
+        helper.assertFalse(WandPlacement.canCopy(Blocks.CHEST.defaultBlockState()), "Chests can't be copied");
+        helper.assertFalse(WandPlacement.canCopy(Blocks.OAK_DOOR.defaultBlockState()), "Doors can't be copied");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void knowledgeStatsCountsItemsWithEmc(GameTestHelper helper) {
+        int count = KnowledgeStats.itemsWithEmc();
+        helper.assertTrue(count > 100, "Expected many items with EMC, got " + count);
         helper.succeed();
     }
 }

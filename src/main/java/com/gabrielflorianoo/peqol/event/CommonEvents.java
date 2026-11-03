@@ -2,6 +2,7 @@ package com.gabrielflorianoo.peqol.event;
 
 import com.gabrielflorianoo.peqol.config.PEQoLConfig;
 import com.gabrielflorianoo.peqol.item.RestockerTalismanItem;
+import com.gabrielflorianoo.peqol.item.IlluminationCharmItem;
 import com.gabrielflorianoo.peqol.item.MendingCharmItem;
 import com.gabrielflorianoo.peqol.item.SatiationCharmItem;
 import com.gabrielflorianoo.peqol.item.SiphonCharmItem;
@@ -50,6 +51,9 @@ public final class CommonEvents {
         }
         if (tick % 20 == 0 && hasActive(player, StellarLinkItem.class)) {
             StellarLinkItem.charge(player);
+        }
+        if (tick % PEQoLConfig.COMMON.illuminationInterval.get() == 0 && hasActive(player, IlluminationCharmItem.class)) {
+            IlluminationCharmItem.illuminate(player);
         }
     }
 

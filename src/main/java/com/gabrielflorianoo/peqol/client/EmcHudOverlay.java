@@ -12,6 +12,8 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.toasts.SystemToast;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
@@ -56,7 +58,11 @@ public final class EmcHudOverlay implements IGuiOverlay {
         if (provider == null) {
             return;
         }
+        BigInteger previous = currentEmc;
         currentEmc = provider.getEmc();
+        if (samplesTaken >= SAMPLE_TICKS && PEQoLConfig.CLIENT.milestoneToasts.get()) {
+            checkMilestone(previous, currentEmc);
+        }
         if (player.tickCount % 20 == 0) {
             knowledge = provider.getKnowledge().size();
             fullKnowledge = provider.hasFullKnowledge();
@@ -80,6 +86,22 @@ public final class EmcHudOverlay implements IGuiOverlay {
             ratePerSecond = BigInteger.ZERO;
         } else if (oldest != null) {
             ratePerSecond = currentEmc.subtract(oldest).divide(BigInteger.valueOf(SAMPLE_TICKS / 20));
+        }
+    }
+
+    private static void checkMilestone(BigInteger before, BigInteger now) {
+        if (now.compareTo(before) <= 0 || now.compareTo(BigInteger.valueOf(1000)) < 0) {
+            return;
+        }
+        //Number of digits = order of magnitude; a new digit means we crossed 10^n
+        int digitsBefore = before.signum() <= 0 ? 0 : before.toString().length();
+        int digitsNow = now.toString().length();
+        if (digitsNow > digitsBefore && digitsNow >= 4) {
+            BigInteger milestone = BigInteger.TEN.pow(digitsNow - 1);
+            Minecraft mc = Minecraft.getInstance();
+            SystemToast.addOrUpdate(mc.getToasts(), SystemToast.SystemToastIds.PERIODIC_NOTIFICATION,
+                    Component.translatable("toast.peqol.milestone.title"),
+                    Component.translatable("toast.peqol.milestone.body", EmcUtil.compact(milestone)));
         }
     }
 
@@ -114,6 +136,14 @@ public final class EmcHudOverlay implements IGuiOverlay {
                     : Component.translatable("hud.peqol.knowledge", knowledge).withStyle(ChatFormatting.AQUA));
         }
 
+        if (PEQoLConfig.CLIENT.hudShowHeldValue.get() && mc.player != null) {
+            ItemStack held = mc.player.getMainHandItem();
+            long unit = EmcUtil.value(held);
+            if (unit > 0) {
+                lines.add(Component.translatable("hud.peqol.held", held.getCount(), held.getHoverName(),
+                        EmcUtil.format(EmcUtil.stackValue(held), compact)).withStyle(ChatFormatting.GRAY));
+            }
+        }
         if (PEQoLConfig.CLIENT.hudShowActiveCharms.get()) {
             for (Component charm : activeCharms) {
                 lines.add(Component.literal("\u2726 ").append(charm).withStyle(ChatFormatting.LIGHT_PURPLE));

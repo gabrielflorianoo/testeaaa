@@ -1,7 +1,10 @@
 package com.gabrielflorianoo.peqol.registry;
 
 import com.gabrielflorianoo.peqol.PEQoL;
+import com.gabrielflorianoo.peqol.item.AppraisalLensItem;
+import com.gabrielflorianoo.peqol.item.ConstructionWandItem;
 import com.gabrielflorianoo.peqol.item.EmcChequeItem;
+import com.gabrielflorianoo.peqol.item.IlluminationCharmItem;
 import com.gabrielflorianoo.peqol.item.KnowledgeScrollItem;
 import com.gabrielflorianoo.peqol.item.OwnedBlockItem;
 import com.gabrielflorianoo.peqol.item.RestockerTalismanItem;
@@ -29,6 +32,12 @@ public final class ModItems {
             () -> new SatiationCharmItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).fireResistant()));
     public static final RegistryObject<StellarLinkItem> STELLAR_LINK = ITEMS.register("stellar_link",
             () -> new StellarLinkItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).fireResistant()));
+    public static final RegistryObject<IlluminationCharmItem> ILLUMINATION_CHARM = ITEMS.register("illumination_charm",
+            () -> new IlluminationCharmItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).fireResistant()));
+    public static final RegistryObject<ConstructionWandItem> CONSTRUCTION_WAND = ITEMS.register("construction_wand",
+            () -> new ConstructionWandItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).fireResistant()));
+    public static final RegistryObject<AppraisalLensItem> APPRAISAL_LENS = ITEMS.register("appraisal_lens",
+            () -> new AppraisalLensItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<EmcChequeItem> EMC_CHEQUE = ITEMS.register("emc_cheque",
             () -> new EmcChequeItem(new Item.Properties().stacksTo(64).rarity(Rarity.RARE).fireResistant()));
     public static final RegistryObject<KnowledgeScrollItem> KNOWLEDGE_SCROLL = ITEMS.register("knowledge_scroll",

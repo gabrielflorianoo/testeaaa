@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.client.event.RenderHighlightEvent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -49,6 +50,7 @@ public final class ClientForgeEvents {
         send(ModKeys.TOGGLE_MENDING, KeyAction.TOGGLE_MENDING);
         send(ModKeys.TOGGLE_SATIATION, KeyAction.TOGGLE_SATIATION);
         send(ModKeys.TOGGLE_STELLAR, KeyAction.TOGGLE_STELLAR);
+        send(ModKeys.TOGGLE_ILLUMINATION, KeyAction.TOGGLE_ILLUMINATION);
         while (ModKeys.TOGGLE_HUD.consumeClick()) {
             boolean visible = EmcHudOverlay.INSTANCE.toggle();
             mc.player.displayClientMessage(Component.translatable(visible ? "message.peqol.hud_on" : "message.peqol.hud_off")
@@ -87,6 +89,11 @@ public final class ClientForgeEvents {
         if (!picked.isEmpty() && mc.player.getInventory().findSlotMatchingItem(picked) == -1) {
             PEQoLNetwork.sendToServer(new PickBlockPacket(hit.getBlockPos()));
         }
+    }
+
+    @SubscribeEvent
+    public static void onHighlight(RenderHighlightEvent.Block event) {
+        WandPreview.render(event);
     }
 
     @SubscribeEvent

@@ -62,6 +62,16 @@ public final class PEQoLConfig {
         public final ForgeConfigSpec.IntValue satiationInterval;
         public final ForgeConfigSpec.LongValue stellarLinkRate;
 
+        // Construction wand
+        public final ForgeConfigSpec.BooleanValue wandEnabled;
+        public final ForgeConfigSpec.BooleanValue wandUsesEmc;
+        public final ForgeConfigSpec.IntValue wandMaxBlocks;
+
+        // Illumination
+        public final ForgeConfigSpec.IntValue illuminationInterval;
+        public final ForgeConfigSpec.IntValue illuminationThreshold;
+        public final ForgeConfigSpec.ConfigValue<String> illuminationItem;
+
         // Buy command
         public final ForgeConfigSpec.BooleanValue buyEnabled;
         public final ForgeConfigSpec.BooleanValue buyRequiresTablet;
@@ -148,6 +158,23 @@ public final class PEQoLConfig {
                     .defineInRange("ratePerSecond", 1_000_000L, 1L, Long.MAX_VALUE);
             builder.pop();
 
+            builder.comment("Alchemical Construction Wand").push("constructionWand");
+            wandEnabled = builder.define("enabled", true);
+            wandUsesEmc = builder.comment("When the inventory runs out of the block, pay with personal EMC (learned blocks only).")
+                    .define("usesEmc", true);
+            wandMaxBlocks = builder.comment("Maximum blocks placed per use.")
+                    .defineInRange("maxBlocks", 81, 1, 81);
+            builder.pop();
+
+            builder.comment("Charm of Illumination").push("illumination");
+            illuminationInterval = builder.comment("Ticks between light checks.")
+                    .defineInRange("interval", 10, 1, 1200);
+            illuminationThreshold = builder.comment("A light is placed when both block and sky light at your feet are below this value.")
+                    .defineInRange("threshold", 8, 1, 15);
+            illuminationItem = builder.comment("Block item that is placed (must be a block item, e.g. minecraft:torch or minecraft:soul_torch).")
+                    .define("item", "minecraft:torch");
+            builder.pop();
+
             builder.comment("/peqol buy").push("buy");
             buyEnabled = builder.comment("Allow creating learned items from personal EMC with /peqol buy.")
                     .define("enabled", true);
@@ -201,6 +228,8 @@ public final class PEQoLConfig {
         public final ForgeConfigSpec.BooleanValue hudCompactNumbers;
         public final ForgeConfigSpec.BooleanValue hudBackground;
         public final ForgeConfigSpec.BooleanValue hudShowActiveCharms;
+        public final ForgeConfigSpec.BooleanValue hudShowHeldValue;
+        public final ForgeConfigSpec.BooleanValue milestoneToasts;
 
         public final ForgeConfigSpec.BooleanValue tooltipAffordable;
         public final ForgeConfigSpec.BooleanValue tooltipSellValue;
@@ -224,6 +253,10 @@ public final class PEQoLConfig {
             hudBackground = builder.define("background", true);
             hudShowActiveCharms = builder.comment("List the active QoL+ charms under the EMC line.")
                     .define("showActiveCharms", true);
+            hudShowHeldValue = builder.comment("Show the EMC value of the held stack.")
+                    .define("showHeldValue", true);
+            milestoneToasts = builder.comment("Show a toast when your personal EMC crosses 1K, 10K, 100K, 1M, ...")
+                    .define("milestoneToasts", true);
             builder.pop();
 
             builder.comment("Extra tooltip lines (shown while holding SHIFT, like ProjectE's own)").push("tooltips");

@@ -2,6 +2,10 @@
   "replace": false,
   "values": [
     "peqol:restocker_talisman",
-    { "id": "projecte:transmutation_tablet", "required": false }
+    "peqol:illumination_charm",
+    {
+      "id": "projecte:transmutation_tablet",
+      "required": false
+    }
   ]
 }

@@ -19,7 +19,13 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import com.gabrielflorianoo.peqol.util.KnowledgeStats;
+import moze_intel.projecte.api.ItemInfo;
 import moze_intel.projecte.api.capabilities.IKnowledgeProvider;
+import net.minecraft.network.chat.ClickEvent;
+import net.minecraft.network.chat.HoverEvent;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraftforge.registries.ForgeRegistries;
 import moze_intel.projecte.api.capabilities.PECapabilities;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
@@ -62,6 +68,14 @@ public final class PEQoLCommand {
                         .then(Commands.argument("item", ItemArgument.item(buildContext))
                                 .executes(PEQoLCommand::value)))
                 .then(Commands.literal("unlearned").executes(ctx -> unlearned(ctx.getSource())))
+                .then(Commands.literal("known")
+                        .executes(ctx -> known(ctx.getSource(), "", 1))
+                        .then(Commands.literal("page")
+                                .then(Commands.argument("page", IntegerArgumentType.integer(1))
+                                        .executes(ctx -> known(ctx.getSource(), "", IntegerArgumentType.getInteger(ctx, "page")))))
+                        .then(Commands.literal("search")
+                                .then(Commands.argument("text", StringArgumentType.greedyString())
+                                        .executes(ctx -> known(ctx.getSource(), StringArgumentType.getString(ctx, "text"), 1)))))
                 .then(Commands.literal("stars")
                         .then(Commands.literal("fill").executes(ctx -> starsFill(ctx.getSource())))
                         .then(Commands.literal("drain").executes(ctx -> starsDrain(ctx.getSource()))))
@@ -98,7 +112,7 @@ public final class PEQoLCommand {
 
     private static int help(CommandSourceStack source) {
         source.sendSuccess(() -> Component.translatable("command.peqol.help.header").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD), false);
-        String[] entries = {"balance", "pay", "withdraw", "buy", "value", "worth", "burn", "missing", "unlearned", "stars", "knowledge", "top"};
+        String[] entries = {"balance", "pay", "withdraw", "buy", "value", "known", "worth", "burn", "missing", "unlearned", "stars", "knowledge", "top"};
         for (String entry : entries) {
             source.sendSuccess(() -> Component.literal("/peqol " + entry).withStyle(ChatFormatting.GOLD)
                     .append(Component.literal(" - ").withStyle(ChatFormatting.DARK_GRAY))
@@ -157,6 +171,12 @@ public final class PEQoLCommand {
         long affordable = player == null ? 0 : EmcUtil.affordable(EmcUtil.getEmc(player), unit);
         ctx.getSource().sendSuccess(() -> Component.translatable("command.peqol.value", stack.getHoverName(),
                 Component.literal(EmcUtil.format(unit)).withStyle(ChatFormatting.YELLOW), EmcUtil.format(sell), known, EmcUtil.format(affordable)), false);
+        if (player != null && EmcUtil.isKnown(player, stack) && !stack.hasTag()) {
+            BigInteger emc = EmcUtil.getEmc(player);
+            int maxStack = Math.max(1, stack.getMaxStackSize());
+            ctx.getSource().sendSuccess(() -> Component.literal(" ").append(buyButton(stack, 1, unit, emc)).append(" ")
+                    .append(buyButton(stack, maxStack, unit, emc)), false);
+        }
         return (int) Math.min(Integer.MAX_VALUE, unit);
     }
 
@@ -185,6 +205,70 @@ public final class PEQoLCommand {
                     .withStyle(ChatFormatting.GRAY), false);
         }
         return unknown.size();
+    }
+
+    private static final int PAGE_SIZE = 10;
+
+    private static int known(CommandSourceStack source, String search, int page) throws CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+        IKnowledgeProvider provider = EmcUtil.knowledge(player).orElse(null);
+        if (provider == null) {
+            return 0;
+        }
+        String needle = search.toLowerCase(java.util.Locale.ROOT).trim();
+        List<ItemStack> matches = new ArrayList<>();
+        for (ItemInfo info : provider.getKnowledge()) {
+            ItemStack stack = info.createStack();
+            if (stack.isEmpty() || !EmcUtil.hasValue(stack)) {
+                continue;
+            }
+            if (!needle.isEmpty()) {
+                String id = String.valueOf(ForgeRegistries.ITEMS.getKey(stack.getItem()));
+                if (!id.contains(needle) && !stack.getHoverName().getString().toLowerCase(java.util.Locale.ROOT).contains(needle)) {
+                    continue;
+                }
+            }
+            matches.add(stack);
+        }
+        if (matches.isEmpty()) {
+            source.sendFailure(Component.translatable("command.peqol.known.none"));
+            return 0;
+        }
+        matches.sort((a, b) -> a.getHoverName().getString().compareToIgnoreCase(b.getHoverName().getString()));
+        int pages = (matches.size() + PAGE_SIZE - 1) / PAGE_SIZE;
+        int current = Math.min(page, pages);
+        source.sendSuccess(() -> Component.translatable("command.peqol.known.header", matches.size(), current, pages).withStyle(ChatFormatting.GOLD), false);
+        BigInteger emc = provider.getEmc();
+        for (int i = (current - 1) * PAGE_SIZE; i < Math.min(matches.size(), current * PAGE_SIZE); i++) {
+            ItemStack stack = matches.get(i);
+            long unit = EmcUtil.value(stack);
+            MutableComponent line = Component.literal(" ").append(stack.getHoverName().copy().withStyle(style -> style
+                            .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, new HoverEvent.ItemStackInfo(stack)))))
+                    .append(Component.literal(" " + EmcUtil.compact(BigInteger.valueOf(unit)) + " EMC ").withStyle(ChatFormatting.YELLOW));
+            if (!stack.hasTag()) {
+                line.append(buyButton(stack, 1, unit, emc)).append(" ").append(buyButton(stack, Math.max(1, stack.getMaxStackSize()), unit, emc));
+            }
+            source.sendSuccess(() -> line.withStyle(ChatFormatting.GRAY), false);
+        }
+        if (current < pages && needle.isEmpty()) {
+            int next = current + 1;
+            source.sendSuccess(() -> Component.translatable("command.peqol.known.next").withStyle(style -> style.withColor(ChatFormatting.AQUA)
+                    .withUnderlined(true).withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/peqol known page " + next))), false);
+        }
+        return matches.size();
+    }
+
+    /**
+     * A clickable [xN] chat button that runs /peqol buy.
+     */
+    public static Component buyButton(ItemStack stack, int count, long unit, BigInteger emc) {
+        String id = String.valueOf(ForgeRegistries.ITEMS.getKey(stack.getItem()));
+        boolean affordable = emc.compareTo(BigInteger.valueOf(unit).multiply(BigInteger.valueOf(count))) >= 0;
+        return Component.literal("[x" + count + "]").withStyle(style -> style
+                .withColor(affordable ? ChatFormatting.GREEN : ChatFormatting.DARK_RED)
+                .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/peqol buy " + id + " " + count))
+                .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                        Component.translatable("command.peqol.buy.hover", count, stack.getHoverName(), EmcUtil.format(BigInteger.valueOf(unit).multiply(BigInteger.valueOf(count)))))));
     }
 
     private static int starsFill(CommandSourceStack source) throws CommandSyntaxException {
@@ -246,6 +330,11 @@ public final class PEQoLCommand {
         int count = provider.getKnowledge().size();
         source.sendSuccess(() -> Component.translatable(provider.hasFullKnowledge() ? "command.peqol.knowledge.full" : "command.peqol.knowledge",
                 target.getDisplayName(), Component.literal(String.valueOf(count)).withStyle(ChatFormatting.YELLOW)), false);
+        int total = KnowledgeStats.itemsWithEmc();
+        if (total > 0 && !provider.hasFullKnowledge()) {
+            String percent = String.format(java.util.Locale.ROOT, "%.1f", Math.min(100.0, count * 100.0 / total));
+            source.sendSuccess(() -> Component.translatable("command.peqol.knowledge.progress", count, total, percent).withStyle(ChatFormatting.AQUA), false);
+        }
         return count;
     }
 
