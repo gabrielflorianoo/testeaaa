@@ -426,5 +426,8 @@
   "info.peqol.excavator.status.no_emc": "Estado: EMC insuficiente",
   "info.peqol.excavator.status.unloaded": "Estado: área não carregada",
   "book.peqol.page13": "§5§lAutomação III§r\n\n§lInterface§r: seu conhecimento como inventário para canos, AE2 e RS.\n§lEscavadeira§r: pedreira de EMC.\n§lFonte§r: água/lava com EMC.\n§lMelhoria§r: níveis 1-3 para Exportador, Aspirador, Descida, Escavadeira.",
-  "book.peqol.page14": "§5§lServidor§r\n\n§lPosto de Troca§r: venda do baú abaixo por EMC; agachar+mão vazia = modo compra.\n§l/peqol home§r casas.\n§l/peqol fav§r compra rápida.\n§l/peqol share§r ensine amigos.\n§l/peqolclient§r ajustes do HUD."
+  "book.peqol.page14": "§5§lServidor§r\n\n§lPosto de Troca§r: venda do baú abaixo por EMC; agachar+mão vazia = modo compra.\n§l/peqol home§r casas.\n§l/peqol fav§r compra rápida.\n§l/peqol share§r ensine amigos.\n§l/peqolclient§r ajustes do HUD.",
+  "block.peqol.alchemical_display": "Display Alquímico",
+  "block.peqol.alchemical_display.desc": "Mostra seu EMC pessoal como texto flutuante acima dele.",
+  "jei.peqol.info.alchemical_display": "Um letreiro decorativo para a base: mostra o nome do dono, o EMC pessoal e a variação por segundo como texto flutuante acima do bloco. Funciona com o dono offline também."
 }

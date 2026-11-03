@@ -5,6 +5,7 @@ import com.gabrielflorianoo.peqol.block.AlchemicalDownlinkBlock;
 import com.gabrielflorianoo.peqol.block.AlchemicalExporterBlock;
 import com.gabrielflorianoo.peqol.block.AlchemicalGaugeBlock;
 import com.gabrielflorianoo.peqol.block.AlchemicalInterfaceBlock;
+import com.gabrielflorianoo.peqol.block.AlchemicalDisplayBlock;
 import com.gabrielflorianoo.peqol.block.AlchemicalExcavatorBlock;
 import com.gabrielflorianoo.peqol.block.AlchemicalSpringBlock;
 import com.gabrielflorianoo.peqol.block.TradePostBlock;
@@ -50,6 +51,9 @@ public final class ModBlocks {
 
     public static final RegistryObject<AlchemicalExcavatorBlock> ALCHEMICAL_EXCAVATOR = BLOCKS.register("alchemical_excavator",
             () -> new AlchemicalExcavatorBlock(machineProperties(MapColor.COLOR_BROWN)));
+
+    public static final RegistryObject<AlchemicalDisplayBlock> ALCHEMICAL_DISPLAY = BLOCKS.register("alchemical_display",
+            () -> new AlchemicalDisplayBlock(machineProperties(MapColor.COLOR_MAGENTA)));
 
     private ModBlocks() {
     }

@@ -22,6 +22,11 @@ public final class ClientModEvents {
     }
 
     @SubscribeEvent
+    public static void registerRenderers(net.minecraftforge.client.event.EntityRenderersEvent.RegisterRenderers event) {
+        event.registerBlockEntityRenderer(com.gabrielflorianoo.peqol.registry.ModBlockEntities.ALCHEMICAL_DISPLAY.get(), DisplayRenderer::new);
+    }
+
+    @SubscribeEvent
     public static void registerOverlays(RegisterGuiOverlaysEvent event) {
         event.registerAboveAll("emc_hud", EmcHudOverlay.INSTANCE);
         event.registerAboveAll("machine_info", MachineInfoOverlay.INSTANCE);

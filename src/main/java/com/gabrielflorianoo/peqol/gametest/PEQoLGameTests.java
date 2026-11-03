@@ -440,4 +440,16 @@ public class PEQoLGameTests {
             helper.succeed();
         });
     }
+
+    @GameTest(template = "empty")
+    public static void displaySyncsData(GameTestHelper helper) {
+        helper.setBlock(POS, ModBlocks.ALCHEMICAL_DISPLAY.get());
+        com.gabrielflorianoo.peqol.block.entity.AlchemicalDisplayBlockEntity display =
+                (com.gabrielflorianoo.peqol.block.entity.AlchemicalDisplayBlockEntity) helper.getBlockEntity(POS);
+        display.getOwnerData().set(helper.makeMockPlayer());
+        CompoundTag update = display.getUpdateTag();
+        helper.assertTrue(update.contains("ShownEmc") && update.hasUUID("Owner"), "Update tag should carry the owner and EMC");
+        helper.assertTrue(display.getUpdatePacket() != null, "Display should send block entity update packets");
+        helper.succeed();
+    }
 }

@@ -95,6 +95,9 @@ public final class ModItems {
     public static final RegistryObject<OwnedBlockItem> ALCHEMICAL_EXCAVATOR = ITEMS.register("alchemical_excavator",
             () -> new OwnedBlockItem(ModBlocks.ALCHEMICAL_EXCAVATOR.get(), new Item.Properties().rarity(Rarity.RARE), "alchemical_excavator"));
 
+    public static final RegistryObject<OwnedBlockItem> ALCHEMICAL_DISPLAY = ITEMS.register("alchemical_display",
+            () -> new OwnedBlockItem(ModBlocks.ALCHEMICAL_DISPLAY.get(), new Item.Properties().rarity(Rarity.UNCOMMON), "alchemical_display"));
+
     private ModItems() {
     }
 }

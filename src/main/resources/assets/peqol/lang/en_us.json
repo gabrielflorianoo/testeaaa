@@ -426,5 +426,8 @@
   "info.peqol.excavator.status.no_emc": "Status: not enough EMC",
   "info.peqol.excavator.status.unloaded": "Status: area not loaded",
   "book.peqol.page13": "§5§lAutomation III§r\n\n§lInterface§r: your knowledge as an inventory for pipes, AE2 and RS.\n§lExcavator§r: EMC quarry.\n§lSpring§r: water/lava from EMC.\n§lMachine Upgrade§r: tiers 1-3 for Exporter, Vacuum, Downlink, Excavator.",
-  "book.peqol.page14": "§5§lServer Life§r\n\n§lTrade Post§r: sell from the chest below for EMC; sneak+empty hand = buy mode.\n§l/peqol home§r named homes.\n§l/peqol fav§r quick buy.\n§l/peqol share§r teach friends.\n§l/peqolclient§r HUD settings."
+  "book.peqol.page14": "§5§lServer Life§r\n\n§lTrade Post§r: sell from the chest below for EMC; sneak+empty hand = buy mode.\n§l/peqol home§r named homes.\n§l/peqol fav§r quick buy.\n§l/peqol share§r teach friends.\n§l/peqolclient§r HUD settings.",
+  "block.peqol.alchemical_display": "Alchemical Display",
+  "block.peqol.alchemical_display.desc": "Shows your personal EMC as floating text above it.",
+  "jei.peqol.info.alchemical_display": "A decorative sign for your base: shows the owner's name, personal EMC and its change per second as floating text above the block. Works while the owner is offline too."
 }

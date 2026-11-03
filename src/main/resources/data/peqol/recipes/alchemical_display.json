@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["GGG", "GSG", " L "],
+  "key": {
+    "G": { "tag": "forge:glass_panes" },
+    "S": { "item": "minecraft:glowstone" },
+    "L": { "item": "projecte:low_covalence_dust" }
+  },
+  "result": { "item": "peqol:alchemical_display" },
+  "conditions": [ { "type": "peqol:recipe_enabled", "item": "alchemical_display" } ]
+}
