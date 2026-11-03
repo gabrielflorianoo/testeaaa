@@ -134,6 +134,9 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 ## JEI (opcional)
 Com o JEI instalado, todos os itens do addon ganham uma página de informação (aperte **U** ou **R** sobre o item).
 
+## Jade (opcional)
+Com o Jade instalado, as informações das máquinas do QoL+ (dono, buffer, nível, estado) e dos blocos de EMC do ProjectE (EMC armazenado, variação, alvo e progresso dos condensadores) aparecem **dentro do tooltip do Jade**, e o painel próprio do addon se esconde.
+
 ## Curios (opcional)
 Se o [Curios](https://www.curseforge.com/minecraft/mc-mods/curios) estiver instalado, os itens podem ficar nos slots dele e continuam funcionando:
 - **Cinto**: Reabastecedor, Iluminação e Tábua de Transmutação.
@@ -175,6 +178,7 @@ A quality-of-life addon for ProjectE on Forge 1.20.1. It includes:
 - A Siphon Charm that turns filtered pickups into EMC.
 - Tradeable EMC Cheques and Knowledge Scrolls for sharing knowledge.
 - Uplink, Importer and Exporter blocks that bridge automation and personal EMC.
+- Jade integration (machine info inside Jade's tooltip).
 - Named homes (`/peqol home`) and favorites with quick-buy buttons (`/peqol fav` + keybind).
 - Machine upgrades (tiers 1-3 for Exporter, Vacuum, Downlink) and a peqol_emc scoreboard objective.
 - Unlearned-item slot markers, Siphon junk mode, CHANGELOG and tag-based releases.

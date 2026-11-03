@@ -1,6 +1,7 @@
 # ProjectE QoL+ changelog
 
 ## 1.7.0
+- Jade integration: QoL+ machine info and ProjectE EMC block info inside Jade's tooltip (own panel hides when Jade is present)
 - Named homes: `/peqol home set|del|list|<name>` with EMC-paid teleports and clickable list
 - Favorites: `/peqol fav add|remove <item>` and `/peqol fav` with quick-buy buttons, plus a keybind
 

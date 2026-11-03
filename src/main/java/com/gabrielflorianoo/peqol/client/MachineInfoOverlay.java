@@ -28,6 +28,10 @@ public final class MachineInfoOverlay implements IGuiOverlay {
 
     public static final MachineInfoOverlay INSTANCE = new MachineInfoOverlay();
     private static final int REQUEST_INTERVAL = 10;
+    /**
+     * With Jade installed the same info is shown inside Jade's tooltip instead.
+     */
+    private static final boolean JADE_LOADED = net.minecraftforge.fml.ModList.get().isLoaded("jade");
 
     private BlockPos target;
     private BlockPos infoPos;
@@ -47,7 +51,7 @@ public final class MachineInfoOverlay implements IGuiOverlay {
 
     public void tick(Minecraft mc) {
         target = null;
-        if (!PEQoLConfig.CLIENT.machineInfo.get() || mc.level == null || !(mc.hitResult instanceof BlockHitResult hit) || hit.getType() != HitResult.Type.BLOCK) {
+        if (!PEQoLConfig.CLIENT.machineInfo.get() || JADE_LOADED || mc.level == null || !(mc.hitResult instanceof BlockHitResult hit) || hit.getType() != HitResult.Type.BLOCK) {
             return;
         }
         BlockPos pos = hit.getBlockPos();

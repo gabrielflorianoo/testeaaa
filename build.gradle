@@ -76,6 +76,9 @@ dependencies {
     // ProjectE 1.20.1 (PE1.0.1) - CurseForge project 226410, file 4901949
     implementation fg.deobf("curse.maven:projecte-226410:${projecte_file_id}")
 
+    // Jade (optional integration, compile only) - same API build ProjectE compiles against
+    compileOnly fg.deobf("curse.maven:jade-api-324717:${jade_api_id}")
+
     // JEI (optional integration, compile only)
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
