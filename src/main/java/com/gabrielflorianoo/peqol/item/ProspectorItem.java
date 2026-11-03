@@ -39,8 +39,22 @@ public class ProspectorItem extends Item {
     public record OreReport(BigInteger total, Map<Block, Integer> counts) {
     }
 
+    /**
+     * EMC of an ore: its own value, or (ProjectE usually gives ores none) the value of what it smelts into.
+     */
+    public static long oreValue(Level level, Block block) {
+        ItemStack stack = new ItemStack(block);
+        long value = EmcUtil.value(stack);
+        if (value > 0) {
+            return value;
+        }
+        ItemStack smelted = SmeltingCharmItem.smeltResult(level, stack);
+        return smelted.isEmpty() ? 0 : EmcUtil.value(smelted) * smelted.getCount();
+    }
+
     public static OreReport scan(Level level, BlockPos center, int radius) {
         Map<Block, Integer> counts = new HashMap<>();
+        Map<Block, Long> values = new HashMap<>();
         BigInteger total = BigInteger.ZERO;
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
         for (int x = -radius; x <= radius; x++) {
@@ -54,7 +68,7 @@ public class ProspectorItem extends Item {
                     if (!state.is(Tags.Blocks.ORES)) {
                         continue;
                     }
-                    long value = EmcUtil.value(new ItemStack(state.getBlock()));
+                    long value = values.computeIfAbsent(state.getBlock(), block -> oreValue(level, block));
                     counts.merge(state.getBlock(), 1, Integer::sum);
                     total = total.add(BigInteger.valueOf(value));
                 }
@@ -80,10 +94,10 @@ public class ProspectorItem extends Item {
             player.sendSystemMessage(Component.translatable("message.peqol.prospector.total", ores,
                     Component.literal(EmcUtil.format(report.total())).withStyle(ChatFormatting.YELLOW)).withStyle(ChatFormatting.GOLD));
             List<Map.Entry<Block, Integer>> entries = new ArrayList<>(report.counts().entrySet());
-            entries.sort((a, b) -> Long.compare(EmcUtil.value(new ItemStack(b.getKey())) * b.getValue(), EmcUtil.value(new ItemStack(a.getKey())) * a.getValue()));
+            entries.sort((a, b) -> Long.compare(oreValue(level, b.getKey()) * b.getValue(), oreValue(level, a.getKey()) * a.getValue()));
             for (int i = 0; i < Math.min(TOP, entries.size()); i++) {
                 Map.Entry<Block, Integer> entry = entries.get(i);
-                long each = EmcUtil.value(new ItemStack(entry.getKey()));
+                long each = oreValue(level, entry.getKey());
                 player.sendSystemMessage(Component.literal(" " + entry.getValue() + "x ").append(entry.getKey().getName())
                         .append(Component.literal(" (" + EmcUtil.compact(BigInteger.valueOf(each * entry.getValue())) + " EMC)").withStyle(ChatFormatting.YELLOW))
                         .withStyle(ChatFormatting.GRAY));
