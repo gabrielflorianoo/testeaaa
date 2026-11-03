@@ -21,10 +21,10 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Build
-        run: ./gradlew build --no-daemon --stacktrace
+        run: ./gradlew build --no-daemon
 
       - name: Run game tests (loads the mod together with ProjectE on a headless server)
-        run: ./gradlew runGameTestServer --no-daemon --stacktrace
+        run: ./gradlew runGameTestServer --no-daemon
         timeout-minutes: 20
 
       - name: Upload mod jar
