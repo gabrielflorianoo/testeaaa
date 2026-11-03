@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
  * The reverse of the Uplink: draws the owner's personal EMC and pushes it into adjacent EMC acceptors
  * (Anti-Matter Relays, Energy Collectors, anything with ProjectE's EMC storage capability).
  */
-public class AlchemicalDownlinkBlockEntity extends BaseEmcBlockEntity implements IOwnedMachine {
+public class AlchemicalDownlinkBlockEntity extends BaseEmcBlockEntity implements IOwnedMachine, IUpgradeable {
 
     private static final int INTERVAL = 10;
 
@@ -34,6 +34,25 @@ public class AlchemicalDownlinkBlockEntity extends BaseEmcBlockEntity implements
     private long lastSecondSent;
     private long sentThisSecond;
     private int ticks;
+    private int tier;
+
+    @Override
+    public int getTier() {
+        return tier;
+    }
+
+    @Override
+    public void setTier(int tier) {
+        this.tier = Math.max(0, Math.min(MAX_TIER, tier));
+        applyTier();
+        setChanged();
+    }
+
+    private void applyTier() {
+        long base = Math.max(1, PEQoLConfig.COMMON.downlinkRate.get());
+        long scaled = base > Long.MAX_VALUE / 4 ? Long.MAX_VALUE : base * (1L + tier);
+        setMaximumEMC(scaled);
+    }
 
     public AlchemicalDownlinkBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.ALCHEMICAL_DOWNLINK.get(), pos, state);
@@ -120,6 +139,7 @@ public class AlchemicalDownlinkBlockEntity extends BaseEmcBlockEntity implements
         lines.add(Component.translatable("info.peqol.uplink.buffer", EmcUtil.format(getStoredEmc()), EmcUtil.format(getMaximumEmc(), true)).withStyle(ChatFormatting.YELLOW));
         lines.add(Component.translatable("info.peqol.uplink.rate", EmcUtil.format(lastSecondSent)).withStyle(ChatFormatting.AQUA));
         lines.add(Component.translatable("info.peqol.uplink.total", EmcUtil.format(totalSent)).withStyle(ChatFormatting.GOLD));
+        lines.add(Component.translatable("info.peqol.tier", tier, MAX_TIER).withStyle(ChatFormatting.LIGHT_PURPLE));
         lines.add(Component.translatable("info.peqol.downlink.hint").withStyle(ChatFormatting.DARK_GRAY));
     }
 
@@ -128,10 +148,13 @@ public class AlchemicalDownlinkBlockEntity extends BaseEmcBlockEntity implements
         super.saveAdditional(tag);
         ownerData.save(tag);
         tag.putString("TotalSent", totalSent.toString());
+        tag.putInt("Tier", tier);
     }
 
     @Override
     public void load(@NotNull CompoundTag tag) {
+        tier = Math.max(0, Math.min(MAX_TIER, tag.getInt("Tier")));
+        applyTier();
         super.load(tag);
         ownerData.load(tag);
         try {

@@ -32,10 +32,26 @@ import org.jetbrains.annotations.NotNull;
  * An Importer that also sucks item entities in a radius around it (mob farms, tree farms, quarries...).
  * Optional whitelist: right click with an item to (un)filter it; with no filter every item with EMC is taken.
  */
-public class AlchemicalVacuumBlockEntity extends AlchemicalImporterBlockEntity {
+public class AlchemicalVacuumBlockEntity extends AlchemicalImporterBlockEntity implements IUpgradeable {
 
     private final List<ResourceLocation> filter = new ArrayList<>();
     private int vacuumTicks;
+    private int tier;
+
+    @Override
+    public int getTier() {
+        return tier;
+    }
+
+    @Override
+    public void setTier(int tier) {
+        this.tier = Math.max(0, Math.min(MAX_TIER, tier));
+        setChanged();
+    }
+
+    public int getRadius() {
+        return PEQoLConfig.COMMON.vacuumRadius.get() + 2 * tier;
+    }
 
     public AlchemicalVacuumBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.ALCHEMICAL_VACUUM.get(), pos, state);
@@ -55,10 +71,10 @@ public class AlchemicalVacuumBlockEntity extends AlchemicalImporterBlockEntity {
 
     public static void vacuumTick(Level level, BlockPos pos, BlockState state, AlchemicalVacuumBlockEntity vacuum) {
         AlchemicalImporterBlockEntity.serverTick(level, pos, state, vacuum);
-        if (++vacuum.vacuumTicks % PEQoLConfig.COMMON.vacuumInterval.get() != 0 || !vacuum.getOwnerData().hasOwner() || level.hasNeighborSignal(pos)) {
+        if (++vacuum.vacuumTicks % Math.max(1, PEQoLConfig.COMMON.vacuumInterval.get() / (1 + vacuum.tier)) != 0 || !vacuum.getOwnerData().hasOwner() || level.hasNeighborSignal(pos)) {
             return;
         }
-        int radius = PEQoLConfig.COMMON.vacuumRadius.get();
+        int radius = vacuum.getRadius();
         AABB area = new AABB(pos).inflate(radius);
         boolean any = false;
         for (ItemEntity entity : level.getEntitiesOfClass(ItemEntity.class, area, e -> e.isAlive() && !e.getItem().isEmpty())) {
@@ -122,7 +138,8 @@ public class AlchemicalVacuumBlockEntity extends AlchemicalImporterBlockEntity {
     @Override
     public void addInfo(List<Component> lines) {
         super.addInfo(lines);
-        lines.add(Component.translatable("info.peqol.vacuum.radius", PEQoLConfig.COMMON.vacuumRadius.get()).withStyle(ChatFormatting.AQUA));
+        lines.add(Component.translatable("info.peqol.vacuum.radius", getRadius()).withStyle(ChatFormatting.AQUA));
+        lines.add(Component.translatable("info.peqol.tier", tier, MAX_TIER).withStyle(ChatFormatting.LIGHT_PURPLE));
         if (filter.isEmpty()) {
             lines.add(Component.translatable("info.peqol.vacuum.everything").withStyle(ChatFormatting.YELLOW));
         } else {
@@ -143,11 +160,13 @@ public class AlchemicalVacuumBlockEntity extends AlchemicalImporterBlockEntity {
             list.add(StringTag.valueOf(id.toString()));
         }
         tag.put("VacuumFilter", list);
+        tag.putInt("Tier", tier);
     }
 
     @Override
     public void load(@NotNull CompoundTag tag) {
         super.load(tag);
+        tier = Math.max(0, Math.min(MAX_TIER, tag.getInt("Tier")));
         filter.clear();
         ListTag list = tag.getList("VacuumFilter", Tag.TAG_STRING);
         for (int i = 0; i < list.size(); i++) {

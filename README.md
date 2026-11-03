@@ -61,6 +61,7 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
 - **Aspirador Alquímico**: suga os itens soltos num raio de 6 blocos e os transforma em EMC, com filtro opcional. Ideal para farms de mobs e de árvores. Guarda o EMC se você estiver offline, e redstone pausa.
 - **Descida Alquímica**: o contrário da Conexão. Puxa o seu EMC pessoal e o envia para os relés, coletores e outros blocos de EMC vizinhos, o que permite carregar Estrelas de Klein num relé usando o EMC pessoal. Redstone pausa.
 - **Medidor Alquímico**: emite um sinal de comparador igual ao número de dígitos do seu EMC pessoal (1–9 EMC = 1, 1M = 7, 100T ou mais = 15). Serve para ligar e desligar farms ou máquinas conforme o seu saldo, e funciona com você offline.
+- **Melhoria de Máquina Alquímica**: clique com ela num Exportador, Aspirador ou Descida para subir o nível da máquina (até 3). O Exportador fica mais rápido e move mais itens; o Aspirador fica mais rápido e ganha +2 de raio por nível; a Descida move mais EMC. O nível é mantido ao usar a chave.
 - A **Conexão Alquímica** emite sinal de comparador proporcional ao buffer.
 
 Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
@@ -117,11 +118,13 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 | Prospector Alquímico | Linha, Pepita de Ouro, Pó de Covalência Baixo ×2, Diamante |
 | Bancada de Bolso | Mesa de Trabalho, Pó de Covalência Baixo, Couro (sem forma) |
 | Bolsa do Vazio | Linha, Couro ×3, Baú do Ender |
+| Melhoria de Máquina (×2) | Pó de Covalência Alto ×4, Redstone ×4, Matéria Escura |
 | Amuleto da Fundição | Pó de Covalência Baixo ×4, Fornalha ×4, Faixa de Ferro |
 
 ## Extras
 - **Estatísticas**: em Estatísticas → Geral aparecem os itens queimados, os itens criados com EMC, os blocos construídos com a varinha, os itens fundidos, os reparados, as luzes colocadas, os teleportes e as refeições alquímicas.
 - **Conquistas**: tem uma aba própria "ProjectE QoL+" com 11 conquistas.
+- **Placar de EMC**: o objetivo `peqol_emc` é atualizado com o EMC de cada jogador. Para exibir: `/scoreboard objectives setdisplay sidebar peqol_emc`.
 - **Conhecimento inicial**: `server.starterKnowledge` é uma lista de itens que todo jogador já conhece ao entrar pela primeira vez.
 - **Aprender ao fabricar** (`server.learnOnCraft`, desligado por padrão): fabricar um item com EMC também o aprende.
 - **Lista negra para servidores**: `blacklist.items` impede que itens sejam criados com EMC pelo `buy`, pelo pick block, pelo Reabastecedor, pelo Exportador e pela varinha. Aceita IDs e tags, por exemplo `["minecraft:elytra", "#forge:ores"]`.
@@ -170,6 +173,7 @@ A quality-of-life addon for ProjectE on Forge 1.20.1. It includes:
 - A Siphon Charm that turns filtered pickups into EMC.
 - Tradeable EMC Cheques and Knowledge Scrolls for sharing knowledge.
 - Uplink, Importer and Exporter blocks that bridge automation and personal EMC.
+- Machine upgrades (tiers 1-3 for Exporter, Vacuum, Downlink) and a peqol_emc scoreboard objective.
 - Unlearned-item slot markers, Siphon junk mode, CHANGELOG and tag-based releases.
 - Buttons on the transmutation screen (learn/burn inventory), EMC goal progress bar on the HUD.
 - JEI info pages for every item, `/peqol tablet` and `/peqol bag [color]`.

@@ -342,5 +342,12 @@
   "hud.peqol.goal": "Goal: %sx %s",
   "message.peqol.siphon.junk_on": "Junk mode ON: cobblestone, dirt, gravel, netherrack... are siphoned too",
   "message.peqol.siphon.junk_off": "Junk mode OFF",
-  "tooltip.peqol.siphon.junk": "Junk mode: on"
+  "tooltip.peqol.siphon.junk": "Junk mode: on",
+  "item.peqol.machine_upgrade": "Alchemical Machine Upgrade",
+  "item.peqol.machine_upgrade.desc": "Right click an Exporter, Vacuum or Downlink to raise its tier (max 3).",
+  "item.peqol.machine_upgrade.desc2": "Exporter: faster and more items. Vacuum: faster, +2 radius. Downlink: more EMC.",
+  "jei.peqol.info.machine_upgrade": "Right click an Alchemical Exporter, Vacuum or Downlink (that you own) to raise its tier, up to 3. Each tier makes the machine faster and stronger, and the tier is kept when wrenched.",
+  "message.peqol.upgrade.done": "Upgraded to tier %s",
+  "message.peqol.upgrade.max": "Already at the maximum tier",
+  "info.peqol.tier": "Tier: %s/%s"
 }

@@ -68,6 +68,38 @@ public final class CommonEvents {
         return InventoryUtil.contains(player, s -> type.isInstance(s.getItem()) && ToggleableItem.isActive(s));
     }
 
+    public static final String OBJECTIVE = "peqol_emc";
+
+    /**
+     * Keeps the peqol_emc scoreboard objective in sync with personal EMC.
+     */
+    @SubscribeEvent
+    public static void onServerTick(TickEvent.ServerTickEvent event) {
+        if (event.phase != TickEvent.Phase.END || !PEQoLConfig.COMMON.scoreboard.get()) {
+            return;
+        }
+        net.minecraft.server.MinecraftServer server = net.minecraftforge.server.ServerLifecycleHooks.getCurrentServer();
+        if (server == null) {
+            return;
+        }
+        if (server.getTickCount() % 100 != 0) {
+            return;
+        }
+        net.minecraft.server.ServerScoreboard scoreboard = server.getScoreboard();
+        net.minecraft.world.scores.Objective objective = scoreboard.getObjective(OBJECTIVE);
+        if (objective == null) {
+            objective = scoreboard.addObjective(OBJECTIVE, net.minecraft.world.scores.criteria.ObjectiveCriteria.DUMMY,
+                    Component.literal("EMC").withStyle(ChatFormatting.LIGHT_PURPLE), net.minecraft.world.scores.criteria.ObjectiveCriteria.RenderType.INTEGER);
+        }
+        for (ServerPlayer player : server.getPlayerList().getPlayers()) {
+            int value = EmcUtil.getEmc(player).min(BigInteger.valueOf(Integer.MAX_VALUE)).intValue();
+            net.minecraft.world.scores.Score score = scoreboard.getOrCreatePlayerScore(player.getScoreboardName(), objective);
+            if (score.getScore() != value) {
+                score.setScore(value);
+            }
+        }
+    }
+
     /**
      * Starter knowledge: learned once, the first time a player joins.
      */

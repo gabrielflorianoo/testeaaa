@@ -5,6 +5,7 @@ import com.gabrielflorianoo.peqol.item.AlchemicalAnchorItem;
 import com.gabrielflorianoo.peqol.item.AppraisalLensItem;
 import com.gabrielflorianoo.peqol.item.PhilosophersWrenchItem;
 import com.gabrielflorianoo.peqol.item.SmeltingCharmItem;
+import com.gabrielflorianoo.peqol.item.MachineUpgradeItem;
 import com.gabrielflorianoo.peqol.item.ProspectorItem;
 import com.gabrielflorianoo.peqol.item.PocketWorkbenchItem;
 import com.gabrielflorianoo.peqol.item.VoidPouchItem;
@@ -78,6 +79,9 @@ public final class ModItems {
 
     public static final RegistryObject<ProspectorItem> PROSPECTOR = ITEMS.register("prospector",
             () -> new ProspectorItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
+
+    public static final RegistryObject<MachineUpgradeItem> MACHINE_UPGRADE = ITEMS.register("machine_upgrade",
+            () -> new MachineUpgradeItem(new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
 
     private ModItems() {
     }

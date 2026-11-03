@@ -63,6 +63,24 @@ public abstract class OwnedMachineBlock extends BaseEntityBlock {
             return InteractionResult.PASS;
         }
         ItemStack held = player.getItemInHand(hand);
+        if (held.getItem() instanceof com.gabrielflorianoo.peqol.item.MachineUpgradeItem
+                && level.getBlockEntity(pos) instanceof com.gabrielflorianoo.peqol.block.entity.IUpgradeable upgradeable) {
+            if (!machine.getOwnerData().canConfigure(serverPlayer)) {
+                player.displayClientMessage(Component.translatable("message.peqol.not_owner", machine.getOwnerData().describe()).withStyle(ChatFormatting.RED), true);
+                return InteractionResult.CONSUME;
+            }
+            if (upgradeable.getTier() >= com.gabrielflorianoo.peqol.block.entity.IUpgradeable.MAX_TIER) {
+                player.displayClientMessage(Component.translatable("message.peqol.upgrade.max").withStyle(ChatFormatting.YELLOW), true);
+                return InteractionResult.CONSUME;
+            }
+            upgradeable.setTier(upgradeable.getTier() + 1);
+            if (!player.getAbilities().instabuild) {
+                held.shrink(1);
+            }
+            player.displayClientMessage(Component.translatable("message.peqol.upgrade.done", upgradeable.getTier()).withStyle(ChatFormatting.GREEN), true);
+            level.playSound(null, pos, net.minecraft.sounds.SoundEvents.SMITHING_TABLE_USE, net.minecraft.sounds.SoundSource.BLOCKS, 0.8F, 1.2F);
+            return InteractionResult.CONSUME;
+        }
         if (!held.isEmpty()) {
             return machine.onItemUse(serverPlayer, hand, held) ? InteractionResult.CONSUME : InteractionResult.PASS;
         }

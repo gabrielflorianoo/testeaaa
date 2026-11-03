@@ -342,5 +342,12 @@
   "hud.peqol.goal": "Meta: %sx %s",
   "message.peqol.siphon.junk_on": "Modo lixo LIGADO: pedregulho, terra, cascalho, netherrack... também são sifonados",
   "message.peqol.siphon.junk_off": "Modo lixo DESLIGADO",
-  "tooltip.peqol.siphon.junk": "Modo lixo: ligado"
+  "tooltip.peqol.siphon.junk": "Modo lixo: ligado",
+  "item.peqol.machine_upgrade": "Melhoria de Máquina Alquímica",
+  "item.peqol.machine_upgrade.desc": "Clique direito num Exportador, Aspirador ou Descida para subir o nível (máx. 3).",
+  "item.peqol.machine_upgrade.desc2": "Exportador: mais rápido e mais itens. Aspirador: mais rápido, +2 de raio. Descida: mais EMC.",
+  "jei.peqol.info.machine_upgrade": "Clique direito num Exportador, Aspirador ou Descida Alquímica (seus) para subir o nível, até 3. Cada nível deixa a máquina mais rápida e forte, e o nível é mantido ao usar a chave.",
+  "message.peqol.upgrade.done": "Melhorado para o nível %s",
+  "message.peqol.upgrade.max": "Já está no nível máximo",
+  "info.peqol.tier": "Nível: %s/%s"
 }

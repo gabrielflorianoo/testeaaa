@@ -32,7 +32,7 @@ import org.jetbrains.annotations.NotNull;
  * Creates the filtered items out of the owner's personal EMC and pushes them into adjacent inventories.
  * Only works while the owner is online and only for items the owner has learned. A redstone signal pauses it.
  */
-public class AlchemicalExporterBlockEntity extends BlockEntity implements IOwnedMachine {
+public class AlchemicalExporterBlockEntity extends BlockEntity implements IOwnedMachine, IUpgradeable {
 
     private final OwnerData ownerData = new OwnerData();
     private final List<ItemInfo> filters = new ArrayList<>();
@@ -44,6 +44,18 @@ public class AlchemicalExporterBlockEntity extends BlockEntity implements IOwned
     private long itemsExported;
     private int ticks;
     private Status status = Status.IDLE;
+    private int tier;
+
+    @Override
+    public int getTier() {
+        return tier;
+    }
+
+    @Override
+    public void setTier(int tier) {
+        this.tier = Math.max(0, Math.min(MAX_TIER, tier));
+        setChanged();
+    }
 
     public enum Status {
         IDLE, RUNNING, NO_OWNER, OWNER_OFFLINE, NO_EMC, NO_TARGET, PAUSED
@@ -63,7 +75,7 @@ public class AlchemicalExporterBlockEntity extends BlockEntity implements IOwned
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, AlchemicalExporterBlockEntity exporter) {
-        if (++exporter.ticks % PEQoLConfig.COMMON.exporterInterval.get() != 0) {
+        if (++exporter.ticks % Math.max(1, PEQoLConfig.COMMON.exporterInterval.get() / (1 + exporter.tier)) != 0) {
             return;
         }
         exporter.status = exporter.operate(level, pos);
@@ -102,7 +114,7 @@ public class AlchemicalExporterBlockEntity extends BlockEntity implements IOwned
         if (targets.isEmpty()) {
             return Status.NO_TARGET;
         }
-        int perOperation = PEQoLConfig.COMMON.exporterItemsPerOperation.get();
+        int perOperation = Math.min(64, PEQoLConfig.COMMON.exporterItemsPerOperation.get() * (1 + tier));
         BigInteger emc = provider.getEmc();
         BigInteger startEmc = emc;
         boolean anyEmcShortage = false;
@@ -236,6 +248,7 @@ public class AlchemicalExporterBlockEntity extends BlockEntity implements IOwned
     public void addInfo(List<Component> lines) {
         lines.add(Component.translatable("info.peqol.owner", ownerData.describe()).withStyle(ChatFormatting.GRAY));
         lines.add(Component.translatable("info.peqol.exporter.status." + status.name().toLowerCase(java.util.Locale.ROOT)).withStyle(ChatFormatting.AQUA));
+        lines.add(Component.translatable("info.peqol.tier", tier, MAX_TIER).withStyle(ChatFormatting.LIGHT_PURPLE));
         lines.add(Component.translatable("info.peqol.exporter.total", EmcUtil.format(itemsExported), EmcUtil.format(totalSpent)).withStyle(ChatFormatting.GOLD));
         if (filters.isEmpty()) {
             lines.add(Component.translatable("info.peqol.exporter.no_filter").withStyle(ChatFormatting.YELLOW));
@@ -263,6 +276,7 @@ public class AlchemicalExporterBlockEntity extends BlockEntity implements IOwned
         tag.put("Filters", list);
         tag.putString("TotalSpent", totalSpent.toString());
         tag.putLong("ItemsExported", itemsExported);
+        tag.putInt("Tier", tier);
     }
 
     @Override
@@ -287,5 +301,6 @@ public class AlchemicalExporterBlockEntity extends BlockEntity implements IOwned
             totalSpent = BigInteger.ZERO;
         }
         itemsExported = tag.getLong("ItemsExported");
+        tier = Math.max(0, Math.min(MAX_TIER, tag.getInt("Tier")));
     }
 }

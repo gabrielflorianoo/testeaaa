@@ -337,4 +337,24 @@ public class PEQoLGameTests {
         helper.assertFalse(SiphonCharmItem.matches(charm, new ItemStack(Items.DIAMOND)), "Junk mode must not take diamonds");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void machineUpgradesPersist(GameTestHelper helper) {
+        helper.setBlock(POS, ModBlocks.ALCHEMICAL_VACUUM.get());
+        AlchemicalVacuumBlockEntity vacuum = (AlchemicalVacuumBlockEntity) helper.getBlockEntity(POS);
+        int baseRadius = vacuum.getRadius();
+        vacuum.setTier(2);
+        helper.assertTrue(vacuum.getRadius() == baseRadius + 4, "Tier 2 should add 4 blocks of radius");
+        vacuum.setTier(99);
+        helper.assertTrue(vacuum.getTier() == 3, "Tier is capped at 3");
+        CompoundTag saved = vacuum.saveWithoutMetadata();
+        helper.assertTrue(saved.getInt("Tier") == 3, "Tier should be saved");
+
+        helper.setBlock(new BlockPos(0, 1, 0), ModBlocks.ALCHEMICAL_DOWNLINK.get());
+        AlchemicalDownlinkBlockEntity downlink = (AlchemicalDownlinkBlockEntity) helper.getBlockEntity(new BlockPos(0, 1, 0));
+        long baseMax = downlink.getMaximumEmc();
+        downlink.setTier(1);
+        helper.assertTrue(downlink.getMaximumEmc() == baseMax * 2, "Tier 1 doubles the downlink rate");
+        helper.succeed();
+    }
 }

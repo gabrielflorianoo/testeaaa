@@ -1,5 +1,9 @@
 # ProjectE QoL+ changelog
 
+## 1.6.0
+- Alchemical Machine Upgrade: tiers 1-3 for the Exporter (speed, items), Vacuum (speed, +2 radius) and Downlink (rate); kept when wrenched
+- `peqol_emc` scoreboard objective kept up to date with every player's EMC
+
 ## 1.5.0
 - Buttons on ProjectE's transmutation screen: **Learn Inventory** and **Burn Inventory**
 - EMC goal progress bar on the HUD (`/peqolclient goal <item> [count]`)
