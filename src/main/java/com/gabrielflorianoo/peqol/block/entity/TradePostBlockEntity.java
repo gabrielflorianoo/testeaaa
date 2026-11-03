@@ -54,6 +54,23 @@ public class TradePostBlockEntity extends BlockEntity implements IOwnedMachine {
         return ownerData;
     }
 
+    /**
+     * Keeps the world-wide shop list (/peqol shops) in sync with this post.
+     */
+    private void publish() {
+        if (level == null || level.isClientSide || !ownerData.hasOwner()) {
+            return;
+        }
+        String productId = product == null ? "" : String.valueOf(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(product.getItem()));
+        com.gabrielflorianoo.peqol.util.ShopRegistry.update(level, worldPosition, ownerData.getOwnerName(), productId, price.toString(), buyMode);
+    }
+
+    @Override
+    public void setChanged() {
+        super.setChanged();
+        publish();
+    }
+
     public void setPrice(BigInteger price) {
         this.price = price.signum() < 0 ? BigInteger.ZERO : price;
         setChanged();

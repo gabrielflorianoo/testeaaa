@@ -87,6 +87,10 @@ public final class PEQoLCommand {
                                         .executes(ctx -> xpFromEmc(ctx.getSource(), IntegerArgumentType.getInteger(ctx, "points"))))))
                 .then(Commands.literal("stats").executes(ctx -> stats(ctx.getSource())))
                 .then(Commands.literal("back").executes(ctx -> back(ctx.getSource())))
+                .then(Commands.literal("shops")
+                        .executes(ctx -> shops(ctx.getSource(), null))
+                        .then(Commands.argument("item", ItemArgument.item(buildContext))
+                                .executes(ctx -> shops(ctx.getSource(), ItemArgument.getItem(ctx, "item").getItem()))))
                 .then(Commands.literal("shop")
                         .then(Commands.literal("price")
                                 .then(Commands.argument("amount", StringArgumentType.word())
@@ -182,7 +186,7 @@ public final class PEQoLCommand {
 
     private static int help(CommandSourceStack source) {
         source.sendSuccess(() -> Component.translatable("command.peqol.help.header").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD), false);
-        String[] entries = {"balance", "pay", "withdraw", "buy", "sell", "value", "known", "tablet", "bag", "fav", "home", "shop", "autostock", "learnall", "gift", "share", "back", "xp", "stats", "handbook", "worth", "burn", "missing", "unlearned", "stars", "knowledge", "top"};
+        String[] entries = {"balance", "pay", "withdraw", "buy", "sell", "value", "known", "tablet", "bag", "fav", "home", "shop", "shops", "autostock", "learnall", "gift", "share", "back", "xp", "stats", "handbook", "worth", "burn", "missing", "unlearned", "stars", "knowledge", "top"};
         for (String entry : entries) {
             source.sendSuccess(() -> Component.literal("/peqol " + entry).withStyle(ChatFormatting.GOLD)
                     .append(Component.literal(" - ").withStyle(ChatFormatting.DARK_GRAY))
@@ -585,6 +589,45 @@ public final class PEQoLCommand {
             ctx.getSource().sendSuccess(() -> Component.translatable(changed ? "command.peqol.fav.removed" : "command.peqol.fav.missing", name).withStyle(ChatFormatting.YELLOW), false);
         }
         return changed ? 1 : 0;
+    }
+
+    private static int shops(CommandSourceStack source, @org.jetbrains.annotations.Nullable Item filter) {
+        com.gabrielflorianoo.peqol.util.ShopRegistry registry = com.gabrielflorianoo.peqol.util.ShopRegistry.get(source.getServer());
+        java.util.List<com.gabrielflorianoo.peqol.util.ShopRegistry.Entry> entries = registry == null ? java.util.List.of() : registry.entries();
+        String wanted = filter == null ? null : String.valueOf(ForgeRegistries.ITEMS.getKey(filter));
+        java.util.List<com.gabrielflorianoo.peqol.util.ShopRegistry.Entry> shown = new ArrayList<>();
+        for (com.gabrielflorianoo.peqol.util.ShopRegistry.Entry entry : entries) {
+            if (!entry.product().isEmpty() && (wanted == null || wanted.equals(entry.product()))) {
+                shown.add(entry);
+            }
+        }
+        if (shown.isEmpty()) {
+            source.sendFailure(Component.translatable("command.peqol.shops.none"));
+            return 0;
+        }
+        source.sendSuccess(() -> Component.translatable("command.peqol.shops.header", shown.size()).withStyle(ChatFormatting.GOLD), false);
+        for (com.gabrielflorianoo.peqol.util.ShopRegistry.Entry entry : shown.subList(0, Math.min(20, shown.size()))) {
+            Item item = ForgeRegistries.ITEMS.getValue(net.minecraft.resources.ResourceLocation.tryParse(entry.product()));
+            Component name = item == null ? Component.literal(entry.product()) : item.getDescription();
+            net.minecraft.core.BlockPos pos = entry.pos().pos();
+            BigInteger price;
+            try {
+                price = new BigInteger(entry.price());
+            } catch (NumberFormatException e) {
+                price = BigInteger.ZERO;
+            }
+            String coords = pos.getX() + " " + pos.getY() + " " + pos.getZ();
+            BigInteger finalPrice = price;
+            source.sendSuccess(() -> Component.literal(" ")
+                    .append(Component.translatable(entry.buying() ? "command.peqol.shops.buys" : "command.peqol.shops.sells").withStyle(entry.buying() ? ChatFormatting.AQUA : ChatFormatting.GREEN))
+                    .append(" ").append(name.copy().withStyle(ChatFormatting.WHITE))
+                    .append(Component.literal(" " + EmcUtil.compact(finalPrice) + " EMC ").withStyle(ChatFormatting.YELLOW))
+                    .append(Component.literal("(" + entry.owner() + ") ").withStyle(ChatFormatting.GRAY))
+                    .append(Component.literal("[" + coords + "]").withStyle(style -> style.withColor(ChatFormatting.AQUA)
+                            .withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, coords))
+                            .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal(entry.pos().dimension().location().toString()))))), false);
+        }
+        return shown.size();
     }
 
     private static int shopPrice(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {

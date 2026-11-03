@@ -1,6 +1,7 @@
 # ProjectE QoL+ changelog
 
 ## 1.13.0
+- `/peqol shops [item]`: world-wide Trade Post market listing (saved data, works for unloaded chunks)
 - Master switch keybind that turns every charm off and back on
 - Filter screens with 27 ghost slots for the Siphon Charm (with a junk mode button) and the Alchemical Vacuum
 

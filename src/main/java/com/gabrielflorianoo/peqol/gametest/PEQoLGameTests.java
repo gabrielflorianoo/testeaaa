@@ -517,4 +517,20 @@ public class PEQoLGameTests {
         helper.assertTrue(saved.size() == 1 && saved.get(0).is(Items.DIAMOND), "Only the diamond should remain, got " + saved);
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void shopRegistryTracksPosts(GameTestHelper helper) {
+        helper.setBlock(POS, ModBlocks.TRADE_POST.get());
+        com.gabrielflorianoo.peqol.block.entity.TradePostBlockEntity post =
+                (com.gabrielflorianoo.peqol.block.entity.TradePostBlockEntity) helper.getBlockEntity(POS);
+        post.getOwnerData().set(helper.makeMockPlayer());
+        post.setProduct(moze_intel.projecte.api.ItemInfo.fromItem(Items.EMERALD));
+        BlockPos abs = helper.absolutePos(POS);
+        com.gabrielflorianoo.peqol.util.ShopRegistry registry = com.gabrielflorianoo.peqol.util.ShopRegistry.get(helper.getLevel().getServer());
+        helper.assertTrue(registry != null && registry.entries().stream().anyMatch(e -> e.pos().pos().equals(abs) && e.product().equals("minecraft:emerald")),
+                "The post should be listed");
+        helper.setBlock(POS, Blocks.AIR);
+        helper.assertFalse(registry.entries().stream().anyMatch(e -> e.pos().pos().equals(abs)), "Removed posts are unlisted");
+        helper.succeed();
+    }
 }

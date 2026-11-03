@@ -91,6 +91,7 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 | `bag [cor]` | Abre uma bolsa alquímica, opcionalmente escolhendo a cor (ex.: `/peqol bag red`) |
 | `home set\|del <nome>` / `home [list]` / `home <nome>` | Casas com nome (até 5, configurável). A lista tem botões clicáveis e o teleporte custa EMC como a Âncora |
 | `fav add\|remove <item>` / `fav` | Itens favoritos com botões de compra rápida (também existe tecla) |
+| `shops [item]` | Lista todos os Postos de Troca do servidor (vende/compra, preço, dono, coordenadas clicáveis) |
 | `shop price <EMC>` | Define o preço do Posto de Troca que você está olhando |
 | `back` | Teleporta para onde você morreu por último, pagando EMC (mesma fórmula da Âncora). Procura um lugar seguro, sem lava |
 | `stats` | Mostra as suas estatísticas do QoL+ |

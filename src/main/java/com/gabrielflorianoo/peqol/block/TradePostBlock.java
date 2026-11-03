@@ -44,6 +44,15 @@ public class TradePostBlock extends OwnedMachineBlock {
         return super.use(state, level, pos, player, hand, hit);
     }
 
+    @Override
+    @SuppressWarnings("deprecation")
+    public void onRemove(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull BlockState newState, boolean moving) {
+        if (!state.is(newState.getBlock()) && !level.isClientSide) {
+            com.gabrielflorianoo.peqol.util.ShopRegistry.remove(level, pos);
+        }
+        super.onRemove(state, level, pos, newState, moving);
+    }
+
     @Nullable
     @Override
     public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
