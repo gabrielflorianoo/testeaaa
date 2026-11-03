@@ -42,6 +42,8 @@ public final class ModCreativeTab {
                 output.accept(ModItems.ALCHEMICAL_EXCAVATOR.get());
                 output.accept(ModItems.ALCHEMICAL_DISPLAY.get());
                 output.accept(ModItems.ALCHEMICAL_HARVESTER.get());
+                output.accept(ModItems.ALCHEMICAL_PASTURE.get());
+                output.accept(ModItems.CELESTIAL_HOURGLASS.get());
                 output.accept(ModItems.MACHINE_UPGRADE.get());
                 output.accept(ModItems.PHILOSOPHERS_WRENCH.get());
             })

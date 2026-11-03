@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "pattern": ["GHG", " C ", "GHG"],
+  "key": {
+    "G": { "item": "minecraft:gold_ingot" },
+    "H": { "item": "projecte:high_covalence_dust" },
+    "C": { "item": "minecraft:clock" }
+  },
+  "result": { "item": "peqol:celestial_hourglass" },
+  "conditions": [ { "type": "peqol:recipe_enabled", "item": "celestial_hourglass" } ]
+}

@@ -473,4 +473,15 @@ public class PEQoLGameTests {
         helper.assertTrue(classify.apply(new BlockPos(0, 1, 0)) == com.gabrielflorianoo.peqol.block.entity.AlchemicalHarvesterBlockEntity.HarvestType.NONE, "Sugar cane base is kept");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void pastureKnowsAnimalFood(GameTestHelper helper) {
+        net.minecraft.world.entity.animal.Cow cow = helper.spawn(net.minecraft.world.entity.EntityType.COW, new BlockPos(1, 1, 1));
+        helper.assertTrue(com.gabrielflorianoo.peqol.block.entity.AlchemicalPastureBlockEntity.foodFor(cow).is(Items.WHEAT), "Cows eat wheat");
+        net.minecraft.world.entity.animal.Pig pig = helper.spawn(net.minecraft.world.entity.EntityType.PIG, new BlockPos(1, 1, 1));
+        helper.assertTrue(!com.gabrielflorianoo.peqol.block.entity.AlchemicalPastureBlockEntity.foodFor(pig).isEmpty(), "Pigs have a food");
+        cow.discard();
+        pig.discard();
+        helper.succeed();
+    }
 }

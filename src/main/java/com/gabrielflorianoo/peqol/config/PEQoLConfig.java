@@ -131,6 +131,12 @@ public final class PEQoLConfig {
         // Blocks
         public final ForgeConfigSpec.LongValue uplinkBufferCapacity;
         public final ForgeConfigSpec.IntValue interfaceMaxSlots;
+        public final ForgeConfigSpec.IntValue pastureRadius;
+        public final ForgeConfigSpec.IntValue pastureInterval;
+        public final ForgeConfigSpec.IntValue pastureMaxAnimals;
+        public final ForgeConfigSpec.BooleanValue hourglassEnabled;
+        public final ForgeConfigSpec.LongValue hourglassDayCost;
+        public final ForgeConfigSpec.LongValue hourglassWeatherCost;
         public final ForgeConfigSpec.IntValue harvesterRadius;
         public final ForgeConfigSpec.IntValue harvesterInterval;
         public final ForgeConfigSpec.BooleanValue harvesterBurnsProduce;
@@ -330,6 +336,16 @@ public final class PEQoLConfig {
             builder.comment("Personal EMC automation blocks").push("blocks");
             uplinkBufferCapacity = builder.comment("EMC an Alchemical Uplink can buffer while its owner is offline.")
                     .defineInRange("uplinkBufferCapacity", 1_000_000_000L, 1L, Long.MAX_VALUE);
+            pastureRadius = builder.comment("Alchemical Pasture: horizontal radius where animals are bred.")
+                    .defineInRange("pastureRadius", 6, 1, 16);
+            pastureInterval = builder.comment("Alchemical Pasture: ticks between breeding attempts.")
+                    .defineInRange("pastureInterval", 600, 20, 72_000);
+            pastureMaxAnimals = builder.comment("Alchemical Pasture: stops breeding once this many animals are in range.")
+                    .defineInRange("pastureMaxAnimals", 24, 2, 500);
+            hourglassEnabled = builder.comment("Allow the Celestial Hourglass (skip to morning / clear weather for EMC).")
+                    .define("hourglassEnabled", true);
+            hourglassDayCost = builder.defineInRange("hourglassDayCost", 16_384L, 0L, Long.MAX_VALUE);
+            hourglassWeatherCost = builder.defineInRange("hourglassWeatherCost", 8_192L, 0L, Long.MAX_VALUE);
             harvesterRadius = builder.comment("Alchemical Harvester: base radius (each upgrade tier adds 2).")
                     .defineInRange("harvesterRadius", 4, 1, 16);
             harvesterInterval = builder.comment("Alchemical Harvester: ticks between harvests.")

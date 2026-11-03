@@ -12,6 +12,7 @@
     "peqol:alchemical_spring",
     "peqol:alchemical_excavator",
     "peqol:alchemical_display",
-    "peqol:alchemical_harvester"
+    "peqol:alchemical_harvester",
+    "peqol:alchemical_pasture"
   ]
 }

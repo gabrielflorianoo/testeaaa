@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["WCW", "DGD", "WCW"],
+  "key": {
+    "W": { "item": "minecraft:wheat" },
+    "C": { "item": "minecraft:golden_carrot" },
+    "D": { "item": "projecte:dark_matter" },
+    "G": { "tag": "minecraft:dirt" }
+  },
+  "result": { "item": "peqol:alchemical_pasture" },
+  "conditions": [ { "type": "peqol:recipe_enabled", "item": "alchemical_pasture" } ]
+}

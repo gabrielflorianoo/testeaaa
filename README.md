@@ -48,6 +48,7 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
 - **Âncora Alquímica**: agache e clique num bloco para ancorar o ponto; clique com o botão direito para teleportar até lá pagando EMC (base + distância, mais caro entre dimensões). Funciona entre dimensões e tem cooldown.
 - **Chave do Filósofo**: agache e clique com o botão direito em qualquer máquina do ProjectE (condensador, coletor, relé, baú alquímico...) ou do QoL+ para pegá-la com o **EMC, o inventário e as configurações intactos**. O tooltip do item mostra o EMC guardado. Respeita proteções de área.
 - **Prospector Alquímico**: escaneia os minérios num raio de 12 blocos e mostra quantos são, quanto valem em EMC e os mais valiosos.
+- **Ampulheta Celestial**: clique com o botão direito para pular para a manhã; agache e clique para limpar o tempo. Os dois são pagos com EMC, anunciados no servidor e podem ser desligados na config.
 - **Bancada de Bolso**: abre uma mesa de trabalho em qualquer lugar.
 - **Bolsa do Vazio**: abre o seu baú do Ender em qualquer lugar, por 64 EMC (configurável).
 - **Cheque de EMC**: o `/peqol withdraw` transforma EMC em um item que pode ser trocado entre jogadores. Clique com o botão direito para resgatar; agachado, você resgata a pilha inteira. O cheque não tem valor de EMC, então não dá para queimá-lo e duplicar EMC.
@@ -62,6 +63,7 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
 - **Descida Alquímica**: o contrário da Conexão. Puxa o seu EMC pessoal e o envia para os relés, coletores e outros blocos de EMC vizinhos, o que permite carregar Estrelas de Klein num relé usando o EMC pessoal. Redstone pausa.
 - **Medidor Alquímico**: emite um sinal de comparador igual ao número de dígitos do seu EMC pessoal (1–9 EMC = 1, 1M = 7, 100T ou mais = 15). Serve para ligar e desligar farms ou máquinas conforme o seu saldo, e funciona com você offline.
 - **Colheitadeira Alquímica**: colhe e replanta as plantações maduras ao redor (trigo, cenoura, batata, beterraba, fungo do Nether, melancia, abóbora, cana, cacto, bambu). A produção com EMC vira o seu EMC, e o resto vai para um baú vizinho. Aceita Melhorias (raio), e redstone pausa.
+- **Pasto Alquímico**: de tempos em tempos coloca pares de animais adultos próximos no modo amor, pagando a comida deles com o seu EMC. Para num limite de população.
 - **Display Alquímico**: um letreiro para a base que mostra flutuando acima do bloco o nome do dono, o EMC dele e a variação por segundo.
 - **Escavadeira Alquímica**: uma pedreira movida a EMC. Escava um quadrado de 9×9 (configurável) abaixo dela, camada por camada, até a rocha-mãe. Os drops com EMC viram o seu EMC pessoal e o resto vai para um baú vizinho. Cada bloco custa um pouco de EMC. Respeita proteções, precisa de você online, redstone pausa, agachar com a mão vazia reinicia, e aceita Melhorias de Máquina (mais blocos por ciclo). Clicar nela com um **livro encantado de Toque Suave ou Fortuna** instala o encantamento na picareta virtual dela.
 - **Fonte Alquímica**: água ou lava infinita, paga com o seu EMC (valor do balde cheio menos o do balde vazio). Empurra o fluido para tanques e canos vizinhos e também pode ser drenada. Agache e clique com a mão vazia para alternar entre água e lava. Redstone pausa.
@@ -129,6 +131,8 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 | Bolsa do Vazio | Linha, Couro ×3, Baú do Ender |
 | Melhoria de Máquina (×2) | Pó de Covalência Alto ×4, Redstone ×4, Matéria Escura |
 | Colheitadeira Alquímica | Enxada de Matéria Escura, Matéria Escura ×2, Faixa da Deusa da Colheita, Pó de Covalência Baixo |
+| Pasto Alquímico | Trigo ×4, Cenoura Dourada ×2, Matéria Escura ×2, Terra |
+| Ampulheta Celestial | Ouro ×4, Pó de Covalência Alto ×2, Relógio |
 | Display Alquímico | Painel de Vidro ×5, Pedra Luminosa, Pó de Covalência Baixo |
 | Escavadeira Alquímica | Matéria Escura ×4, Picareta de Matéria Escura, Matéria Vermelha ×2, Aspirador Alquímico, Funil |
 | Fonte Alquímica | Matéria Escura ×2, Amuleto Evertide, Amuleto Vulcanita, Balde |
@@ -193,6 +197,7 @@ A quality-of-life addon for ProjectE on Forge 1.20.1. It includes:
 - A Siphon Charm that turns filtered pickups into EMC.
 - Tradeable EMC Cheques and Knowledge Scrolls for sharing knowledge.
 - Uplink, Importer and Exporter blocks that bridge automation and personal EMC.
+- Alchemical Pasture (auto breeding paid with EMC), Celestial Hourglass (morning / clear weather for EMC).
 - Alchemical Harvester (auto-harvest and replant, produce into EMC).
 - Alchemical Display (floating EMC sign).
 - Alchemical Excavator (EMC-powered quarry).

@@ -5,6 +5,7 @@ import com.gabrielflorianoo.peqol.item.AlchemicalAnchorItem;
 import com.gabrielflorianoo.peqol.item.AppraisalLensItem;
 import com.gabrielflorianoo.peqol.item.PhilosophersWrenchItem;
 import com.gabrielflorianoo.peqol.item.SmeltingCharmItem;
+import com.gabrielflorianoo.peqol.item.CelestialHourglassItem;
 import com.gabrielflorianoo.peqol.item.MachineUpgradeItem;
 import com.gabrielflorianoo.peqol.item.ProspectorItem;
 import com.gabrielflorianoo.peqol.item.PocketWorkbenchItem;
@@ -100,6 +101,11 @@ public final class ModItems {
 
     public static final RegistryObject<OwnedBlockItem> ALCHEMICAL_HARVESTER = ITEMS.register("alchemical_harvester",
             () -> new OwnedBlockItem(ModBlocks.ALCHEMICAL_HARVESTER.get(), new Item.Properties().rarity(Rarity.UNCOMMON), "alchemical_harvester"));
+
+    public static final RegistryObject<OwnedBlockItem> ALCHEMICAL_PASTURE = ITEMS.register("alchemical_pasture",
+            () -> new OwnedBlockItem(ModBlocks.ALCHEMICAL_PASTURE.get(), new Item.Properties().rarity(Rarity.UNCOMMON), "alchemical_pasture"));
+    public static final RegistryObject<CelestialHourglassItem> CELESTIAL_HOURGLASS = ITEMS.register("celestial_hourglass",
+            () -> new CelestialHourglassItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).fireResistant()));
 
     private ModItems() {
     }

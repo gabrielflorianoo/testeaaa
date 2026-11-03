@@ -1,6 +1,8 @@
 # ProjectE QoL+ changelog
 
 ## 1.12.0
+- Alchemical Pasture: breeds nearby animal pairs paying their food with EMC, with a population cap
+- Celestial Hourglass: skip to morning / clear the weather for EMC (server toggle)
 - Alchemical Harvester: harvests and replants crops (wheat, carrots, potatoes, beetroots, nether wart, melons, pumpkins, sugar cane, cactus, bamboo); produce into EMC; upgradeable radius
 
 ## 1.11.0
