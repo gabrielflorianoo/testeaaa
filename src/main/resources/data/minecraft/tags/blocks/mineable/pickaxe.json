@@ -9,6 +9,7 @@
     "peqol:alchemical_gauge",
     "peqol:alchemical_interface",
     "peqol:trade_post",
-    "peqol:alchemical_spring"
+    "peqol:alchemical_spring",
+    "peqol:alchemical_excavator"
   ]
 }

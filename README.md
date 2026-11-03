@@ -61,6 +61,7 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
 - **Aspirador Alquímico**: suga os itens soltos num raio de 6 blocos e os transforma em EMC, com filtro opcional. Ideal para farms de mobs e de árvores. Guarda o EMC se você estiver offline, e redstone pausa.
 - **Descida Alquímica**: o contrário da Conexão. Puxa o seu EMC pessoal e o envia para os relés, coletores e outros blocos de EMC vizinhos, o que permite carregar Estrelas de Klein num relé usando o EMC pessoal. Redstone pausa.
 - **Medidor Alquímico**: emite um sinal de comparador igual ao número de dígitos do seu EMC pessoal (1–9 EMC = 1, 1M = 7, 100T ou mais = 15). Serve para ligar e desligar farms ou máquinas conforme o seu saldo, e funciona com você offline.
+- **Escavadeira Alquímica**: uma pedreira movida a EMC. Escava um quadrado de 9×9 (configurável) abaixo dela, camada por camada, até a rocha-mãe. Os drops com EMC viram o seu EMC pessoal e o resto vai para um baú vizinho. Cada bloco custa um pouco de EMC. Respeita proteções, precisa de você online, redstone pausa, agachar com a mão vazia reinicia, e aceita Melhorias de Máquina (mais blocos por ciclo).
 - **Fonte Alquímica**: água ou lava infinita, paga com o seu EMC (valor do balde cheio menos o do balde vazio). Empurra o fluido para tanques e canos vizinhos e também pode ser drenada. Agache e clique com a mão vazia para alternar entre água e lava. Redstone pausa.
 - **Posto de Troca Alquímico**: uma loja de jogador. Coloque o posto em cima de um baú com o estoque, clique nele com o item que quer vender e, olhando para ele, use `/peqol shop price <EMC>`. Os outros jogadores clicam com a mão vazia para comprar (agachados compram uma pilha), pagando com o EMC pessoal deles. O lucro vai para você na hora, ou fica guardado se você estiver offline. Agache e clique com a mão vazia para trocar para o **modo compra**: os jogadores clicam segurando o produto, os itens vão para o baú e você paga em EMC (precisa estar online).
 - **Interface Alquímica**: transforma o seu conhecimento num **inventário virtual**. Cada item aprendido aparece como um slot, com a quantidade que você consegue pagar. Canos, funis e mods de armazenamento (storage bus do **AE2**, external storage do **Refined Storage**) podem puxar itens, que são criados com o seu EMC, e inserir itens, que são queimados. Com o AE2 isso vira autocrafting movido a EMC. Funciona enquanto o dono está online.
@@ -125,6 +126,7 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 | Bancada de Bolso | Mesa de Trabalho, Pó de Covalência Baixo, Couro (sem forma) |
 | Bolsa do Vazio | Linha, Couro ×3, Baú do Ender |
 | Melhoria de Máquina (×2) | Pó de Covalência Alto ×4, Redstone ×4, Matéria Escura |
+| Escavadeira Alquímica | Matéria Escura ×4, Picareta de Matéria Escura, Matéria Vermelha ×2, Aspirador Alquímico, Funil |
 | Fonte Alquímica | Matéria Escura ×2, Amuleto Evertide, Amuleto Vulcanita, Balde |
 | Posto de Troca | Lã ×3, Ouro ×2, Esmeralda, Tábuas ×3 |
 | Interface Alquímica | Matéria Vermelha ×4, Baú ×2, Importador, Exportador, Mesa de Transmutação |
@@ -187,6 +189,7 @@ A quality-of-life addon for ProjectE on Forge 1.20.1. It includes:
 - A Siphon Charm that turns filtered pickups into EMC.
 - Tradeable EMC Cheques and Knowledge Scrolls for sharing knowledge.
 - Uplink, Importer and Exporter blocks that bridge automation and personal EMC.
+- Alchemical Excavator (EMC-powered quarry).
 - Alchemical Spring (water/lava paid with EMC for pipes and tanks).
 - Alchemical Trade Post (player shops paid in EMC), mod list logo.
 - Alchemical Interface (learned items as a virtual inventory for pipes/AE2/RS), per-recipe disabling via config.

@@ -427,4 +427,17 @@ public class PEQoLGameTests {
                 net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE) == 0, "Spring never accepts fluids");
         helper.succeed();
     }
+
+    @GameTest(template = "empty", timeoutTicks = 60)
+    public static void excavatorWaitsForOwner(GameTestHelper helper) {
+        helper.setBlock(new BlockPos(1, 0, 1), Blocks.STONE);
+        helper.setBlock(POS, ModBlocks.ALCHEMICAL_EXCAVATOR.get());
+        com.gabrielflorianoo.peqol.block.entity.AlchemicalExcavatorBlockEntity excavator =
+                (com.gabrielflorianoo.peqol.block.entity.AlchemicalExcavatorBlockEntity) helper.getBlockEntity(POS);
+        excavator.getOwnerData().set(helper.makeMockPlayer());
+        helper.runAfterDelay(40, () -> {
+            helper.assertBlockPresent(Blocks.STONE, new BlockPos(1, 0, 1));
+            helper.succeed();
+        });
+    }
 }

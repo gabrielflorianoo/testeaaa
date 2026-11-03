@@ -5,6 +5,7 @@ import com.gabrielflorianoo.peqol.block.entity.AlchemicalDownlinkBlockEntity;
 import com.gabrielflorianoo.peqol.block.entity.AlchemicalExporterBlockEntity;
 import com.gabrielflorianoo.peqol.block.entity.AlchemicalGaugeBlockEntity;
 import com.gabrielflorianoo.peqol.block.entity.AlchemicalInterfaceBlockEntity;
+import com.gabrielflorianoo.peqol.block.entity.AlchemicalExcavatorBlockEntity;
 import com.gabrielflorianoo.peqol.block.entity.AlchemicalSpringBlockEntity;
 import com.gabrielflorianoo.peqol.block.entity.TradePostBlockEntity;
 import com.gabrielflorianoo.peqol.block.entity.AlchemicalImporterBlockEntity;
@@ -52,6 +53,10 @@ public final class ModBlockEntities {
     @SuppressWarnings("DataFlowIssue")
     public static final RegistryObject<BlockEntityType<AlchemicalSpringBlockEntity>> ALCHEMICAL_SPRING = BLOCK_ENTITIES.register("alchemical_spring",
             () -> BlockEntityType.Builder.of(AlchemicalSpringBlockEntity::new, ModBlocks.ALCHEMICAL_SPRING.get()).build(null));
+
+    @SuppressWarnings("DataFlowIssue")
+    public static final RegistryObject<BlockEntityType<AlchemicalExcavatorBlockEntity>> ALCHEMICAL_EXCAVATOR = BLOCK_ENTITIES.register("alchemical_excavator",
+            () -> BlockEntityType.Builder.of(AlchemicalExcavatorBlockEntity::new, ModBlocks.ALCHEMICAL_EXCAVATOR.get()).build(null));
 
     private ModBlockEntities() {
     }

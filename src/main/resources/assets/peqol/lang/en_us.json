@@ -410,5 +410,19 @@
   "info.peqol.spring.hint": "Sneak + empty hand switches water/lava. Redstone pauses it.",
   "command.peqol.history.empty": "Not enough data yet (one sample every 10 seconds)",
   "command.peqol.history.header": "Your EMC over the last %s min:",
-  "command.peqol.history.summary": "min %s / max %s / change %s"
+  "command.peqol.history.summary": "min %s / max %s / change %s",
+  "block.peqol.alchemical_excavator": "Alchemical Excavator",
+  "block.peqol.alchemical_excavator.desc": "Mines the area below it layer by layer, turning drops into EMC.",
+  "jei.peqol.info.alchemical_excavator": "Mines a square area below itself (9x9 by default) down to bedrock, paying a little EMC per block. Drops with EMC become the owner's personal EMC, the rest goes into an adjacent chest (or pops out on top). Skips blocks with inventories, fluids and unbreakable blocks, respects protections. Needs the owner online, redstone pauses it, sneak + empty hand restarts it. Accepts Machine Upgrades.",
+  "message.peqol.excavator.restart": "Excavator restarted from the top layer",
+  "info.peqol.excavator.layer": "Current layer: Y=%s",
+  "info.peqol.excavator.mined": "Mined %s blocks, gained %s EMC",
+  "info.peqol.excavator.hint": "Mines a %s wide square below it. Sneak + empty hand restarts.",
+  "info.peqol.excavator.status.idle": "Status: idle",
+  "info.peqol.excavator.status.mining": "Status: mining",
+  "info.peqol.excavator.status.finished": "Status: finished",
+  "info.peqol.excavator.status.paused": "Status: paused by redstone",
+  "info.peqol.excavator.status.owner_offline": "Status: owner offline",
+  "info.peqol.excavator.status.no_emc": "Status: not enough EMC",
+  "info.peqol.excavator.status.unloaded": "Status: area not loaded"
 }

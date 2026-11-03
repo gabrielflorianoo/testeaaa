@@ -410,5 +410,19 @@
   "info.peqol.spring.hint": "Agache com a mão vazia para trocar água/lava. Redstone pausa.",
   "command.peqol.history.empty": "Ainda não há dados suficientes (uma amostra a cada 10 segundos)",
   "command.peqol.history.header": "Seu EMC nos últimos %s min:",
-  "command.peqol.history.summary": "mín %s / máx %s / variação %s"
+  "command.peqol.history.summary": "mín %s / máx %s / variação %s",
+  "block.peqol.alchemical_excavator": "Escavadeira Alquímica",
+  "block.peqol.alchemical_excavator.desc": "Escava a área abaixo camada por camada, transformando os drops em EMC.",
+  "jei.peqol.info.alchemical_excavator": "Escava uma área quadrada abaixo (9x9 por padrão) até a rocha-mãe, pagando um pouco de EMC por bloco. Drops com EMC viram EMC pessoal do dono, o resto vai para um baú vizinho (ou sai por cima). Pula blocos com inventário, fluidos e inquebráveis, respeita proteções. Precisa do dono online, redstone pausa, agachar com a mão vazia reinicia. Aceita Melhorias de Máquina.",
+  "message.peqol.excavator.restart": "Escavadeira reiniciada a partir da camada de cima",
+  "info.peqol.excavator.layer": "Camada atual: Y=%s",
+  "info.peqol.excavator.mined": "Escavou %s blocos, ganhou %s EMC",
+  "info.peqol.excavator.hint": "Escava um quadrado de %s de largura abaixo. Agache com a mão vazia para reiniciar.",
+  "info.peqol.excavator.status.idle": "Estado: ocioso",
+  "info.peqol.excavator.status.mining": "Estado: escavando",
+  "info.peqol.excavator.status.finished": "Estado: concluído",
+  "info.peqol.excavator.status.paused": "Estado: pausado por redstone",
+  "info.peqol.excavator.status.owner_offline": "Estado: dono offline",
+  "info.peqol.excavator.status.no_emc": "Estado: EMC insuficiente",
+  "info.peqol.excavator.status.unloaded": "Estado: área não carregada"
 }

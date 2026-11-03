@@ -131,6 +131,10 @@ public final class PEQoLConfig {
         // Blocks
         public final ForgeConfigSpec.LongValue uplinkBufferCapacity;
         public final ForgeConfigSpec.IntValue interfaceMaxSlots;
+        public final ForgeConfigSpec.IntValue excavatorRadius;
+        public final ForgeConfigSpec.IntValue excavatorInterval;
+        public final ForgeConfigSpec.LongValue excavatorCostPerBlock;
+        public final ForgeConfigSpec.BooleanValue excavatorBurnsDrops;
         public final ForgeConfigSpec.LongValue springWaterCost;
         public final ForgeConfigSpec.LongValue springLavaCost;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> disabledRecipes;
@@ -323,6 +327,14 @@ public final class PEQoLConfig {
             builder.comment("Personal EMC automation blocks").push("blocks");
             uplinkBufferCapacity = builder.comment("EMC an Alchemical Uplink can buffer while its owner is offline.")
                     .defineInRange("uplinkBufferCapacity", 1_000_000_000L, 1L, Long.MAX_VALUE);
+            excavatorRadius = builder.comment("Alchemical Excavator: radius of the square mined below it (4 = 9x9).")
+                    .defineInRange("excavatorRadius", 4, 1, 16);
+            excavatorInterval = builder.comment("Alchemical Excavator: ticks between mining operations.")
+                    .defineInRange("excavatorInterval", 10, 1, 1200);
+            excavatorCostPerBlock = builder.comment("Alchemical Excavator: EMC paid per block mined.")
+                    .defineInRange("excavatorCostPerBlock", 8L, 0L, Long.MAX_VALUE);
+            excavatorBurnsDrops = builder.comment("Alchemical Excavator: drops with EMC become personal EMC instead of items.")
+                    .define("excavatorBurnsDrops", true);
             springWaterCost = builder.comment("Alchemical Spring: EMC per bucket of water when ProjectE gives buckets no usable value.")
                     .defineInRange("springWaterCost", 1L, 0L, Long.MAX_VALUE);
             springLavaCost = builder.comment("Alchemical Spring: EMC per bucket of lava when ProjectE gives buckets no usable value.")

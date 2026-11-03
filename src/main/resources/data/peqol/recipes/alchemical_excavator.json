@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["DPD", "RVR", "DHD"],
+  "key": {
+    "D": { "item": "projecte:dark_matter" },
+    "P": { "item": "projecte:dm_pick" },
+    "R": { "item": "projecte:red_matter" },
+    "V": { "item": "peqol:alchemical_vacuum" },
+    "H": { "item": "minecraft:hopper" }
+  },
+  "result": { "item": "peqol:alchemical_excavator" },
+  "conditions": [ { "type": "peqol:recipe_enabled", "item": "alchemical_excavator" } ]
+}
