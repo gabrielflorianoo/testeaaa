@@ -432,5 +432,10 @@
   "jei.peqol.info.alchemical_display": "A decorative sign for your base: shows the owner's name, personal EMC and its change per second as floating text above the block. Works while the owner is offline too.",
   "message.peqol.excavator.silk": "Excavator mines with Silk Touch",
   "message.peqol.excavator.fortune": "Excavator mines with Fortune %s",
-  "message.peqol.excavator.bad_book": "Only Silk Touch or Fortune books can be installed"
+  "message.peqol.excavator.bad_book": "Only Silk Touch or Fortune books can be installed",
+  "block.peqol.alchemical_harvester": "Alchemical Harvester",
+  "block.peqol.alchemical_harvester.desc": "Harvests and replants mature crops around it, turning produce into EMC.",
+  "jei.peqol.info.alchemical_harvester": "Harvests mature crops in a radius around it (from one block below to two above) and replants them: wheat, carrots, potatoes, beetroots, nether wart, melons, pumpkins, sugar cane, cactus and bamboo (bases are kept). Produce with EMC becomes the owner's personal EMC while they are online; everything else goes into an adjacent chest. Upgrades add radius, redstone pauses it.",
+  "info.peqol.harvester.total": "Harvested %s plants, gained %s EMC",
+  "info.peqol.harvester.hint": "Covers one block below to two above. Redstone pauses it."
 }

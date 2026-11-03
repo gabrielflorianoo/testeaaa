@@ -5,6 +5,7 @@ import com.gabrielflorianoo.peqol.block.AlchemicalDownlinkBlock;
 import com.gabrielflorianoo.peqol.block.AlchemicalExporterBlock;
 import com.gabrielflorianoo.peqol.block.AlchemicalGaugeBlock;
 import com.gabrielflorianoo.peqol.block.AlchemicalInterfaceBlock;
+import com.gabrielflorianoo.peqol.block.AlchemicalHarvesterBlock;
 import com.gabrielflorianoo.peqol.block.AlchemicalDisplayBlock;
 import com.gabrielflorianoo.peqol.block.AlchemicalExcavatorBlock;
 import com.gabrielflorianoo.peqol.block.AlchemicalSpringBlock;
@@ -54,6 +55,9 @@ public final class ModBlocks {
 
     public static final RegistryObject<AlchemicalDisplayBlock> ALCHEMICAL_DISPLAY = BLOCKS.register("alchemical_display",
             () -> new AlchemicalDisplayBlock(machineProperties(MapColor.COLOR_MAGENTA)));
+
+    public static final RegistryObject<AlchemicalHarvesterBlock> ALCHEMICAL_HARVESTER = BLOCKS.register("alchemical_harvester",
+            () -> new AlchemicalHarvesterBlock(machineProperties(MapColor.PLANT)));
 
     private ModBlocks() {
     }

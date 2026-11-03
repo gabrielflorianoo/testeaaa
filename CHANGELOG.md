@@ -1,5 +1,8 @@
 # ProjectE QoL+ changelog
 
+## 1.12.0
+- Alchemical Harvester: harvests and replants crops (wheat, carrots, potatoes, beetroots, nether wart, melons, pumpkins, sugar cane, cactus, bamboo); produce into EMC; upgradeable radius
+
 ## 1.11.0
 - Alchemical Display: floating text with the owner's EMC and EMC/s (block entity renderer)
 - Handbook pages for the newer blocks and server features

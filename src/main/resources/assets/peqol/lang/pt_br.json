@@ -432,5 +432,10 @@
   "jei.peqol.info.alchemical_display": "Um letreiro decorativo para a base: mostra o nome do dono, o EMC pessoal e a variação por segundo como texto flutuante acima do bloco. Funciona com o dono offline também.",
   "message.peqol.excavator.silk": "A escavadeira escava com Toque Suave",
   "message.peqol.excavator.fortune": "A escavadeira escava com Fortuna %s",
-  "message.peqol.excavator.bad_book": "Só livros de Toque Suave ou Fortuna podem ser instalados"
+  "message.peqol.excavator.bad_book": "Só livros de Toque Suave ou Fortuna podem ser instalados",
+  "block.peqol.alchemical_harvester": "Colheitadeira Alquímica",
+  "block.peqol.alchemical_harvester.desc": "Colhe e replanta as plantações maduras ao redor, transformando a produção em EMC.",
+  "jei.peqol.info.alchemical_harvester": "Colhe as plantações maduras num raio ao redor (de um bloco abaixo a dois acima) e replanta: trigo, cenoura, batata, beterraba, fungo do Nether, melancia, abóbora, cana, cacto e bambu (as bases ficam). A produção com EMC vira EMC pessoal do dono enquanto ele está online; o resto vai para um baú vizinho. Melhorias aumentam o raio, redstone pausa.",
+  "info.peqol.harvester.total": "Colheu %s plantas, ganhou %s EMC",
+  "info.peqol.harvester.hint": "Cobre de um bloco abaixo a dois acima. Redstone pausa."
 }

@@ -452,4 +452,25 @@ public class PEQoLGameTests {
         helper.assertTrue(display.getUpdatePacket() != null, "Display should send block entity update packets");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void harvesterClassifiesPlants(GameTestHelper helper) {
+        helper.setBlock(new BlockPos(1, 0, 1), Blocks.FARMLAND);
+        helper.setBlock(new BlockPos(1, 1, 1), ((net.minecraft.world.level.block.CropBlock) Blocks.WHEAT).getStateForAge(7));
+        helper.setBlock(new BlockPos(2, 0, 1), Blocks.FARMLAND);
+        helper.setBlock(new BlockPos(2, 1, 1), ((net.minecraft.world.level.block.CropBlock) Blocks.WHEAT).getStateForAge(2));
+        helper.setBlock(new BlockPos(0, 0, 0), Blocks.SAND);
+        helper.setBlock(new BlockPos(0, 1, 0), Blocks.SUGAR_CANE);
+        helper.setBlock(new BlockPos(0, 2, 0), Blocks.SUGAR_CANE);
+        net.minecraft.server.level.ServerLevel level = helper.getLevel();
+        java.util.function.Function<BlockPos, com.gabrielflorianoo.peqol.block.entity.AlchemicalHarvesterBlockEntity.HarvestType> classify = rel -> {
+            BlockPos abs = helper.absolutePos(rel);
+            return com.gabrielflorianoo.peqol.block.entity.AlchemicalHarvesterBlockEntity.classify(level, abs, level.getBlockState(abs));
+        };
+        helper.assertTrue(classify.apply(new BlockPos(1, 1, 1)) == com.gabrielflorianoo.peqol.block.entity.AlchemicalHarvesterBlockEntity.HarvestType.REPLANT, "Mature wheat is replanted");
+        helper.assertTrue(classify.apply(new BlockPos(2, 1, 1)) == com.gabrielflorianoo.peqol.block.entity.AlchemicalHarvesterBlockEntity.HarvestType.NONE, "Young wheat is left alone");
+        helper.assertTrue(classify.apply(new BlockPos(0, 2, 0)) == com.gabrielflorianoo.peqol.block.entity.AlchemicalHarvesterBlockEntity.HarvestType.CUT_ABOVE, "Upper sugar cane is cut");
+        helper.assertTrue(classify.apply(new BlockPos(0, 1, 0)) == com.gabrielflorianoo.peqol.block.entity.AlchemicalHarvesterBlockEntity.HarvestType.NONE, "Sugar cane base is kept");
+        helper.succeed();
+    }
 }

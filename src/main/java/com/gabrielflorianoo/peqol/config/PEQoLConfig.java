@@ -131,6 +131,9 @@ public final class PEQoLConfig {
         // Blocks
         public final ForgeConfigSpec.LongValue uplinkBufferCapacity;
         public final ForgeConfigSpec.IntValue interfaceMaxSlots;
+        public final ForgeConfigSpec.IntValue harvesterRadius;
+        public final ForgeConfigSpec.IntValue harvesterInterval;
+        public final ForgeConfigSpec.BooleanValue harvesterBurnsProduce;
         public final ForgeConfigSpec.IntValue excavatorRadius;
         public final ForgeConfigSpec.IntValue excavatorInterval;
         public final ForgeConfigSpec.LongValue excavatorCostPerBlock;
@@ -327,6 +330,12 @@ public final class PEQoLConfig {
             builder.comment("Personal EMC automation blocks").push("blocks");
             uplinkBufferCapacity = builder.comment("EMC an Alchemical Uplink can buffer while its owner is offline.")
                     .defineInRange("uplinkBufferCapacity", 1_000_000_000L, 1L, Long.MAX_VALUE);
+            harvesterRadius = builder.comment("Alchemical Harvester: base radius (each upgrade tier adds 2).")
+                    .defineInRange("harvesterRadius", 4, 1, 16);
+            harvesterInterval = builder.comment("Alchemical Harvester: ticks between harvests.")
+                    .defineInRange("harvesterInterval", 40, 1, 1200);
+            harvesterBurnsProduce = builder.comment("Alchemical Harvester: produce with EMC becomes the owner's personal EMC (owner must be online).")
+                    .define("harvesterBurnsProduce", true);
             excavatorRadius = builder.comment("Alchemical Excavator: radius of the square mined below it (4 = 9x9).")
                     .defineInRange("excavatorRadius", 4, 1, 16);
             excavatorInterval = builder.comment("Alchemical Excavator: ticks between mining operations.")

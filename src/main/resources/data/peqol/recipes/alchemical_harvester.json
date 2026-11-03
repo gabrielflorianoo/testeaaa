@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [" H ", "DSD", " L "],
+  "key": {
+    "H": { "item": "projecte:dm_hoe" },
+    "D": { "item": "projecte:dark_matter" },
+    "S": { "item": "projecte:harvest_goddess_band" },
+    "L": { "item": "projecte:low_covalence_dust" }
+  },
+  "result": { "item": "peqol:alchemical_harvester" },
+  "conditions": [ { "type": "peqol:recipe_enabled", "item": "alchemical_harvester" } ]
+}

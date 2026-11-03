@@ -5,6 +5,7 @@ import com.gabrielflorianoo.peqol.block.entity.AlchemicalDownlinkBlockEntity;
 import com.gabrielflorianoo.peqol.block.entity.AlchemicalExporterBlockEntity;
 import com.gabrielflorianoo.peqol.block.entity.AlchemicalGaugeBlockEntity;
 import com.gabrielflorianoo.peqol.block.entity.AlchemicalInterfaceBlockEntity;
+import com.gabrielflorianoo.peqol.block.entity.AlchemicalHarvesterBlockEntity;
 import com.gabrielflorianoo.peqol.block.entity.AlchemicalDisplayBlockEntity;
 import com.gabrielflorianoo.peqol.block.entity.AlchemicalExcavatorBlockEntity;
 import com.gabrielflorianoo.peqol.block.entity.AlchemicalSpringBlockEntity;
@@ -62,6 +63,10 @@ public final class ModBlockEntities {
     @SuppressWarnings("DataFlowIssue")
     public static final RegistryObject<BlockEntityType<AlchemicalDisplayBlockEntity>> ALCHEMICAL_DISPLAY = BLOCK_ENTITIES.register("alchemical_display",
             () -> BlockEntityType.Builder.of(AlchemicalDisplayBlockEntity::new, ModBlocks.ALCHEMICAL_DISPLAY.get()).build(null));
+
+    @SuppressWarnings("DataFlowIssue")
+    public static final RegistryObject<BlockEntityType<AlchemicalHarvesterBlockEntity>> ALCHEMICAL_HARVESTER = BLOCK_ENTITIES.register("alchemical_harvester",
+            () -> BlockEntityType.Builder.of(AlchemicalHarvesterBlockEntity::new, ModBlocks.ALCHEMICAL_HARVESTER.get()).build(null));
 
     private ModBlockEntities() {
     }
