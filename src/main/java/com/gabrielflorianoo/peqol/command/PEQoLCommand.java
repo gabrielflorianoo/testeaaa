@@ -87,6 +87,11 @@ public final class PEQoLCommand {
                                         .executes(ctx -> xpFromEmc(ctx.getSource(), IntegerArgumentType.getInteger(ctx, "points"))))))
                 .then(Commands.literal("stats").executes(ctx -> stats(ctx.getSource())))
                 .then(Commands.literal("back").executes(ctx -> back(ctx.getSource())))
+                .then(Commands.literal("tablet").executes(ctx -> {
+                    com.gabrielflorianoo.peqol.network.ServerActions.openTablet(ctx.getSource().getPlayerOrException());
+                    return 1;
+                }))
+                .then(bagCommand())
                 .then(Commands.literal("share")
                         .then(Commands.argument("player", EntityArgument.player())
                                 .executes(PEQoLCommand::share)))
@@ -160,7 +165,7 @@ public final class PEQoLCommand {
 
     private static int help(CommandSourceStack source) {
         source.sendSuccess(() -> Component.translatable("command.peqol.help.header").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD), false);
-        String[] entries = {"balance", "pay", "withdraw", "buy", "sell", "value", "known", "autostock", "learnall", "gift", "share", "back", "xp", "stats", "handbook", "worth", "burn", "missing", "unlearned", "stars", "knowledge", "top"};
+        String[] entries = {"balance", "pay", "withdraw", "buy", "sell", "value", "known", "tablet", "bag", "autostock", "learnall", "gift", "share", "back", "xp", "stats", "handbook", "worth", "burn", "missing", "unlearned", "stars", "knowledge", "top"};
         for (String entry : entries) {
             source.sendSuccess(() -> Component.literal("/peqol " + entry).withStyle(ChatFormatting.GOLD)
                     .append(Component.literal(" - ").withStyle(ChatFormatting.DARK_GRAY))
@@ -414,6 +419,20 @@ public final class PEQoLCommand {
         source.sendSuccess(() -> Component.translatable("message.peqol.scroll.learned", learned).withStyle(ChatFormatting.GREEN), false);
         sender.sendSystemMessage(Component.translatable("command.peqol.share.accepted", target.getDisplayName(), learned).withStyle(ChatFormatting.GREEN));
         return learned;
+    }
+
+    private static com.mojang.brigadier.builder.LiteralArgumentBuilder<CommandSourceStack> bagCommand() {
+        com.mojang.brigadier.builder.LiteralArgumentBuilder<CommandSourceStack> bag = Commands.literal("bag").executes(ctx -> {
+            com.gabrielflorianoo.peqol.network.ServerActions.openBag(ctx.getSource().getPlayerOrException(), null);
+            return 1;
+        });
+        for (net.minecraft.world.item.DyeColor color : net.minecraft.world.item.DyeColor.values()) {
+            bag.then(Commands.literal(color.getName()).executes(ctx -> {
+                com.gabrielflorianoo.peqol.network.ServerActions.openBag(ctx.getSource().getPlayerOrException(), color);
+                return 1;
+            }));
+        }
+        return bag;
     }
 
     private static int back(CommandSourceStack source) throws CommandSyntaxException {

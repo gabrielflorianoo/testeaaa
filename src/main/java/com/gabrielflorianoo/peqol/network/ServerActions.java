@@ -65,14 +65,18 @@ public final class ServerActions {
     }
 
     public static void openBag(ServerPlayer player) {
-        ItemStack bagStack = InventoryUtil.findFirstStack(player, stack -> stack.getItem() instanceof AlchemicalBag);
+        openBag(player, null);
+    }
+
+    public static void openBag(ServerPlayer player, @org.jetbrains.annotations.Nullable DyeColor wanted) {
+        ItemStack bagStack = InventoryUtil.findFirstStack(player, stack -> stack.getItem() instanceof AlchemicalBag bag && (wanted == null || bag.color == wanted));
         DyeColor color;
         Component title;
         if (!bagStack.isEmpty()) {
             color = ((AlchemicalBag) bagStack.getItem()).color;
             title = bagStack.getHoverName();
         } else if (!PEQoLConfig.COMMON.keybindBagRequiresItem.get()) {
-            color = DyeColor.WHITE;
+            color = wanted == null ? DyeColor.WHITE : wanted;
             title = Component.translatable("container.peqol.alchemical_bag");
         } else {
             player.displayClientMessage(Component.translatable("message.peqol.need_bag").withStyle(ChatFormatting.RED), true);

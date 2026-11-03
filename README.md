@@ -74,6 +74,8 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 | `xp toemc [pontos]` / `xp fromemc <pontos>` | Converte experiência em EMC e vice-versa (32 EMC por ponto, configurável) |
 | `gift <jogador> <item> [qtd]` | Cria um item aprendido com o seu EMC direto no inventário de outro jogador |
 | `share <jogador>` / `accept` | Oferece todo o seu conhecimento a outro jogador; ele aceita clicando em **[Aceitar]** no chat ou com `/peqol accept` |
+| `tablet` | Abre a transmutação (igual à tecla J) |
+| `bag [cor]` | Abre uma bolsa alquímica, opcionalmente escolhendo a cor (ex.: `/peqol bag red`) |
 | `back` | Teleporta para onde você morreu por último, pagando EMC (mesma fórmula da Âncora). Procura um lugar seguro, sem lava |
 | `stats` | Mostra as suas estatísticas do QoL+ |
 | `burn hand\|inventory` | Queima a mão ou o inventário principal. A hotbar, a armadura, a mão secundária, os itens com NBT e as Estrelas de Klein são preservados |
@@ -121,6 +123,9 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 - **Aprender ao fabricar** (`server.learnOnCraft`, desligado por padrão): fabricar um item com EMC também o aprende.
 - **Lista negra para servidores**: `blacklist.items` impede que itens sejam criados com EMC pelo `buy`, pelo pick block, pelo Reabastecedor, pelo Exportador e pela varinha. Aceita IDs e tags, por exemplo `["minecraft:elytra", "#forge:ores"]`.
 
+## JEI (opcional)
+Com o JEI instalado, todos os itens do addon ganham uma página de informação (aperte **U** ou **R** sobre o item).
+
 ## Curios (opcional)
 Se o [Curios](https://www.curseforge.com/minecraft/mc-mods/curios) estiver instalado, os itens podem ficar nos slots dele e continuam funcionando:
 - **Cinto**: Reabastecedor, Iluminação e Tábua de Transmutação.
@@ -158,6 +163,7 @@ A quality-of-life addon for ProjectE on Forge 1.20.1. It includes:
 - A Siphon Charm that turns filtered pickups into EMC.
 - Tradeable EMC Cheques and Knowledge Scrolls for sharing knowledge.
 - Uplink, Importer and Exporter blocks that bridge automation and personal EMC.
+- JEI info pages for every item, `/peqol tablet` and `/peqol bag [color]`.
 - `/peqol share` + `/peqol accept` (knowledge sharing with consent), `/peqolclient` to tweak HUD and tooltips in game.
 - Alchemist's Handbook (in-game guide book), richer look-at info (condenser target/progress, collector light, EMC/s).
 - Alchemical Prospector, `/peqol gift`, starter knowledge and learn-on-craft server options.
