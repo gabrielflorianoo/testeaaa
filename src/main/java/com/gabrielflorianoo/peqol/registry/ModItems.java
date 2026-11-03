@@ -65,6 +65,9 @@ public final class ModItems {
     public static final RegistryObject<PhilosophersWrenchItem> PHILOSOPHERS_WRENCH = ITEMS.register("philosophers_wrench",
             () -> new PhilosophersWrenchItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
 
+    public static final RegistryObject<OwnedBlockItem> ALCHEMICAL_GAUGE = ITEMS.register("alchemical_gauge",
+            () -> new OwnedBlockItem(ModBlocks.ALCHEMICAL_GAUGE.get(), new Item.Properties().rarity(Rarity.UNCOMMON), "alchemical_gauge"));
+
     private ModItems() {
     }
 }

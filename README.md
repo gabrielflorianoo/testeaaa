@@ -10,6 +10,7 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
 - **HUD de EMC**: seu EMC pessoal, ganho/perda por segundo (média de 5 s) e quantos itens você aprendeu. Por padrão aparece só quando você carrega uma Tábua de Transmutação. Dá para mudar o canto, o deslocamento, o formato compacto (`1.25M`) e o fundo. A tecla **H** mostra/esconde.
 - **Estrelas de Klein no HUD**: mostra o total de EMC guardado nas estrelas que você carrega.
 - **Valor da mão no HUD**: mostra quanto vale a pilha que você está segurando.
+- **Toasts de aprendizado**: uma notificação aparece quando você aprende itens novos.
 - **Toasts de marco**: uma notificação aparece quando o seu EMC passa de 1K, 10K, 100K, 1M e assim por diante.
 - **Amuletos ativos no HUD**: os amuletos ligados aparecem listados embaixo do EMC.
 - **Tooltips extras** (segure SHIFT):
@@ -24,7 +25,7 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
 |---|---|
 | **J** | Abre a interface de transmutação de qualquer lugar (precisa de uma Tábua de Transmutação no inventário) |
 | **B** | Abre a primeira Bolsa Alquímica do inventário sem precisar segurá-la |
-| *(sem tecla)* | **Queima rápida**: converte a pilha da mão em EMC pessoal e aprende o item |
+| *(sem tecla)* | **Queima rápida** (segurando agachar, queima também todas as pilhas iguais do inventário): converte a pilha da mão em EMC pessoal e aprende o item |
 | **H** | Mostra/esconde o HUD de EMC |
 | *(sem tecla)* | Liga/desliga o Reabastecedor, o Sifão, o Reparo, a Saciedade e o Elo Estelar (uma tecla para cada) |
 | **Botão do meio** | **Pick block alquímico**: se você não tem o bloco, ele é criado com o seu EMC (exige o Reabastecedor ativo) |
@@ -51,6 +52,7 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
   - **Modo estoque**: agache e clique com o botão direito segurando *N* itens. O exportador mantém exatamente *N* deles nos inventários vizinhos, repondo só o que for usado.
 - **Aspirador Alquímico**: suga os itens soltos num raio de 6 blocos e os transforma em EMC, com filtro opcional. Ideal para farms de mobs e de árvores. Guarda o EMC se você estiver offline, e redstone pausa.
 - **Descida Alquímica**: o contrário da Conexão. Puxa o seu EMC pessoal e o envia para os relés, coletores e outros blocos de EMC vizinhos, o que permite carregar Estrelas de Klein num relé usando o EMC pessoal. Redstone pausa.
+- **Medidor Alquímico**: emite um sinal de comparador igual ao número de dígitos do seu EMC pessoal (1–9 EMC = 1, 1M = 7, 100T ou mais = 15). Serve para ligar e desligar farms ou máquinas conforme o seu saldo, e funciona com você offline.
 - A **Conexão Alquímica** emite sinal de comparador proporcional ao buffer.
 
 Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
@@ -63,6 +65,9 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 | `pay <jogador> <quantia>` | Envia EMC para outro jogador. Aceita `1.5k`, `20M`, `3B`... |
 | `withdraw <quantia> [cheques]` | Saca o EMC em Cheques de EMC |
 | `worth [hand\|inventory]` | Mostra quanto vale a mão ou o inventário |
+| `sell <item> [qtd]` | Queima uma quantidade exata de um item do inventário (sem quantidade, queima todos) |
+| `xp toemc [pontos]` / `xp fromemc <pontos>` | Converte experiência em EMC e vice-versa (32 EMC por ponto, configurável) |
+| `stats` | Mostra as suas estatísticas do QoL+ |
 | `burn hand\|inventory` | Queima a mão ou o inventário principal. A hotbar, a armadura, a mão secundária, os itens com NBT e as Estrelas de Klein são preservados |
 | `buy <item> [qtd]` | Cria itens aprendidos com o seu EMC, com autocompletar (ex.: `/peqol buy minecraft:diamond 64`) |
 | `value <item>` | Mostra o valor de qualquer item, se você já o aprendeu e quantos consegue criar |
@@ -94,6 +99,7 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 | Âncora Alquímica | Pérola do Ender, Pó de Covalência Médio ×2, Bússola, Matéria Escura |
 | Descida Alquímica | Matéria Escura ×2, Tocha de Redstone ×2, Conexão Alquímica |
 | Chave do Filósofo | Ferro ×2, Matéria Escura, Pó de Covalência Médio |
+| Medidor Alquímico | Comparador, Redstone ×2, Matéria Escura, Pó de Covalência Baixo |
 | Amuleto da Fundição | Pó de Covalência Baixo ×4, Fornalha ×4, Faixa de Ferro |
 
 ## Extras
@@ -129,6 +135,7 @@ A quality-of-life addon for ProjectE on Forge 1.20.1. It includes:
 - A Siphon Charm that turns filtered pickups into EMC.
 - Tradeable EMC Cheques and Knowledge Scrolls for sharing knowledge.
 - Uplink, Importer and Exporter blocks that bridge automation and personal EMC.
+- Alchemical Gauge (comparator by EMC magnitude), `/peqol sell|xp|stats`, sneak quick-burn, learn toasts.
 - Philosopher's Wrench (pick up ProjectE machines with EMC/contents), Alchemical Downlink, `/peqol autostock`.
 - Alchemical Vacuum, Alchemical Anchor (EMC teleport), Charm of Smelting, broken-tool replacement, custom statistics, advancements and a server blacklist.
 - Construction Wand with preview, Charm of Illumination, Appraisal Lens.

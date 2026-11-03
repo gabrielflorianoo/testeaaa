@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [" C ", "RDR", " L "],
+  "key": {
+    "C": { "item": "minecraft:comparator" },
+    "R": { "item": "minecraft:redstone" },
+    "D": { "item": "projecte:dark_matter" },
+    "L": { "item": "projecte:low_covalence_dust" }
+  },
+  "result": { "item": "peqol:alchemical_gauge" }
+}

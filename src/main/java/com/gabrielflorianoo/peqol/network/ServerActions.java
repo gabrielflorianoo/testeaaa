@@ -117,7 +117,19 @@ public final class ServerActions {
         }
         Component name = held.getHoverName();
         int count = held.getCount();
+        ItemStack template = held.copy();
         player.getInventory().setItem(player.getInventory().selected, ItemStack.EMPTY);
+        if (player.isShiftKeyDown()) {
+            //Sneaking: burn every identical stack in the main inventory too
+            for (int i = 0; i < player.getInventory().items.size(); i++) {
+                ItemStack stack = player.getInventory().items.get(i);
+                if (ItemStack.isSameItemSameTags(stack, template)) {
+                    count += stack.getCount();
+                    gained = gained.add(EmcUtil.burn(player, stack, false));
+                    player.getInventory().items.set(i, ItemStack.EMPTY);
+                }
+            }
+        }
         player.displayClientMessage(Component.translatable("message.peqol.burned", count, name, EmcUtil.format(gained)).withStyle(ChatFormatting.GOLD), true);
         player.level().playSound(null, player.blockPosition(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 0.4F, 1.4F);
     }

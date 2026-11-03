@@ -95,6 +95,10 @@ public final class PEQoLConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> wrenchNamespaces;
         public final ForgeConfigSpec.LongValue downlinkRate;
 
+        // XP conversion
+        public final ForgeConfigSpec.BooleanValue xpEnabled;
+        public final ForgeConfigSpec.LongValue xpEmcPerPoint;
+
         // Blacklist
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> blacklist;
 
@@ -239,6 +243,12 @@ public final class PEQoLConfig {
                     .defineInRange("rate", 50_000L, 1L, Long.MAX_VALUE);
             builder.pop();
 
+            builder.comment("/peqol xp - convert experience points to EMC and back").push("experience");
+            xpEnabled = builder.define("enabled", true);
+            xpEmcPerPoint = builder.comment("EMC per experience point (same rate both ways).")
+                    .defineInRange("emcPerPoint", 32L, 1L, 1_000_000_000L);
+            builder.pop();
+
             builder.comment("Blacklist for every feature that CREATES items from personal EMC (buy, pick block, restocker, exporter, wand...).",
                     "Accepts item ids (minecraft:diamond) and item tags (#forge:ores).").push("blacklist");
             blacklist = builder.defineListAllowEmpty(List.of("items"), () -> List.<String>of(), o -> o instanceof String);
@@ -300,6 +310,7 @@ public final class PEQoLConfig {
         public final ForgeConfigSpec.BooleanValue hudShowHeldValue;
         public final ForgeConfigSpec.BooleanValue milestoneToasts;
         public final ForgeConfigSpec.BooleanValue hudShowKleinStars;
+        public final ForgeConfigSpec.BooleanValue learnToasts;
 
         public final ForgeConfigSpec.BooleanValue tooltipAffordable;
         public final ForgeConfigSpec.BooleanValue tooltipSellValue;
@@ -325,6 +336,8 @@ public final class PEQoLConfig {
                     .define("showActiveCharms", true);
             hudShowHeldValue = builder.comment("Show the EMC value of the held stack.")
                     .define("showHeldValue", true);
+            learnToasts = builder.comment("Show a toast when you learn new items.")
+                    .define("learnToasts", true);
             hudShowKleinStars = builder.comment("Show the total EMC stored in the Klein Stars you carry.")
                     .define("showKleinStars", true);
             milestoneToasts = builder.comment("Show a toast when your personal EMC crosses 1K, 10K, 100K, 1M, ...")

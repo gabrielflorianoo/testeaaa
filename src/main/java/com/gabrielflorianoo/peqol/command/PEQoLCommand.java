@@ -72,6 +72,20 @@ public final class PEQoLCommand {
                         .then(Commands.argument("item", ItemArgument.item(buildContext))
                                 .executes(PEQoLCommand::value)))
                 .then(Commands.literal("unlearned").executes(ctx -> unlearned(ctx.getSource())))
+                .then(Commands.literal("sell")
+                        .then(Commands.argument("item", ItemArgument.item(buildContext))
+                                .executes(ctx -> sell(ctx, Integer.MAX_VALUE))
+                                .then(Commands.argument("count", IntegerArgumentType.integer(1))
+                                        .executes(ctx -> sell(ctx, IntegerArgumentType.getInteger(ctx, "count"))))))
+                .then(Commands.literal("xp")
+                        .then(Commands.literal("toemc")
+                                .executes(ctx -> xpToEmc(ctx.getSource(), -1))
+                                .then(Commands.argument("points", IntegerArgumentType.integer(1))
+                                        .executes(ctx -> xpToEmc(ctx.getSource(), IntegerArgumentType.getInteger(ctx, "points")))))
+                        .then(Commands.literal("fromemc")
+                                .then(Commands.argument("points", IntegerArgumentType.integer(1, 1_000_000))
+                                        .executes(ctx -> xpFromEmc(ctx.getSource(), IntegerArgumentType.getInteger(ctx, "points"))))))
+                .then(Commands.literal("stats").executes(ctx -> stats(ctx.getSource())))
                 .then(Commands.literal("autostock")
                         .executes(ctx -> autostockList(ctx.getSource()))
                         .then(Commands.literal("list").executes(ctx -> autostockList(ctx.getSource())))
@@ -127,7 +141,7 @@ public final class PEQoLCommand {
 
     private static int help(CommandSourceStack source) {
         source.sendSuccess(() -> Component.translatable("command.peqol.help.header").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD), false);
-        String[] entries = {"balance", "pay", "withdraw", "buy", "value", "known", "autostock", "worth", "burn", "missing", "unlearned", "stars", "knowledge", "top"};
+        String[] entries = {"balance", "pay", "withdraw", "buy", "sell", "value", "known", "autostock", "xp", "stats", "worth", "burn", "missing", "unlearned", "stars", "knowledge", "top"};
         for (String entry : entries) {
             source.sendSuccess(() -> Component.literal("/peqol " + entry).withStyle(ChatFormatting.GOLD)
                     .append(Component.literal(" - ").withStyle(ChatFormatting.DARK_GRAY))
@@ -224,6 +238,103 @@ public final class PEQoLCommand {
                     .withStyle(ChatFormatting.GRAY), false);
         }
         return unknown.size();
+    }
+
+    private static int sell(CommandContext<CommandSourceStack> ctx, int count) throws CommandSyntaxException {
+        ServerPlayer player = ctx.getSource().getPlayerOrException();
+        checkBurn(player);
+        ItemStack template = ItemArgument.getItem(ctx, "item").createItemStack(1, false);
+        if (!burnable(template)) {
+            throw NOT_LEARNED.create(template.getHoverName());
+        }
+        Inventory inventory = player.getInventory();
+        int remaining = count;
+        int sold = 0;
+        BigInteger total = BigInteger.ZERO;
+        //Main inventory first (not the hotbar), then the hotbar
+        for (int pass = 0; pass < 2 && remaining > 0; pass++) {
+            int from = pass == 0 ? Inventory.getSelectionSize() : 0;
+            int to = pass == 0 ? inventory.items.size() : Inventory.getSelectionSize();
+            for (int i = from; i < to && remaining > 0; i++) {
+                ItemStack stack = inventory.items.get(i);
+                if (!ItemStack.isSameItemSameTags(stack, template)) {
+                    continue;
+                }
+                int take = Math.min(remaining, stack.getCount());
+                ItemStack portion = stack.split(take);
+                total = total.add(EmcUtil.burn(player, portion, true));
+                sold += take;
+                remaining -= take;
+            }
+        }
+        if (sold == 0) {
+            ctx.getSource().sendFailure(Component.translatable("command.peqol.sell.none", template.getHoverName()));
+            return 0;
+        }
+        int soldCount = sold;
+        BigInteger gained = total;
+        ctx.getSource().sendSuccess(() -> Component.translatable("message.peqol.burned", soldCount, template.getHoverName(), EmcUtil.format(gained))
+                .withStyle(ChatFormatting.GOLD), false);
+        return sold;
+    }
+
+    /**
+     * Total experience points the player currently has.
+     */
+    private static int totalXp(ServerPlayer player) {
+        int level = player.experienceLevel;
+        int points;
+        if (level <= 16) {
+            points = level * level + 6 * level;
+        } else if (level <= 31) {
+            points = (int) (2.5 * level * level - 40.5 * level + 360);
+        } else {
+            points = (int) (4.5 * level * level - 162.5 * level + 2220);
+        }
+        return points + Math.round(player.experienceProgress * player.getXpNeededForNextLevel());
+    }
+
+    private static int xpToEmc(CommandSourceStack source, int requested) throws CommandSyntaxException {
+        if (!PEQoLConfig.COMMON.xpEnabled.get()) {
+            throw DISABLED.create();
+        }
+        ServerPlayer player = source.getPlayerOrException();
+        int available = totalXp(player);
+        int points = requested < 0 ? available : Math.min(requested, available);
+        if (points <= 0) {
+            source.sendFailure(Component.translatable("command.peqol.xp.none"));
+            return 0;
+        }
+        player.giveExperiencePoints(-points);
+        BigInteger emc = BigInteger.valueOf(PEQoLConfig.COMMON.xpEmcPerPoint.get()).multiply(BigInteger.valueOf(points));
+        EmcUtil.addEmc(player, emc);
+        source.sendSuccess(() -> Component.translatable("command.peqol.xp.toemc", points, EmcUtil.format(emc)).withStyle(ChatFormatting.GREEN), false);
+        return points;
+    }
+
+    private static int xpFromEmc(CommandSourceStack source, int points) throws CommandSyntaxException {
+        if (!PEQoLConfig.COMMON.xpEnabled.get()) {
+            throw DISABLED.create();
+        }
+        ServerPlayer player = source.getPlayerOrException();
+        BigInteger cost = BigInteger.valueOf(PEQoLConfig.COMMON.xpEmcPerPoint.get()).multiply(BigInteger.valueOf(points));
+        if (!EmcUtil.tryRemoveEmc(player, cost)) {
+            throw NOT_ENOUGH.create();
+        }
+        player.giveExperiencePoints(points);
+        source.sendSuccess(() -> Component.translatable("command.peqol.xp.fromemc", points, EmcUtil.format(cost)).withStyle(ChatFormatting.GREEN), false);
+        return points;
+    }
+
+    private static int stats(CommandSourceStack source) throws CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+        source.sendSuccess(() -> Component.translatable("command.peqol.stats.header").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD), false);
+        for (net.minecraft.resources.ResourceLocation id : ModStats.ALL) {
+            int value = player.getStats().getValue(net.minecraft.stats.Stats.CUSTOM.get(id));
+            source.sendSuccess(() -> Component.literal(" ").append(Component.translatable("stat." + id.getNamespace() + "." + id.getPath()))
+                    .append(Component.literal(": " + EmcUtil.format(value)).withStyle(ChatFormatting.YELLOW)).withStyle(ChatFormatting.GRAY), false);
+        }
+        return 1;
     }
 
     private static int autostockList(CommandSourceStack source) throws CommandSyntaxException {

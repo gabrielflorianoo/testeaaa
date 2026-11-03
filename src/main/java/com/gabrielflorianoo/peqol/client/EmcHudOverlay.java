@@ -38,6 +38,7 @@ public final class EmcHudOverlay implements IGuiOverlay {
     private boolean fullKnowledge;
     private final List<Component> activeCharms = new ArrayList<>();
     private BigInteger kleinStarEmc = BigInteger.ZERO;
+    private java.util.Set<moze_intel.projecte.api.ItemInfo> knownItems;
 
     private EmcHudOverlay() {
     }
@@ -48,6 +49,8 @@ public final class EmcHudOverlay implements IGuiOverlay {
     }
 
     public void reset() {
+        knownItems = null;
+        knowledge = 0;
         sampleIndex = 0;
         samplesTaken = 0;
         currentEmc = BigInteger.ZERO;
@@ -65,7 +68,26 @@ public final class EmcHudOverlay implements IGuiOverlay {
             checkMilestone(previous, currentEmc);
         }
         if (player.tickCount % 20 == 0) {
-            knowledge = provider.getKnowledge().size();
+            int newKnowledge = provider.getKnowledge().size();
+            if (knownItems == null || newKnowledge < knowledge) {
+                knownItems = new java.util.HashSet<>(provider.getKnowledge());
+            } else if (newKnowledge > knowledge) {
+                java.util.List<moze_intel.projecte.api.ItemInfo> learned = new ArrayList<>();
+                for (moze_intel.projecte.api.ItemInfo info : provider.getKnowledge()) {
+                    if (!knownItems.contains(info)) {
+                        learned.add(info);
+                    }
+                }
+                knownItems = new java.util.HashSet<>(provider.getKnowledge());
+                if (PEQoLConfig.CLIENT.learnToasts.get() && samplesTaken >= SAMPLE_TICKS && !learned.isEmpty()) {
+                    Minecraft mc = Minecraft.getInstance();
+                    Component body = learned.size() == 1 ? learned.get(0).createStack().getHoverName()
+                            : Component.translatable("toast.peqol.learned.many", learned.size());
+                    SystemToast.addOrUpdate(mc.getToasts(), SystemToast.SystemToastIds.TUTORIAL_HINT,
+                            Component.translatable("toast.peqol.learned.title"), body);
+                }
+            }
+            knowledge = newKnowledge;
             fullKnowledge = provider.hasFullKnowledge();
             hasTablet = EmcUtil.hasTablet(player);
             BigInteger[] stars = {BigInteger.ZERO};

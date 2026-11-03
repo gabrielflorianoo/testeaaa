@@ -7,6 +7,7 @@ import com.gabrielflorianoo.peqol.item.EmcChequeItem;
 import com.gabrielflorianoo.peqol.item.MendingCharmItem;
 import com.gabrielflorianoo.peqol.item.SatiationCharmItem;
 import com.gabrielflorianoo.peqol.item.SiphonCharmItem;
+import com.gabrielflorianoo.peqol.block.entity.AlchemicalGaugeBlockEntity;
 import com.gabrielflorianoo.peqol.item.PhilosophersWrenchItem;
 import com.gabrielflorianoo.peqol.block.entity.AlchemicalDownlinkBlockEntity;
 import com.gabrielflorianoo.peqol.util.AutoStock;
@@ -262,5 +263,21 @@ public class PEQoLGameTests {
         AutoStock.set(player, arrow, 0);
         helper.assertTrue(AutoStock.get(player).isEmpty(), "Entry should be removed");
         helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void gaugeSignalScale(GameTestHelper helper) {
+        helper.assertTrue(AlchemicalGaugeBlockEntity.signalFor(BigInteger.ZERO) == 0, "0 EMC = 0");
+        helper.assertTrue(AlchemicalGaugeBlockEntity.signalFor(BigInteger.valueOf(7)) == 1, "7 EMC = 1");
+        helper.assertTrue(AlchemicalGaugeBlockEntity.signalFor(BigInteger.valueOf(1_000_000)) == 7, "1M EMC = 7");
+        helper.assertTrue(AlchemicalGaugeBlockEntity.signalFor(BigInteger.TEN.pow(40)) == 15, "huge EMC caps at 15");
+        helper.setBlock(POS, ModBlocks.ALCHEMICAL_GAUGE.get());
+        AlchemicalGaugeBlockEntity gauge = (AlchemicalGaugeBlockEntity) helper.getBlockEntity(POS);
+        gauge.getOwnerData().set(helper.makeMockPlayer());
+        helper.runAfterDelay(25, () -> {
+            //Unknown offline owner reads as 0 EMC
+            helper.assertTrue(gauge.getSignal() == 0, "Gauge of a player without data should read 0");
+            helper.succeed();
+        });
     }
 }

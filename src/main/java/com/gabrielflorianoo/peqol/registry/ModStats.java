@@ -23,6 +23,9 @@ public final class ModStats {
     public static final ResourceLocation ANCHOR_TELEPORTS = register("anchor_teleports");
     public static final ResourceLocation MEALS_EATEN = register("meals_eaten");
 
+    public static final ResourceLocation[] ALL = {ITEMS_BURNED, ITEMS_CREATED, BLOCKS_BUILT, ITEMS_SMELTED, ITEMS_REPAIRED, LIGHTS_PLACED,
+            ANCHOR_TELEPORTS, MEALS_EATEN};
+
     private ModStats() {
     }
 
@@ -36,8 +39,7 @@ public final class ModStats {
      * Must run after registration (common setup) so the stats get a formatter.
      */
     public static void init() {
-        for (ResourceLocation id : new ResourceLocation[]{ITEMS_BURNED, ITEMS_CREATED, BLOCKS_BUILT, ITEMS_SMELTED, ITEMS_REPAIRED, LIGHTS_PLACED,
-                ANCHOR_TELEPORTS, MEALS_EATEN}) {
+        for (ResourceLocation id : ALL) {
             Stats.CUSTOM.get(id, StatFormatter.DEFAULT);
         }
     }
