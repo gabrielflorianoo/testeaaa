@@ -87,6 +87,10 @@ public final class PEQoLCommand {
                                         .executes(ctx -> xpFromEmc(ctx.getSource(), IntegerArgumentType.getInteger(ctx, "points"))))))
                 .then(Commands.literal("stats").executes(ctx -> stats(ctx.getSource())))
                 .then(Commands.literal("back").executes(ctx -> back(ctx.getSource())))
+                .then(Commands.literal("shop")
+                        .then(Commands.literal("price")
+                                .then(Commands.argument("amount", StringArgumentType.word())
+                                        .executes(PEQoLCommand::shopPrice))))
                 .then(Commands.literal("home")
                         .executes(ctx -> homeList(ctx.getSource()))
                         .then(Commands.literal("list").executes(ctx -> homeList(ctx.getSource())))
@@ -178,7 +182,7 @@ public final class PEQoLCommand {
 
     private static int help(CommandSourceStack source) {
         source.sendSuccess(() -> Component.translatable("command.peqol.help.header").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD), false);
-        String[] entries = {"balance", "pay", "withdraw", "buy", "sell", "value", "known", "tablet", "bag", "fav", "home", "autostock", "learnall", "gift", "share", "back", "xp", "stats", "handbook", "worth", "burn", "missing", "unlearned", "stars", "knowledge", "top"};
+        String[] entries = {"balance", "pay", "withdraw", "buy", "sell", "value", "known", "tablet", "bag", "fav", "home", "shop", "autostock", "learnall", "gift", "share", "back", "xp", "stats", "handbook", "worth", "burn", "missing", "unlearned", "stars", "knowledge", "top"};
         for (String entry : entries) {
             source.sendSuccess(() -> Component.literal("/peqol " + entry).withStyle(ChatFormatting.GOLD)
                     .append(Component.literal(" - ").withStyle(ChatFormatting.DARK_GRAY))
@@ -581,6 +585,24 @@ public final class PEQoLCommand {
             ctx.getSource().sendSuccess(() -> Component.translatable(changed ? "command.peqol.fav.removed" : "command.peqol.fav.missing", name).withStyle(ChatFormatting.YELLOW), false);
         }
         return changed ? 1 : 0;
+    }
+
+    private static int shopPrice(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        ServerPlayer player = ctx.getSource().getPlayerOrException();
+        BigInteger price = parseAmount(ctx);
+        net.minecraft.world.phys.HitResult hit = player.pick(6, 0, false);
+        if (!(hit instanceof net.minecraft.world.phys.BlockHitResult blockHit) || hit.getType() != net.minecraft.world.phys.HitResult.Type.BLOCK
+                || !(player.level().getBlockEntity(blockHit.getBlockPos()) instanceof com.gabrielflorianoo.peqol.block.entity.TradePostBlockEntity post)) {
+            ctx.getSource().sendFailure(Component.translatable("command.peqol.shop.look"));
+            return 0;
+        }
+        if (!post.getOwnerData().isOwner(player) && !player.hasPermissions(2)) {
+            ctx.getSource().sendFailure(Component.translatable("message.peqol.not_owner", post.getOwnerData().describe()));
+            return 0;
+        }
+        post.setPrice(price);
+        ctx.getSource().sendSuccess(() -> Component.translatable("command.peqol.shop.price", EmcUtil.format(price)).withStyle(ChatFormatting.GREEN), false);
+        return 1;
     }
 
     private static int back(CommandSourceStack source) throws CommandSyntaxException {

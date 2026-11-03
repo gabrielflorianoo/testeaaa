@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["WWW", "GEG", "PPP"],
+  "key": {
+    "W": { "tag": "minecraft:wool" },
+    "G": { "item": "minecraft:gold_ingot" },
+    "E": { "item": "minecraft:emerald" },
+    "P": { "tag": "minecraft:planks" }
+  },
+  "result": { "item": "peqol:trade_post" },
+  "conditions": [ { "type": "peqol:recipe_enabled", "item": "trade_post" } ]
+}

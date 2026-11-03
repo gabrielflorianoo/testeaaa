@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "peqol:block/trade_post_top",
+    "bottom": "peqol:block/trade_post_top",
+    "side": "peqol:block/trade_post_side"
+  }
+}

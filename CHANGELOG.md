@@ -1,5 +1,10 @@
 # ProjectE QoL+ changelog
 
+## 1.9.0
+- Alchemical Trade Post: player shops selling from the chest below for EMC (offline earnings are kept)
+- `/peqol shop price <amount>`
+- Mod list logo
+
 ## 1.8.0
 - Alchemical Interface: every learned item exposed as an item handler slot (extract creates from EMC, insert burns) for pipes, AE2 and RS
 - `blocks.disabledRecipes` config + `peqol:recipe_enabled` recipe condition on every QoL+ recipe

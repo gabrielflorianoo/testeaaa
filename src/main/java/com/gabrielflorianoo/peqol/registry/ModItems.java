@@ -86,6 +86,9 @@ public final class ModItems {
     public static final RegistryObject<OwnedBlockItem> ALCHEMICAL_INTERFACE = ITEMS.register("alchemical_interface",
             () -> new OwnedBlockItem(ModBlocks.ALCHEMICAL_INTERFACE.get(), new Item.Properties().rarity(Rarity.RARE), "alchemical_interface"));
 
+    public static final RegistryObject<OwnedBlockItem> TRADE_POST = ITEMS.register("trade_post",
+            () -> new OwnedBlockItem(ModBlocks.TRADE_POST.get(), new Item.Properties().rarity(Rarity.UNCOMMON), "trade_post"));
+
     private ModItems() {
     }
 }

@@ -5,6 +5,7 @@ import com.gabrielflorianoo.peqol.block.entity.AlchemicalDownlinkBlockEntity;
 import com.gabrielflorianoo.peqol.block.entity.AlchemicalExporterBlockEntity;
 import com.gabrielflorianoo.peqol.block.entity.AlchemicalGaugeBlockEntity;
 import com.gabrielflorianoo.peqol.block.entity.AlchemicalInterfaceBlockEntity;
+import com.gabrielflorianoo.peqol.block.entity.TradePostBlockEntity;
 import com.gabrielflorianoo.peqol.block.entity.AlchemicalImporterBlockEntity;
 import com.gabrielflorianoo.peqol.block.entity.AlchemicalUplinkBlockEntity;
 import com.gabrielflorianoo.peqol.block.entity.AlchemicalVacuumBlockEntity;
@@ -42,6 +43,10 @@ public final class ModBlockEntities {
     @SuppressWarnings("DataFlowIssue")
     public static final RegistryObject<BlockEntityType<AlchemicalInterfaceBlockEntity>> ALCHEMICAL_INTERFACE = BLOCK_ENTITIES.register("alchemical_interface",
             () -> BlockEntityType.Builder.of(AlchemicalInterfaceBlockEntity::new, ModBlocks.ALCHEMICAL_INTERFACE.get()).build(null));
+
+    @SuppressWarnings("DataFlowIssue")
+    public static final RegistryObject<BlockEntityType<TradePostBlockEntity>> TRADE_POST = BLOCK_ENTITIES.register("trade_post",
+            () -> BlockEntityType.Builder.of(TradePostBlockEntity::new, ModBlocks.TRADE_POST.get()).build(null));
 
     private ModBlockEntities() {
     }

@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "peqol:block/trade_post" }
+  }
+}

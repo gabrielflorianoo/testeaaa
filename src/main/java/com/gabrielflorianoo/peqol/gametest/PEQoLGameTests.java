@@ -396,4 +396,21 @@ public class PEQoLGameTests {
                 "The Interface recipe should be loaded");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void tradePostCountsStockBelow(GameTestHelper helper) {
+        BlockPos chestPos = new BlockPos(1, 0, 1);
+        helper.setBlock(chestPos, Blocks.CHEST);
+        BlockEntity chest = helper.getBlockEntity(chestPos);
+        IItemHandler chestInv = chest.getCapability(ForgeCapabilities.ITEM_HANDLER).orElseThrow(IllegalStateException::new);
+        chestInv.insertItem(0, new ItemStack(Items.DIAMOND, 10), false);
+        chestInv.insertItem(1, new ItemStack(Items.DIRT, 5), false);
+        helper.setBlock(POS, ModBlocks.TRADE_POST.get());
+        com.gabrielflorianoo.peqol.block.entity.TradePostBlockEntity post =
+                (com.gabrielflorianoo.peqol.block.entity.TradePostBlockEntity) helper.getBlockEntity(POS);
+        helper.assertTrue(post.stockCount() == 0, "No product = no stock");
+        post.setProduct(moze_intel.projecte.api.ItemInfo.fromItem(Items.DIAMOND));
+        helper.assertTrue(post.stockCount() == 10, "Should count the 10 diamonds in the chest below, got " + post.stockCount());
+        helper.succeed();
+    }
 }
