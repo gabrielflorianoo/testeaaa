@@ -184,7 +184,7 @@
   "block.peqol.alchemical_vacuum.desc": "Sucks nearby dropped items and turns them into your personal EMC.",
   "info.peqol.vacuum.radius": "Radius: %s blocks",
   "info.peqol.vacuum.everything": "Filter empty: collects everything with EMC",
-  "info.peqol.vacuum.hint": "Right click with an item to (un)filter, sneak + empty hand to clear. Redstone pauses it.",
+  "info.peqol.vacuum.hint": "Right click with an item to (un)filter, sneak + empty hand opens the filter screen (stack size = keep in stock, 1 item = unlimited). Redstone pauses it.",
   "item.peqol.alchemical_anchor": "Alchemical Anchor",
   "item.peqol.alchemical_anchor.desc": "Right click to teleport to the anchored spot, paying EMC.",
   "item.peqol.alchemical_anchor.desc2": "Sneak + right click a block to anchor. Sneak + right click in the air: info.",

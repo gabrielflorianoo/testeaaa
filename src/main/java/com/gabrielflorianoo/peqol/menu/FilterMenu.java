@@ -31,24 +31,38 @@ public class FilterMenu extends AbstractContainerMenu {
     private final FilterTarget target;
     private final boolean junkOption;
     private final int lockedSlot;
+    private final boolean countMode;
+
+    public boolean isCountMode() {
+        return countMode;
+    }
     private final DataSlot junk = DataSlot.standalone();
 
     /**
      * Client side.
      */
     public static FilterMenu fromNetwork(int id, Inventory inventory, FriendlyByteBuf buf) {
-        return new FilterMenu(id, inventory, null, buf.readBoolean(), buf.readVarInt());
+        return new FilterMenu(id, inventory, null, buf.readBoolean(), buf.readVarInt(), buf.readBoolean());
     }
 
     public FilterMenu(int id, Inventory inventory, @Nullable FilterTarget target, boolean junkOption, int lockedSlot) {
+        this(id, inventory, target, junkOption, lockedSlot, false);
+    }
+
+    /**
+     * @param countMode ghost stacks keep the clicked stack's size (used as a "keep N in stock" amount).
+     */
+    public FilterMenu(int id, Inventory inventory, @Nullable FilterTarget target, boolean junkOption, int lockedSlot, boolean countMode) {
         super(ModMenus.FILTER.get(), id);
         this.target = target;
         this.junkOption = junkOption;
         this.lockedSlot = lockedSlot;
+        this.countMode = countMode;
         if (target != null) {
             List<ItemStack> stored = target.load();
             for (int i = 0; i < Math.min(SIZE, stored.size()); i++) {
-                filter.setItem(i, stored.get(i).copyWithCount(1));
+                ItemStack stack = stored.get(i);
+                filter.setItem(i, stack.copyWithCount(countMode ? Math.max(1, Math.min(64, stack.getCount())) : 1));
             }
             junk.set(target.isJunkMode() ? 1 : 0);
         }
@@ -114,7 +128,7 @@ public class FilterMenu extends AbstractContainerMenu {
                     }
                 }
                 if (!duplicate) {
-                    filter.setItem(slotId, carried.copyWithCount(1));
+                    filter.setItem(slotId, carried.copyWithCount(countMode ? Math.min(64, carried.getCount()) : 1));
                 }
             }
             return;

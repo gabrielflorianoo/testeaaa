@@ -62,6 +62,23 @@ public class FilterScreen extends AbstractContainerScreen<FilterMenu> {
     }
 
     @Override
+    protected void renderLabels(@NotNull GuiGraphics graphics, int mouseX, int mouseY) {
+        super.renderLabels(graphics, mouseX, mouseY);
+        if (menu.isCountMode()) {
+            //Single items in count mode mean "unlimited"
+            graphics.pose().pushPose();
+            graphics.pose().translate(0, 0, 300);
+            for (int i = 0; i < FilterMenu.SIZE; i++) {
+                var slot = menu.getSlot(i);
+                if (!slot.getItem().isEmpty() && slot.getItem().getCount() == 1) {
+                    graphics.drawString(font, "\u221e", slot.x + 11, slot.y + 9, 0xFFFF55, true);
+                }
+            }
+            graphics.pose().popPose();
+        }
+    }
+
+    @Override
     protected void renderBg(@NotNull GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
         graphics.blit(TEXTURE, leftPos, topPos, 0, 0, imageWidth, ROWS * 18 + 17);
         graphics.blit(TEXTURE, leftPos, topPos + ROWS * 18 + 17, 0, 126, imageWidth, 96);

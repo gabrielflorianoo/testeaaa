@@ -5,6 +5,7 @@
 - 5 new advancements (Excavator, Interface, Harvester/Pasture, Trade Post, Hourglass)
 - `/peqol shops [item]`: world-wide Trade Post market listing (saved data, works for unloaded chunks)
 - Master switch keybind that turns every charm off and back on
+- Exporter filter screen with stock amounts (stack size = keep N, single item = unlimited)
 - Filter screens with 27 ghost slots for the Siphon Charm (with a junk mode button) and the Alchemical Vacuum
 
 ## 1.12.0

@@ -184,7 +184,7 @@
   "block.peqol.alchemical_vacuum.desc": "Suga itens soltos por perto e os transforma no seu EMC pessoal.",
   "info.peqol.vacuum.radius": "Raio: %s blocos",
   "info.peqol.vacuum.everything": "Filtro vazio: coleta tudo que tem EMC",
-  "info.peqol.vacuum.hint": "Clique direito com um item para (des)filtrar, agache com a mão vazia para limpar. Redstone pausa.",
+  "info.peqol.vacuum.hint": "Clique direito com um item para (des)filtrar, agache com a mão vazia para abrir a tela de filtro (tamanho da pilha = manter em estoque, 1 item = ilimitado). Redstone pausa.",
   "item.peqol.alchemical_anchor": "Âncora Alquímica",
   "item.peqol.alchemical_anchor.desc": "Clique direito para teleportar ao ponto ancorado, pagando EMC.",
   "item.peqol.alchemical_anchor.desc2": "Agache + clique direito num bloco para ancorar. Agache + clique direito no ar: informações.",

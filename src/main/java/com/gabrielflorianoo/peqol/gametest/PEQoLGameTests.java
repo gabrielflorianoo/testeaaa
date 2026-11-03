@@ -533,4 +533,17 @@ public class PEQoLGameTests {
         helper.assertFalse(registry.entries().stream().anyMatch(e -> e.pos().pos().equals(abs)), "Removed posts are unlisted");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void exporterFilterStacksRoundTrip(GameTestHelper helper) {
+        helper.setBlock(POS, ModBlocks.ALCHEMICAL_EXPORTER.get());
+        com.gabrielflorianoo.peqol.block.entity.AlchemicalExporterBlockEntity exporter =
+                (com.gabrielflorianoo.peqol.block.entity.AlchemicalExporterBlockEntity) helper.getBlockEntity(POS);
+        exporter.setFilterStacks(java.util.List.of(new ItemStack(Items.COBBLESTONE, 32), new ItemStack(Items.DIAMOND, 1), new ItemStack(Items.BEDROCK, 5)));
+        java.util.List<ItemStack> stacks = exporter.filterStacks();
+        helper.assertTrue(stacks.size() == 2, "Bedrock has no EMC and is dropped, got " + stacks);
+        helper.assertTrue(stacks.get(0).is(Items.COBBLESTONE) && stacks.get(0).getCount() == 32, "Keep 32 cobblestone");
+        helper.assertTrue(stacks.get(1).is(Items.DIAMOND) && stacks.get(1).getCount() == 1, "Diamonds unlimited");
+        helper.succeed();
+    }
 }

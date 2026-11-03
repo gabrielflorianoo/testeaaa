@@ -74,6 +74,36 @@ public class AlchemicalExporterBlockEntity extends BlockEntity implements IOwned
         return filters;
     }
 
+    /**
+     * Filters as ghost stacks for the filter screen: count = stock target, 1 = unlimited.
+     */
+    public List<ItemStack> filterStacks() {
+        List<ItemStack> result = new ArrayList<>();
+        for (int i = 0; i < filters.size(); i++) {
+            int stock = stockTargets.get(i);
+            result.add(filters.get(i).createStack().copyWithCount(stock <= 1 ? 1 : Math.min(64, stock)));
+        }
+        return result;
+    }
+
+    public void setFilterStacks(List<ItemStack> stacks) {
+        filters.clear();
+        stockTargets.clear();
+        int max = PEQoLConfig.COMMON.exporterMaxFilters.get();
+        for (ItemStack stack : stacks) {
+            if (filters.size() >= max || stack.isEmpty() || !EmcUtil.hasValue(stack)) {
+                continue;
+            }
+            ItemInfo info = EmcUtil.emc().getPersistentInfo(ItemInfo.fromStack(stack.copyWithCount(1)));
+            if (filters.contains(info)) {
+                continue;
+            }
+            filters.add(info);
+            stockTargets.add(stack.getCount() <= 1 ? 0 : stack.getCount());
+        }
+        setChanged();
+    }
+
     public static void serverTick(Level level, BlockPos pos, BlockState state, AlchemicalExporterBlockEntity exporter) {
         if (++exporter.ticks % Math.max(1, PEQoLConfig.COMMON.exporterInterval.get() / (1 + exporter.tier)) != 0) {
             return;
@@ -239,10 +269,7 @@ public class AlchemicalExporterBlockEntity extends BlockEntity implements IOwned
             player.displayClientMessage(Component.translatable("message.peqol.not_owner", ownerData.describe()).withStyle(ChatFormatting.RED), true);
             return;
         }
-        filters.clear();
-        stockTargets.clear();
-        setChanged();
-        player.displayClientMessage(Component.translatable("message.peqol.exporter.cleared").withStyle(ChatFormatting.YELLOW), true);
+        com.gabrielflorianoo.peqol.menu.FilterTargets.openExporter(player, this, getBlockState().getBlock().getName());
     }
 
     @Override

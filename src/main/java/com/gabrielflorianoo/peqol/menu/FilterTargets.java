@@ -90,6 +90,7 @@ public final class FilterTargets {
                 charm.getHoverName()), buf -> {
             buf.writeBoolean(true);
             buf.writeVarInt(locked);
+            buf.writeBoolean(false);
         });
     }
 
@@ -115,6 +116,34 @@ public final class FilterTargets {
         NetworkHooks.openScreen(player, new SimpleMenuProvider((id, inventory, p) -> new FilterMenu(id, inventory, target, false, -1), title), buf -> {
             buf.writeBoolean(false);
             buf.writeVarInt(-1);
+            buf.writeBoolean(false);
+        });
+    }
+
+    /**
+     * Exporter: ghost count = "keep N in stock", a single item = unlimited.
+     */
+    public static void openExporter(ServerPlayer player, com.gabrielflorianoo.peqol.block.entity.AlchemicalExporterBlockEntity exporter, Component title) {
+        FilterTarget target = new FilterTarget() {
+            @Override
+            public List<ItemStack> load() {
+                return exporter.filterStacks();
+            }
+
+            @Override
+            public void save(List<ItemStack> filter) {
+                exporter.setFilterStacks(filter);
+            }
+
+            @Override
+            public boolean stillValid(Player viewer) {
+                return !exporter.isRemoved() && viewer.distanceToSqr(Vec3.atCenterOf(exporter.getBlockPos())) < 64;
+            }
+        };
+        NetworkHooks.openScreen(player, new SimpleMenuProvider((id, inventory, p) -> new FilterMenu(id, inventory, target, false, -1, true), title), buf -> {
+            buf.writeBoolean(false);
+            buf.writeVarInt(-1);
+            buf.writeBoolean(true);
         });
     }
 }
