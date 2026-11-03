@@ -413,4 +413,18 @@ public class PEQoLGameTests {
         helper.assertTrue(post.stockCount() == 10, "Should count the 10 diamonds in the chest below, got " + post.stockCount());
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void springPricesFluids(GameTestHelper helper) {
+        helper.setBlock(POS, ModBlocks.ALCHEMICAL_SPRING.get());
+        com.gabrielflorianoo.peqol.block.entity.AlchemicalSpringBlockEntity spring =
+                (com.gabrielflorianoo.peqol.block.entity.AlchemicalSpringBlockEntity) helper.getBlockEntity(POS);
+        helper.assertTrue(spring.fluid() == net.minecraft.world.level.material.Fluids.WATER, "Starts with water");
+        helper.assertTrue(spring.costPerBucket() >= 0, "Water has a non negative cost");
+        net.minecraftforge.fluids.capability.IFluidHandler tank = spring.getCapability(ForgeCapabilities.FLUID_HANDLER).orElseThrow(IllegalStateException::new);
+        helper.assertTrue(tank.drain(1000, net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE).isEmpty(), "Ownerless spring gives nothing");
+        helper.assertTrue(tank.fill(new net.minecraftforge.fluids.FluidStack(net.minecraft.world.level.material.Fluids.WATER, 1000),
+                net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE) == 0, "Spring never accepts fluids");
+        helper.succeed();
+    }
 }

@@ -5,6 +5,7 @@ import com.gabrielflorianoo.peqol.block.AlchemicalDownlinkBlock;
 import com.gabrielflorianoo.peqol.block.AlchemicalExporterBlock;
 import com.gabrielflorianoo.peqol.block.AlchemicalGaugeBlock;
 import com.gabrielflorianoo.peqol.block.AlchemicalInterfaceBlock;
+import com.gabrielflorianoo.peqol.block.AlchemicalSpringBlock;
 import com.gabrielflorianoo.peqol.block.TradePostBlock;
 import com.gabrielflorianoo.peqol.block.AlchemicalImporterBlock;
 import com.gabrielflorianoo.peqol.block.AlchemicalUplinkBlock;
@@ -42,6 +43,9 @@ public final class ModBlocks {
 
     public static final RegistryObject<TradePostBlock> TRADE_POST = BLOCKS.register("trade_post",
             () -> new TradePostBlock(machineProperties(MapColor.COLOR_GREEN)));
+
+    public static final RegistryObject<AlchemicalSpringBlock> ALCHEMICAL_SPRING = BLOCKS.register("alchemical_spring",
+            () -> new AlchemicalSpringBlock(machineProperties(MapColor.WATER)));
 
     private ModBlocks() {
     }

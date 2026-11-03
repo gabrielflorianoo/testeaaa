@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [" D ", "EBV", " D "],
+  "key": {
+    "D": { "item": "projecte:dark_matter" },
+    "E": { "item": "projecte:evertide_amulet" },
+    "V": { "item": "projecte:volcanite_amulet" },
+    "B": { "item": "minecraft:bucket" }
+  },
+  "result": { "item": "peqol:alchemical_spring" },
+  "conditions": [ { "type": "peqol:recipe_enabled", "item": "alchemical_spring" } ]
+}

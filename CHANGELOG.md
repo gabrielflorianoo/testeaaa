@@ -1,5 +1,8 @@
 # ProjectE QoL+ changelog
 
+## 1.10.0
+- Alchemical Spring: infinite water or lava paid with EMC, pushed into adjacent tanks/pipes or drained
+
 ## 1.9.0
 - Alchemical Trade Post: player shops selling from the chest below for EMC (offline earnings are kept)
 - Trade Post buy mode: the owner buys the product from other players (sneak + empty hand toggles)

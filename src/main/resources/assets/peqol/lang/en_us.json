@@ -400,5 +400,12 @@
   "message.peqol.shop.full": "The shop's storage is full",
   "message.peqol.shop.sold_to": "Sold %sx %s for %s EMC",
   "message.peqol.shop.bought_from": "Your shop bought %2$sx %3$s from %1$s for %4$s EMC",
-  "info.peqol.shop.buying": "Buys %s for %s EMC each"
+  "info.peqol.shop.buying": "Buys %s for %s EMC each",
+  "block.peqol.alchemical_spring": "Alchemical Spring",
+  "block.peqol.alchemical_spring.desc": "Infinite water or lava for pipes and tanks, paid with personal EMC.",
+  "jei.peqol.info.alchemical_spring": "Supplies water or lava paid with the owner's personal EMC (bucket value minus empty bucket). It pushes into adjacent tanks and pipes and can also be drained. Sneak + right click with an empty hand to switch the fluid. Redstone pauses pushing.",
+  "message.peqol.spring.mode": "Now supplying %s",
+  "info.peqol.spring.fluid": "Fluid: %s (%s EMC per bucket)",
+  "info.peqol.spring.delivered": "Delivered %s buckets",
+  "info.peqol.spring.hint": "Sneak + empty hand switches water/lava. Redstone pauses it."
 }

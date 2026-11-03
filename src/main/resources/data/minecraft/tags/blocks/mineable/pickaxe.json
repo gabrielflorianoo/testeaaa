@@ -8,6 +8,7 @@
     "peqol:alchemical_downlink",
     "peqol:alchemical_gauge",
     "peqol:alchemical_interface",
-    "peqol:trade_post"
+    "peqol:trade_post",
+    "peqol:alchemical_spring"
   ]
 }

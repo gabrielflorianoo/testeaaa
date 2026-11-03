@@ -38,6 +38,7 @@ public final class ModCreativeTab {
                 output.accept(ModItems.ALCHEMICAL_GAUGE.get());
                 output.accept(ModItems.ALCHEMICAL_INTERFACE.get());
                 output.accept(ModItems.TRADE_POST.get());
+                output.accept(ModItems.ALCHEMICAL_SPRING.get());
                 output.accept(ModItems.MACHINE_UPGRADE.get());
                 output.accept(ModItems.PHILOSOPHERS_WRENCH.get());
             })

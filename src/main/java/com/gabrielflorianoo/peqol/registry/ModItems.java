@@ -89,6 +89,9 @@ public final class ModItems {
     public static final RegistryObject<OwnedBlockItem> TRADE_POST = ITEMS.register("trade_post",
             () -> new OwnedBlockItem(ModBlocks.TRADE_POST.get(), new Item.Properties().rarity(Rarity.UNCOMMON), "trade_post"));
 
+    public static final RegistryObject<OwnedBlockItem> ALCHEMICAL_SPRING = ITEMS.register("alchemical_spring",
+            () -> new OwnedBlockItem(ModBlocks.ALCHEMICAL_SPRING.get(), new Item.Properties().rarity(Rarity.UNCOMMON), "alchemical_spring"));
+
     private ModItems() {
     }
 }

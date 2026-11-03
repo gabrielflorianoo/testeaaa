@@ -400,5 +400,12 @@
   "message.peqol.shop.full": "O estoque da loja está cheio",
   "message.peqol.shop.sold_to": "Vendeu %sx %s por %s EMC",
   "message.peqol.shop.bought_from": "Sua loja comprou %2$sx %3$s de %1$s por %4$s EMC",
-  "info.peqol.shop.buying": "Compra %s por %s EMC cada"
+  "info.peqol.shop.buying": "Compra %s por %s EMC cada",
+  "block.peqol.alchemical_spring": "Fonte Alquímica",
+  "block.peqol.alchemical_spring.desc": "Água ou lava infinita para canos e tanques, paga com EMC pessoal.",
+  "jei.peqol.info.alchemical_spring": "Fornece água ou lava paga com o EMC pessoal do dono (valor do balde cheio menos o vazio). Empurra para tanques e canos vizinhos e também pode ser drenada. Agache + clique com a mão vazia para trocar o fluido. Redstone pausa.",
+  "message.peqol.spring.mode": "Agora fornecendo %s",
+  "info.peqol.spring.fluid": "Fluido: %s (%s EMC por balde)",
+  "info.peqol.spring.delivered": "Entregou %s baldes",
+  "info.peqol.spring.hint": "Agache com a mão vazia para trocar água/lava. Redstone pausa."
 }
