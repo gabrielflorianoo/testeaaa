@@ -87,6 +87,12 @@ public final class PEQoLCommand {
                                         .executes(ctx -> xpFromEmc(ctx.getSource(), IntegerArgumentType.getInteger(ctx, "points"))))))
                 .then(Commands.literal("stats").executes(ctx -> stats(ctx.getSource())))
                 .then(Commands.literal("back").executes(ctx -> back(ctx.getSource())))
+                .then(Commands.literal("gift")
+                        .then(Commands.argument("player", EntityArgument.player())
+                                .then(Commands.argument("item", ItemArgument.item(buildContext))
+                                        .executes(ctx -> gift(ctx, 1))
+                                        .then(Commands.argument("count", IntegerArgumentType.integer(1))
+                                                .executes(ctx -> gift(ctx, IntegerArgumentType.getInteger(ctx, "count")))))))
                 .then(Commands.literal("learnall").executes(ctx -> {
                     int learned = com.gabrielflorianoo.peqol.network.ServerActions.learnInventory(ctx.getSource().getPlayerOrException(), true);
                     return Math.max(learned, 0);
@@ -146,7 +152,7 @@ public final class PEQoLCommand {
 
     private static int help(CommandSourceStack source) {
         source.sendSuccess(() -> Component.translatable("command.peqol.help.header").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD), false);
-        String[] entries = {"balance", "pay", "withdraw", "buy", "sell", "value", "known", "autostock", "learnall", "back", "xp", "stats", "worth", "burn", "missing", "unlearned", "stars", "knowledge", "top"};
+        String[] entries = {"balance", "pay", "withdraw", "buy", "sell", "value", "known", "autostock", "learnall", "gift", "back", "xp", "stats", "worth", "burn", "missing", "unlearned", "stars", "knowledge", "top"};
         for (String entry : entries) {
             source.sendSuccess(() -> Component.literal("/peqol " + entry).withStyle(ChatFormatting.GOLD)
                     .append(Component.literal(" - ").withStyle(ChatFormatting.DARK_GRAY))
@@ -329,6 +335,44 @@ public final class PEQoLCommand {
         player.giveExperiencePoints(points);
         source.sendSuccess(() -> Component.translatable("command.peqol.xp.fromemc", points, EmcUtil.format(cost)).withStyle(ChatFormatting.GREEN), false);
         return points;
+    }
+
+    private static int gift(CommandContext<CommandSourceStack> ctx, int count) throws CommandSyntaxException {
+        if (!PEQoLConfig.COMMON.giftEnabled.get() || !PEQoLConfig.COMMON.buyEnabled.get()) {
+            throw DISABLED.create();
+        }
+        ServerPlayer sender = ctx.getSource().getPlayerOrException();
+        ServerPlayer target = EntityArgument.getPlayer(ctx, "player");
+        int max = PEQoLConfig.COMMON.buyMaxCount.get();
+        if (count > max) {
+            throw TOO_MANY.create(max);
+        }
+        ItemStack template = ItemArgument.getItem(ctx, "item").createItemStack(1, false);
+        IKnowledgeProvider provider = EmcUtil.knowledge(sender).orElse(null);
+        long unit = EmcUtil.value(template);
+        if (provider == null || unit <= 0 || !provider.hasKnowledge(template)) {
+            throw NOT_LEARNED.create(template.getHoverName());
+        }
+        if (EmcUtil.isBlacklisted(template)) {
+            throw BLACKLISTED.create(template.getHoverName());
+        }
+        BigInteger cost = BigInteger.valueOf(unit).multiply(BigInteger.valueOf(count));
+        if (!EmcUtil.tryRemoveEmc(sender, cost)) {
+            throw NOT_ENOUGH.create();
+        }
+        int remaining = count;
+        int maxStack = Math.max(1, template.getMaxStackSize());
+        while (remaining > 0) {
+            int amount = Math.min(remaining, maxStack);
+            InventoryUtil.giveOrDrop(target, template.copyWithCount(amount));
+            remaining -= amount;
+        }
+        sender.awardStat(ModStats.ITEMS_CREATED, count);
+        Component name = template.getHoverName();
+        ctx.getSource().sendSuccess(() -> Component.translatable("command.peqol.gift.sent", count, name, target.getDisplayName(), EmcUtil.format(cost))
+                .withStyle(ChatFormatting.GREEN), false);
+        target.sendSystemMessage(Component.translatable("command.peqol.gift.received", count, name, sender.getDisplayName()).withStyle(ChatFormatting.GREEN));
+        return count;
     }
 
     private static int back(CommandSourceStack source) throws CommandSyntaxException {

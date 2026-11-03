@@ -304,4 +304,17 @@ public class PEQoLGameTests {
         helper.assertTrue(safe != null && safe.getY() == start.getY() + 2, "Safe spot should be right above the two stone blocks, got " + safe);
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void prospectorCountsOres(GameTestHelper helper) {
+        helper.setBlock(new BlockPos(0, 1, 0), Blocks.DIAMOND_ORE);
+        helper.setBlock(new BlockPos(2, 1, 2), Blocks.DIAMOND_ORE);
+        helper.setBlock(new BlockPos(1, 1, 0), Blocks.IRON_ORE);
+        com.gabrielflorianoo.peqol.item.ProspectorItem.OreReport report =
+                com.gabrielflorianoo.peqol.item.ProspectorItem.scan(helper.getLevel(), helper.absolutePos(new BlockPos(1, 1, 1)), 1);
+        helper.assertTrue(report.counts().getOrDefault(Blocks.DIAMOND_ORE, 0) == 2, "Should find 2 diamond ores, got " + report.counts());
+        helper.assertTrue(report.counts().getOrDefault(Blocks.IRON_ORE, 0) == 1, "Should find 1 iron ore");
+        helper.assertTrue(report.total().signum() > 0, "Ores should be worth EMC");
+        helper.succeed();
+    }
 }

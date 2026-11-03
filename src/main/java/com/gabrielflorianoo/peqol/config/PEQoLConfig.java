@@ -104,6 +104,12 @@ public final class PEQoLConfig {
         public final ForgeConfigSpec.BooleanValue backEnabled;
         public final ForgeConfigSpec.BooleanValue siphonCatchesMobDrops;
 
+        // Prospector / server QoL
+        public final ForgeConfigSpec.IntValue prospectorRadius;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> starterKnowledge;
+        public final ForgeConfigSpec.BooleanValue learnOnCraft;
+        public final ForgeConfigSpec.BooleanValue giftEnabled;
+
         // Blacklist
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> blacklist;
 
@@ -261,6 +267,17 @@ public final class PEQoLConfig {
                     .define("backEnabled", true);
             siphonCatchesMobDrops = builder.comment("Mobs you kill drop filtered items straight into your EMC when a Siphon Charm is active.")
                     .define("siphonCatchesMobDrops", true);
+            builder.pop();
+
+            builder.comment("Server quality of life").push("server");
+            prospectorRadius = builder.comment("Radius scanned by the Alchemical Prospector.")
+                    .defineInRange("prospectorRadius", 12, 2, 32);
+            starterKnowledge = builder.comment("Items every player learns the first time they join (item ids), e.g. [\"minecraft:cobblestone\", \"minecraft:dirt\"].")
+                    .defineListAllowEmpty(List.of("starterKnowledge"), () -> List.<String>of(), o -> o instanceof String);
+            learnOnCraft = builder.comment("Crafting an item with EMC also learns it (no burning needed).")
+                    .define("learnOnCraft", false);
+            giftEnabled = builder.comment("Allow /peqol gift (create an item from your EMC directly in another player's inventory).")
+                    .define("giftEnabled", true);
             builder.pop();
 
             builder.comment("Blacklist for every feature that CREATES items from personal EMC (buy, pick block, restocker, exporter, wand...).",

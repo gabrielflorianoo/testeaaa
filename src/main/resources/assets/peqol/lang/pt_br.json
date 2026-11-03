@@ -274,5 +274,14 @@
   "item.peqol.void_pouch.desc": "Clique direito para abrir seu baú do ender (%s EMC).",
   "command.peqol.back.none": "Você ainda não morreu",
   "command.peqol.back.done": "Voltou ao ponto de morte por %s EMC",
-  "command.peqol.help.back": "teleporta para onde você morreu por último (EMC)"
+  "command.peqol.help.back": "teleporta para onde você morreu por último (EMC)",
+  "item.peqol.prospector": "Prospector Alquímico",
+  "item.peqol.prospector.desc": "Clique direito para escanear minérios num raio de %s blocos e seu valor em EMC.",
+  "message.peqol.prospector.header": "Prospecção (raio %s)",
+  "message.peqol.prospector.none": "Nenhum minério por perto",
+  "message.peqol.prospector.total": "%s minérios valendo %s EMC",
+  "message.peqol.starter": "Você começa conhecendo %s itens. Boas transmutações!",
+  "command.peqol.gift.sent": "Criou %sx %s para %s (%s EMC)",
+  "command.peqol.gift.received": "Você recebeu %sx %s de %s",
+  "command.peqol.help.gift": "cria um item com seu EMC para outro jogador"
 }

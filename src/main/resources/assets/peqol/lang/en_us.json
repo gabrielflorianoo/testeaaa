@@ -274,5 +274,14 @@
   "item.peqol.void_pouch.desc": "Right click to open your ender chest (%s EMC).",
   "command.peqol.back.none": "You haven't died yet",
   "command.peqol.back.done": "Returned to your death point for %s EMC",
-  "command.peqol.help.back": "teleport to where you last died (EMC)"
+  "command.peqol.help.back": "teleport to where you last died (EMC)",
+  "item.peqol.prospector": "Alchemical Prospector",
+  "item.peqol.prospector.desc": "Right click to scan ores within %s blocks and their EMC value.",
+  "message.peqol.prospector.header": "Prospecting (radius %s)",
+  "message.peqol.prospector.none": "No ores nearby",
+  "message.peqol.prospector.total": "%s ores worth %s EMC",
+  "message.peqol.starter": "You start out knowing %s items. Happy transmuting!",
+  "command.peqol.gift.sent": "Created %sx %s for %s (%s EMC)",
+  "command.peqol.gift.received": "You received %sx %s from %s",
+  "command.peqol.help.gift": "create an item from your EMC for another player"
 }

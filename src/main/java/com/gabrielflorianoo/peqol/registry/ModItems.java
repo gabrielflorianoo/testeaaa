@@ -5,6 +5,7 @@ import com.gabrielflorianoo.peqol.item.AlchemicalAnchorItem;
 import com.gabrielflorianoo.peqol.item.AppraisalLensItem;
 import com.gabrielflorianoo.peqol.item.PhilosophersWrenchItem;
 import com.gabrielflorianoo.peqol.item.SmeltingCharmItem;
+import com.gabrielflorianoo.peqol.item.ProspectorItem;
 import com.gabrielflorianoo.peqol.item.PocketWorkbenchItem;
 import com.gabrielflorianoo.peqol.item.VoidPouchItem;
 import com.gabrielflorianoo.peqol.item.ConstructionWandItem;
@@ -74,6 +75,9 @@ public final class ModItems {
             () -> new PocketWorkbenchItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<VoidPouchItem> VOID_POUCH = ITEMS.register("void_pouch",
             () -> new VoidPouchItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
+
+    public static final RegistryObject<ProspectorItem> PROSPECTOR = ITEMS.register("prospector",
+            () -> new ProspectorItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
 
     private ModItems() {
     }

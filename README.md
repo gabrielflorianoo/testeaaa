@@ -43,6 +43,7 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
 - **Amuleto da Fundição**: os minérios e materiais brutos coletados chegam já fundidos. Cada item custa 16 EMC (configurável).
 - **Âncora Alquímica**: agache e clique num bloco para ancorar o ponto; clique com o botão direito para teleportar até lá pagando EMC (base + distância, mais caro entre dimensões). Funciona entre dimensões e tem cooldown.
 - **Chave do Filósofo**: agache e clique com o botão direito em qualquer máquina do ProjectE (condensador, coletor, relé, baú alquímico...) ou do QoL+ para pegá-la com o **EMC, o inventário e as configurações intactos**. O tooltip do item mostra o EMC guardado. Respeita proteções de área.
+- **Prospector Alquímico**: escaneia os minérios num raio de 12 blocos e mostra quantos são, quanto valem em EMC e os mais valiosos.
 - **Bancada de Bolso**: abre uma mesa de trabalho em qualquer lugar.
 - **Bolsa do Vazio**: abre o seu baú do Ender em qualquer lugar, por 64 EMC (configurável).
 - **Cheque de EMC**: o `/peqol withdraw` transforma EMC em um item que pode ser trocado entre jogadores. Clique com o botão direito para resgatar; agachado, você resgata a pilha inteira. O cheque não tem valor de EMC, então não dá para queimá-lo e duplicar EMC.
@@ -70,6 +71,7 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 | `worth [hand\|inventory]` | Mostra quanto vale a mão ou o inventário |
 | `sell <item> [qtd]` | Queima uma quantidade exata de um item do inventário (sem quantidade, queima todos) |
 | `xp toemc [pontos]` / `xp fromemc <pontos>` | Converte experiência em EMC e vice-versa (32 EMC por ponto, configurável) |
+| `gift <jogador> <item> [qtd]` | Cria um item aprendido com o seu EMC direto no inventário de outro jogador |
 | `back` | Teleporta para onde você morreu por último, pagando EMC (mesma fórmula da Âncora). Procura um lugar seguro, sem lava |
 | `stats` | Mostra as suas estatísticas do QoL+ |
 | `burn hand\|inventory` | Queima a mão ou o inventário principal. A hotbar, a armadura, a mão secundária, os itens com NBT e as Estrelas de Klein são preservados |
@@ -105,6 +107,7 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 | Descida Alquímica | Matéria Escura ×2, Tocha de Redstone ×2, Conexão Alquímica |
 | Chave do Filósofo | Ferro ×2, Matéria Escura, Pó de Covalência Médio |
 | Medidor Alquímico | Comparador, Redstone ×2, Matéria Escura, Pó de Covalência Baixo |
+| Prospector Alquímico | Linha, Pepita de Ouro, Pó de Covalência Baixo ×2, Diamante |
 | Bancada de Bolso | Mesa de Trabalho, Pó de Covalência Baixo, Couro (sem forma) |
 | Bolsa do Vazio | Linha, Couro ×3, Baú do Ender |
 | Amuleto da Fundição | Pó de Covalência Baixo ×4, Fornalha ×4, Faixa de Ferro |
@@ -112,6 +115,8 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 ## Extras
 - **Estatísticas**: em Estatísticas → Geral aparecem os itens queimados, os itens criados com EMC, os blocos construídos com a varinha, os itens fundidos, os reparados, as luzes colocadas, os teleportes e as refeições alquímicas.
 - **Conquistas**: tem uma aba própria "ProjectE QoL+" com 11 conquistas.
+- **Conhecimento inicial**: `server.starterKnowledge` é uma lista de itens que todo jogador já conhece ao entrar pela primeira vez.
+- **Aprender ao fabricar** (`server.learnOnCraft`, desligado por padrão): fabricar um item com EMC também o aprende.
 - **Lista negra para servidores**: `blacklist.items` impede que itens sejam criados com EMC pelo `buy`, pelo pick block, pelo Reabastecedor, pelo Exportador e pela varinha. Aceita IDs e tags, por exemplo `["minecraft:elytra", "#forge:ores"]`.
 
 ## Curios (opcional)
@@ -142,6 +147,7 @@ A quality-of-life addon for ProjectE on Forge 1.20.1. It includes:
 - A Siphon Charm that turns filtered pickups into EMC.
 - Tradeable EMC Cheques and Knowledge Scrolls for sharing knowledge.
 - Uplink, Importer and Exporter blocks that bridge automation and personal EMC.
+- Alchemical Prospector, `/peqol gift`, starter knowledge and learn-on-craft server options.
 - Pocket Workbench, Void Pouch, `/peqol back`, Siphon catching mob drops.
 - Look-at machine info panel, `/peqol learnall` (+ keybind), lens container burning with confirmation.
 - Alchemical Gauge (comparator by EMC magnitude), `/peqol sell|xp|stats`, sneak quick-burn, learn toasts.

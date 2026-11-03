@@ -10,6 +10,7 @@ import com.gabrielflorianoo.peqol.item.SmeltingCharmItem;
 import com.gabrielflorianoo.peqol.registry.ModStats;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import com.gabrielflorianoo.peqol.item.StellarLinkItem;
 import com.gabrielflorianoo.peqol.item.ToggleableItem;
 import com.gabrielflorianoo.peqol.util.EmcUtil;
@@ -65,6 +66,45 @@ public final class CommonEvents {
 
     public static boolean hasActive(net.minecraft.world.entity.player.Player player, Class<? extends ToggleableItem> type) {
         return InventoryUtil.contains(player, s -> type.isInstance(s.getItem()) && ToggleableItem.isActive(s));
+    }
+
+    /**
+     * Starter knowledge: learned once, the first time a player joins.
+     */
+    @SubscribeEvent
+    public static void onLogin(PlayerEvent.PlayerLoggedInEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer player)) {
+            return;
+        }
+        net.minecraft.nbt.CompoundTag persisted = player.getPersistentData().getCompound(net.minecraft.world.entity.player.Player.PERSISTED_NBT_TAG);
+        if (persisted.getBoolean("peqol_starter_given")) {
+            return;
+        }
+        persisted.putBoolean("peqol_starter_given", true);
+        player.getPersistentData().put(net.minecraft.world.entity.player.Player.PERSISTED_NBT_TAG, persisted);
+        int learned = 0;
+        for (String entry : PEQoLConfig.COMMON.starterKnowledge.get()) {
+            net.minecraft.resources.ResourceLocation id = net.minecraft.resources.ResourceLocation.tryParse(entry);
+            net.minecraft.world.item.Item item = id == null ? null : net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(id);
+            if (item != null && item != net.minecraft.world.item.Items.AIR && EmcUtil.tryLearn(player, new ItemStack(item))) {
+                learned++;
+            }
+        }
+        if (learned > 0) {
+            player.sendSystemMessage(Component.translatable("message.peqol.starter", learned).withStyle(ChatFormatting.LIGHT_PURPLE));
+        }
+    }
+
+    /**
+     * Optional: crafting an item learns it.
+     */
+    @SubscribeEvent
+    public static void onCrafted(PlayerEvent.ItemCraftedEvent event) {
+        if (PEQoLConfig.COMMON.learnOnCraft.get() && event.getEntity() instanceof ServerPlayer player && EmcUtil.hasValue(event.getCrafting())) {
+            if (EmcUtil.tryLearn(player, event.getCrafting())) {
+                player.displayClientMessage(Component.translatable("message.peqol.learned", event.getCrafting().getHoverName()).withStyle(ChatFormatting.LIGHT_PURPLE), true);
+            }
+        }
     }
 
     /**
