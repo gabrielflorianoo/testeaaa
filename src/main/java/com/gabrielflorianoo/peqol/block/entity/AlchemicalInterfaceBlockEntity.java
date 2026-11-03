@@ -38,6 +38,12 @@ public class AlchemicalInterfaceBlockEntity extends BlockEntity implements IOwne
     private final InterfaceHandler handler = new InterfaceHandler();
     private LazyOptional<IItemHandler> handlerCap = LazyOptional.of(() -> handler);
     private List<ItemStack> templates = new ArrayList<>();
+    private long[] unitValues = new long[0];
+    /**
+     * Owner's EMC sampled once per tick (null = owner offline), so storage mods polling every slot stay cheap.
+     */
+    @Nullable
+    private BigInteger cachedEmc;
     private int ticks;
     private long itemsOut;
     private long itemsIn;
@@ -55,6 +61,8 @@ public class AlchemicalInterfaceBlockEntity extends BlockEntity implements IOwne
         if (be.ticks++ % REFRESH_TICKS == 0) {
             be.refresh();
         }
+        ServerPlayer owner = be.owner();
+        be.cachedEmc = owner == null ? null : EmcUtil.getEmc(owner);
     }
 
     @Nullable
@@ -83,7 +91,12 @@ public class AlchemicalInterfaceBlockEntity extends BlockEntity implements IOwne
             result.sort((a, b) -> String.valueOf(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(a.getItem()))
                     .compareTo(String.valueOf(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(b.getItem()))));
         }
+        long[] values = new long[result.size()];
+        for (int i = 0; i < values.length; i++) {
+            values[i] = EmcUtil.value(result.get(i));
+        }
         templates = result;
+        unitValues = values;
     }
 
     @Override
@@ -143,15 +156,12 @@ public class AlchemicalInterfaceBlockEntity extends BlockEntity implements IOwne
         @NotNull
         @Override
         public ItemStack getStackInSlot(int slot) {
-            if (slot < 0 || slot >= templates.size()) {
-                return ItemStack.EMPTY;
-            }
-            ServerPlayer owner = owner();
-            if (owner == null) {
+            BigInteger emc = cachedEmc;
+            if (slot < 0 || slot >= templates.size() || slot >= unitValues.length || emc == null) {
                 return ItemStack.EMPTY;
             }
             ItemStack template = templates.get(slot);
-            long affordable = EmcUtil.affordable(EmcUtil.getEmc(owner), EmcUtil.value(template));
+            long affordable = EmcUtil.affordable(emc, unitValues[slot]);
             int count = (int) Math.min(affordable, template.getMaxStackSize());
             return count <= 0 ? ItemStack.EMPTY : template.copyWithCount(count);
         }
@@ -194,6 +204,7 @@ public class AlchemicalInterfaceBlockEntity extends BlockEntity implements IOwne
             if (!simulate) {
                 provider.setEmc(provider.getEmc().subtract(BigInteger.valueOf(unit).multiply(BigInteger.valueOf(count))));
                 provider.syncEmc(owner);
+                cachedEmc = provider.getEmc();
                 itemsOut += count;
                 setChanged();
             }
