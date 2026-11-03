@@ -36,6 +36,10 @@ public class AlchemicalExporterBlockEntity extends BlockEntity implements IOwned
 
     private final OwnerData ownerData = new OwnerData();
     private final List<ItemInfo> filters = new ArrayList<>();
+    /**
+     * Parallel to {@link #filters}: how many items to keep in the adjacent inventories, 0 = unlimited.
+     */
+    private final List<Integer> stockTargets = new ArrayList<>();
     private BigInteger totalSpent = BigInteger.ZERO;
     private long itemsExported;
     private int ticks;
@@ -102,13 +106,23 @@ public class AlchemicalExporterBlockEntity extends BlockEntity implements IOwned
         BigInteger emc = provider.getEmc();
         BigInteger startEmc = emc;
         boolean anyEmcShortage = false;
-        for (ItemInfo filter : filters) {
+        for (int index = 0; index < filters.size(); index++) {
+            ItemInfo filter = filters.get(index);
             long unit = EmcUtil.emc().getValue(filter);
             if (unit <= 0 || !provider.hasKnowledge(filter)) {
                 continue;
             }
             ItemStack template = filter.createStack();
-            int amount = (int) Math.min(Math.min(perOperation, template.getMaxStackSize()), EmcUtil.affordable(emc, unit));
+            int limit = Math.min(perOperation, template.getMaxStackSize());
+            int stock = stockTargets.get(index);
+            if (stock > 0) {
+                int present = countIn(targets, template);
+                if (present >= stock) {
+                    continue;
+                }
+                limit = Math.min(limit, stock - present);
+            }
+            int amount = (int) Math.min(limit, EmcUtil.affordable(emc, unit));
             if (amount <= 0) {
                 anyEmcShortage = true;
                 continue;
@@ -142,6 +156,19 @@ public class AlchemicalExporterBlockEntity extends BlockEntity implements IOwned
         return anyEmcShortage ? Status.NO_EMC : Status.IDLE;
     }
 
+    private static int countIn(List<IItemHandler> targets, ItemStack template) {
+        int count = 0;
+        for (IItemHandler target : targets) {
+            for (int slot = 0; slot < target.getSlots(); slot++) {
+                ItemStack stack = target.getStackInSlot(slot);
+                if (ItemHandlerHelper.canItemStacksStack(stack, template)) {
+                    count += stack.getCount();
+                }
+            }
+        }
+        return count;
+    }
+
     @Override
     public boolean onItemUse(ServerPlayer player, InteractionHand hand, ItemStack held) {
         if (!ownerData.canConfigure(player)) {
@@ -153,7 +180,29 @@ public class AlchemicalExporterBlockEntity extends BlockEntity implements IOwned
             return true;
         }
         ItemInfo info = EmcUtil.emc().getPersistentInfo(ItemInfo.fromStack(held));
-        if (filters.remove(info)) {
+        int existing = filters.indexOf(info);
+        if (player.isShiftKeyDown()) {
+            //Sneak: set (or update) a "keep N in stock" filter using the held amount
+            int stock = held.getCount();
+            if (existing >= 0) {
+                stockTargets.set(existing, stock);
+            } else {
+                int max = PEQoLConfig.COMMON.exporterMaxFilters.get();
+                if (filters.size() >= max) {
+                    player.displayClientMessage(Component.translatable("message.peqol.filter_full", max).withStyle(ChatFormatting.RED), true);
+                    return true;
+                }
+                filters.add(info);
+                stockTargets.add(stock);
+            }
+            player.displayClientMessage(Component.translatable("message.peqol.exporter.stock", held.getHoverName(), stock).withStyle(ChatFormatting.GREEN), true);
+            player.level().playSound(null, worldPosition, SoundEvents.ITEM_FRAME_ADD_ITEM, SoundSource.BLOCKS, 0.6F, 1.2F);
+            setChanged();
+            return true;
+        }
+        if (existing >= 0) {
+            filters.remove(existing);
+            stockTargets.remove(existing);
             player.displayClientMessage(Component.translatable("message.peqol.exporter.removed", held.getHoverName()).withStyle(ChatFormatting.YELLOW), true);
             player.level().playSound(null, worldPosition, SoundEvents.ITEM_FRAME_REMOVE_ITEM, SoundSource.BLOCKS, 0.6F, 1F);
         } else {
@@ -163,6 +212,7 @@ public class AlchemicalExporterBlockEntity extends BlockEntity implements IOwned
                 return true;
             }
             filters.add(info);
+            stockTargets.add(0);
             player.displayClientMessage(Component.translatable("message.peqol.exporter.added", held.getHoverName()).withStyle(ChatFormatting.GREEN), true);
             player.level().playSound(null, worldPosition, SoundEvents.ITEM_FRAME_ADD_ITEM, SoundSource.BLOCKS, 0.6F, 1F);
         }
@@ -177,6 +227,7 @@ public class AlchemicalExporterBlockEntity extends BlockEntity implements IOwned
             return;
         }
         filters.clear();
+        stockTargets.clear();
         setChanged();
         player.displayClientMessage(Component.translatable("message.peqol.exporter.cleared").withStyle(ChatFormatting.YELLOW), true);
     }
@@ -190,8 +241,10 @@ public class AlchemicalExporterBlockEntity extends BlockEntity implements IOwned
             lines.add(Component.translatable("info.peqol.exporter.no_filter").withStyle(ChatFormatting.YELLOW));
         } else {
             lines.add(Component.translatable("tooltip.peqol.filter", filters.size()).withStyle(ChatFormatting.GOLD));
-            for (ItemInfo info : filters) {
-                lines.add(Component.literal(" - ").append(info.createStack().getHoverName()).withStyle(ChatFormatting.GRAY));
+            for (int i = 0; i < filters.size(); i++) {
+                int stock = stockTargets.get(i);
+                Component mode = stock > 0 ? Component.translatable("info.peqol.exporter.keep", stock) : Component.translatable("info.peqol.exporter.unlimited");
+                lines.add(Component.literal(" - ").append(filters.get(i).createStack().getHoverName()).append(" ").append(mode).withStyle(ChatFormatting.GRAY));
             }
         }
         lines.add(Component.translatable("info.peqol.exporter.hint").withStyle(ChatFormatting.DARK_GRAY));
@@ -202,8 +255,10 @@ public class AlchemicalExporterBlockEntity extends BlockEntity implements IOwned
         super.saveAdditional(tag);
         ownerData.save(tag);
         ListTag list = new ListTag();
-        for (ItemInfo info : filters) {
-            list.add(info.write(new CompoundTag()));
+        for (int i = 0; i < filters.size(); i++) {
+            CompoundTag entry = filters.get(i).write(new CompoundTag());
+            entry.putInt("Stock", stockTargets.get(i));
+            list.add(entry);
         }
         tag.put("Filters", list);
         tag.putString("TotalSpent", totalSpent.toString());
@@ -215,11 +270,14 @@ public class AlchemicalExporterBlockEntity extends BlockEntity implements IOwned
         super.load(tag);
         ownerData.load(tag);
         filters.clear();
+        stockTargets.clear();
         ListTag list = tag.getList("Filters", Tag.TAG_COMPOUND);
         for (int i = 0; i < list.size(); i++) {
-            ItemInfo info = ItemInfo.read(list.getCompound(i));
+            CompoundTag entry = list.getCompound(i);
+            ItemInfo info = ItemInfo.read(entry);
             if (info != null) {
                 filters.add(info);
+                stockTargets.add(Math.max(0, entry.getInt("Stock")));
             }
         }
         try {

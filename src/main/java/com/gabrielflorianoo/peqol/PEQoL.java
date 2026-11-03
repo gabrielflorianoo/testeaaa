@@ -49,7 +49,7 @@ public class PEQoL {
     }
 
     private void registerCommands(RegisterCommandsEvent event) {
-        PEQoLCommand.register(event.getDispatcher());
+        PEQoLCommand.register(event.getDispatcher(), event.getBuildContext());
     }
 
     public static ResourceLocation rl(String path) {

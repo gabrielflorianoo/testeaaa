@@ -4,6 +4,8 @@ import com.gabrielflorianoo.peqol.PEQoL;
 import com.gabrielflorianoo.peqol.block.entity.AlchemicalImporterBlockEntity;
 import com.gabrielflorianoo.peqol.block.entity.AlchemicalUplinkBlockEntity;
 import com.gabrielflorianoo.peqol.item.EmcChequeItem;
+import com.gabrielflorianoo.peqol.item.MendingCharmItem;
+import com.gabrielflorianoo.peqol.item.SatiationCharmItem;
 import com.gabrielflorianoo.peqol.item.SiphonCharmItem;
 import com.gabrielflorianoo.peqol.registry.ModBlocks;
 import com.gabrielflorianoo.peqol.registry.ModItems;
@@ -15,7 +17,10 @@ import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.gametest.GameTestHolder;
@@ -100,6 +105,48 @@ public class PEQoLGameTests {
         helper.assertTrue(uplink.insertEmc(500, IEmcStorage.EmcAction.EXECUTE) == 500, "Uplink should accept EMC");
         helper.assertTrue(uplink.extractEmc(100, IEmcStorage.EmcAction.EXECUTE) == 0, "Uplink should not hand EMC to other blocks");
         helper.assertTrue(uplink.getStoredEmc() == 500, "Uplink should buffer without an owner");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void mendingCostIsBasedOnEmc(GameTestHelper helper) {
+        long cost = MendingCharmItem.costPerDurability(new ItemStack(Items.IRON_PICKAXE));
+        helper.assertTrue(cost > 0, "Iron pickaxe should be repairable with EMC");
+        helper.assertTrue(MendingCharmItem.costPerDurability(new ItemStack(Items.DIRT)) == 0, "Dirt is not damageable");
+        long diamond = MendingCharmItem.costPerDurability(new ItemStack(Items.DIAMOND_PICKAXE));
+        helper.assertTrue(diamond > 0, "Diamond pickaxe should be repairable with EMC");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void kleinStarChargeAndDrain(GameTestHelper helper) {
+        Item kleinStar = ForgeRegistries.ITEMS.getValue(new ResourceLocation("projecte", "klein_star_ein"));
+        helper.assertTrue(kleinStar != null && kleinStar != Items.AIR, "ProjectE Klein Star should exist");
+        ItemStack star = new ItemStack(kleinStar);
+        helper.assertTrue(EmcUtil.isEmcHolder(star), "Klein Star should expose the EMC holder capability");
+        helper.assertTrue(EmcUtil.chargeHolder(star, 1000) == 1000, "Klein Star should accept 1000 EMC");
+        helper.assertTrue(EmcUtil.drainHolder(star, Long.MAX_VALUE) == 1000, "Klein Star should give the 1000 EMC back");
+        helper.assertTrue(EmcUtil.drainHolder(star, Long.MAX_VALUE) == 0, "Klein Star should now be empty");
+        helper.assertTrue(EmcUtil.chargeHolder(new ItemStack(Items.STONE), 1000) == 0, "Stone can't hold EMC");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void satiationFoodSelection(GameTestHelper helper) {
+        ItemStack charm = new ItemStack(ModItems.SATIATION_CHARM.get());
+        helper.assertTrue(SatiationCharmItem.getFood(charm) == null, "No food by default");
+        charm.getOrCreateTag().putString(SatiationCharmItem.TAG_FOOD, "minecraft:cooked_beef");
+        helper.assertTrue(SatiationCharmItem.getFood(charm) == Items.COOKED_BEEF, "Food should be cooked beef");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void uplinkComparatorSignal(GameTestHelper helper) {
+        helper.setBlock(POS, ModBlocks.ALCHEMICAL_UPLINK.get());
+        AlchemicalUplinkBlockEntity uplink = (AlchemicalUplinkBlockEntity) helper.getBlockEntity(POS);
+        helper.assertTrue(uplink.getComparatorSignal() == 0, "Empty uplink gives no signal");
+        uplink.insertEmc(1, IEmcStorage.EmcAction.EXECUTE);
+        helper.assertTrue(uplink.getComparatorSignal() >= 1, "Any EMC gives at least signal 1");
         helper.succeed();
     }
 }

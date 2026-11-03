@@ -19,6 +19,11 @@ public final class PEQoLNetwork {
                 .decoder(KeyActionPacket::decode)
                 .consumerMainThread(KeyActionPacket::handle)
                 .add();
+        CHANNEL.messageBuilder(PickBlockPacket.class, 1, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(PickBlockPacket::encode)
+                .decoder(PickBlockPacket::decode)
+                .consumerMainThread(PickBlockPacket::handle)
+                .add();
     }
 
     public static void sendToServer(Object packet) {

@@ -18,6 +18,9 @@ public final class ModCreativeTab {
             .displayItems((parameters, output) -> {
                 output.accept(ModItems.RESTOCKER_TALISMAN.get());
                 output.accept(ModItems.SIPHON_CHARM.get());
+                output.accept(ModItems.MENDING_CHARM.get());
+                output.accept(ModItems.SATIATION_CHARM.get());
+                output.accept(ModItems.STELLAR_LINK.get());
                 output.accept(ModItems.KNOWLEDGE_SCROLL.get());
                 output.accept(ModItems.ALCHEMICAL_UPLINK.get());
                 output.accept(ModItems.ALCHEMICAL_IMPORTER.get());

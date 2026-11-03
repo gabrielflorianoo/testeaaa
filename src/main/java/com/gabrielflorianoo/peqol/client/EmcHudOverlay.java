@@ -1,7 +1,9 @@
 package com.gabrielflorianoo.peqol.client;
 
 import com.gabrielflorianoo.peqol.config.PEQoLConfig;
+import com.gabrielflorianoo.peqol.item.ToggleableItem;
 import com.gabrielflorianoo.peqol.util.EmcUtil;
+import com.gabrielflorianoo.peqol.util.InventoryUtil;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,7 @@ public final class EmcHudOverlay implements IGuiOverlay {
     private BigInteger ratePerSecond = BigInteger.ZERO;
     private int knowledge;
     private boolean fullKnowledge;
+    private final List<Component> activeCharms = new ArrayList<>();
 
     private EmcHudOverlay() {
     }
@@ -58,6 +61,15 @@ public final class EmcHudOverlay implements IGuiOverlay {
             knowledge = provider.getKnowledge().size();
             fullKnowledge = provider.hasFullKnowledge();
             hasTablet = EmcUtil.hasTablet(player);
+            activeCharms.clear();
+            InventoryUtil.forEachStack(player, stack -> {
+                if (stack.getItem() instanceof ToggleableItem && ToggleableItem.isActive(stack)) {
+                    Component name = stack.getItem().getDescription();
+                    if (activeCharms.stream().noneMatch(c -> c.getString().equals(name.getString()))) {
+                        activeCharms.add(name);
+                    }
+                }
+            });
         }
         //Ring buffer: the value that is about to be overwritten is the one from SAMPLE_TICKS ticks ago
         BigInteger oldest = samples[sampleIndex];
@@ -100,6 +112,12 @@ public final class EmcHudOverlay implements IGuiOverlay {
         if (PEQoLConfig.CLIENT.hudShowKnowledge.get()) {
             lines.add(fullKnowledge ? Component.translatable("hud.peqol.knowledge_full").withStyle(ChatFormatting.LIGHT_PURPLE)
                     : Component.translatable("hud.peqol.knowledge", knowledge).withStyle(ChatFormatting.AQUA));
+        }
+
+        if (PEQoLConfig.CLIENT.hudShowActiveCharms.get()) {
+            for (Component charm : activeCharms) {
+                lines.add(Component.literal("\u2726 ").append(charm).withStyle(ChatFormatting.LIGHT_PURPLE));
+            }
         }
 
         Font font = mc.font;

@@ -10,6 +10,8 @@ import java.util.UUID;
 import moze_intel.projecte.api.ItemInfo;
 import moze_intel.projecte.api.capabilities.IKnowledgeProvider;
 import moze_intel.projecte.api.capabilities.PECapabilities;
+import moze_intel.projecte.api.capabilities.block_entity.IEmcStorage;
+import moze_intel.projecte.api.capabilities.item.IItemEmcHolder;
 import moze_intel.projecte.api.event.PlayerAttemptLearnEvent;
 import moze_intel.projecte.api.proxy.IEMCProxy;
 import moze_intel.projecte.api.proxy.ITransmutationProxy;
@@ -177,6 +179,44 @@ public final class EmcUtil {
         return amount.min(BigInteger.valueOf(Integer.MAX_VALUE)).longValue();
     }
 
+    /**
+     * Inserts up to {@code budget} EMC into an EMC holding item (Klein Stars & co).
+     *
+     * @return the EMC actually inserted.
+     */
+    public static long chargeHolder(ItemStack stack, long budget) {
+        if (budget <= 0 || stack.isEmpty()) {
+            return 0;
+        }
+        IItemEmcHolder holder = stack.getCapability(PECapabilities.EMC_HOLDER_ITEM_CAPABILITY).resolve().orElse(null);
+        if (holder == null) {
+            return 0;
+        }
+        long toInsert = Math.min(budget, holder.getNeededEmc(stack));
+        return toInsert <= 0 ? 0 : holder.insertEmc(stack, toInsert, IEmcStorage.EmcAction.EXECUTE);
+    }
+
+    /**
+     * Pulls up to {@code max} EMC out of an EMC holding item.
+     *
+     * @return the EMC actually extracted.
+     */
+    public static long drainHolder(ItemStack stack, long max) {
+        if (max <= 0 || stack.isEmpty()) {
+            return 0;
+        }
+        IItemEmcHolder holder = stack.getCapability(PECapabilities.EMC_HOLDER_ITEM_CAPABILITY).resolve().orElse(null);
+        if (holder == null) {
+            return 0;
+        }
+        long toExtract = Math.min(max, holder.getStoredEmc(stack));
+        return toExtract <= 0 ? 0 : holder.extractEmc(stack, toExtract, IEmcStorage.EmcAction.EXECUTE);
+    }
+
+    public static boolean isEmcHolder(ItemStack stack) {
+        return !stack.isEmpty() && stack.getCapability(PECapabilities.EMC_HOLDER_ITEM_CAPABILITY).isPresent();
+    }
+
     public static boolean isTablet(ItemStack stack) {
         if (stack.isEmpty()) {
             return false;
@@ -186,7 +226,7 @@ public final class EmcUtil {
     }
 
     public static boolean hasTablet(Player player) {
-        return InventoryUtil.findFirst(player, EmcUtil::isTablet) >= 0;
+        return InventoryUtil.contains(player, EmcUtil::isTablet);
     }
 
     public static String format(BigInteger value) {

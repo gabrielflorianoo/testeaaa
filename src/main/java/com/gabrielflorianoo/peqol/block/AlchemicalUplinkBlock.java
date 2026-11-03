@@ -23,6 +23,18 @@ public class AlchemicalUplinkBlock extends OwnedMachineBlock {
         return new AlchemicalUplinkBlockEntity(pos, state);
     }
 
+    @Override
+    @SuppressWarnings("deprecation")
+    public boolean hasAnalogOutputSignal(@NotNull BlockState state) {
+        return true;
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public int getAnalogOutputSignal(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos) {
+        return level.getBlockEntity(pos) instanceof AlchemicalUplinkBlockEntity uplink ? uplink.getComparatorSignal() : 0;
+    }
+
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {

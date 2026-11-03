@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [" H ", "KBK", " H "],
+  "key": {
+    "H": { "item": "projecte:high_covalence_dust" },
+    "K": { "item": "projecte:klein_star_ein" },
+    "B": { "item": "projecte:iron_band" }
+  },
+  "result": { "item": "peqol:stellar_link" }
+}

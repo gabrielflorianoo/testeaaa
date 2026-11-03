@@ -9,7 +9,11 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+import net.minecraft.commands.CommandBuildContext;
+import net.minecraft.commands.arguments.item.ItemArgument;
+import net.minecraft.commands.arguments.item.ItemInput;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -28,7 +32,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * /peqol balance|pay|withdraw|worth|burn|missing|top|knowledge
+ * /peqol help|balance|pay|withdraw|buy|value|worth|burn|missing|unlearned|stars|top|knowledge
  */
 public final class PEQoLCommand {
 
@@ -36,13 +40,31 @@ public final class PEQoLCommand {
     private static final SimpleCommandExceptionType DISABLED = new SimpleCommandExceptionType(Component.translatable("message.peqol.disabled"));
     private static final SimpleCommandExceptionType NOT_ENOUGH = new SimpleCommandExceptionType(Component.translatable("command.peqol.not_enough_emc"));
     private static final SimpleCommandExceptionType NEED_TABLET = new SimpleCommandExceptionType(Component.translatable("message.peqol.need_tablet"));
+    private static final DynamicCommandExceptionType NOT_LEARNED = new DynamicCommandExceptionType(
+            name -> Component.translatable("command.peqol.buy.not_learned", name));
+    private static final DynamicCommandExceptionType TOO_MANY = new DynamicCommandExceptionType(
+            max -> Component.translatable("command.peqol.buy.too_many", max));
     private static final SimpleCommandExceptionType SELF = new SimpleCommandExceptionType(Component.translatable("command.peqol.pay.self"));
 
     private PEQoLCommand() {
     }
 
-    public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext buildContext) {
         dispatcher.register(Commands.literal("peqol")
+                .executes(ctx -> help(ctx.getSource()))
+                .then(Commands.literal("help").executes(ctx -> help(ctx.getSource())))
+                .then(Commands.literal("buy")
+                        .then(Commands.argument("item", ItemArgument.item(buildContext))
+                                .executes(ctx -> buy(ctx, 1))
+                                .then(Commands.argument("count", IntegerArgumentType.integer(1))
+                                        .executes(ctx -> buy(ctx, IntegerArgumentType.getInteger(ctx, "count"))))))
+                .then(Commands.literal("value")
+                        .then(Commands.argument("item", ItemArgument.item(buildContext))
+                                .executes(PEQoLCommand::value)))
+                .then(Commands.literal("unlearned").executes(ctx -> unlearned(ctx.getSource())))
+                .then(Commands.literal("stars")
+                        .then(Commands.literal("fill").executes(ctx -> starsFill(ctx.getSource())))
+                        .then(Commands.literal("drain").executes(ctx -> starsDrain(ctx.getSource()))))
                 .then(Commands.literal("balance")
                         .executes(ctx -> balance(ctx.getSource(), ctx.getSource().getPlayerOrException()))
                         .then(Commands.argument("player", EntityArgument.player())
@@ -72,6 +94,132 @@ public final class PEQoLCommand {
                 .then(Commands.literal("missing").executes(ctx -> missing(ctx.getSource())))
                 .then(Commands.literal("top").executes(ctx -> top(ctx.getSource())))
         );
+    }
+
+    private static int help(CommandSourceStack source) {
+        source.sendSuccess(() -> Component.translatable("command.peqol.help.header").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD), false);
+        String[] entries = {"balance", "pay", "withdraw", "buy", "value", "worth", "burn", "missing", "unlearned", "stars", "knowledge", "top"};
+        for (String entry : entries) {
+            source.sendSuccess(() -> Component.literal("/peqol " + entry).withStyle(ChatFormatting.GOLD)
+                    .append(Component.literal(" - ").withStyle(ChatFormatting.DARK_GRAY))
+                    .append(Component.translatable("command.peqol.help." + entry).withStyle(ChatFormatting.GRAY)), false);
+        }
+        return entries.length;
+    }
+
+    private static int buy(CommandContext<CommandSourceStack> ctx, int count) throws CommandSyntaxException {
+        if (!PEQoLConfig.COMMON.buyEnabled.get()) {
+            throw DISABLED.create();
+        }
+        ServerPlayer player = ctx.getSource().getPlayerOrException();
+        if (PEQoLConfig.COMMON.buyRequiresTablet.get() && !EmcUtil.hasTablet(player)) {
+            throw NEED_TABLET.create();
+        }
+        int max = PEQoLConfig.COMMON.buyMaxCount.get();
+        if (count > max) {
+            throw TOO_MANY.create(max);
+        }
+        ItemInput input = ItemArgument.getItem(ctx, "item");
+        ItemStack template = input.createItemStack(1, false);
+        IKnowledgeProvider provider = EmcUtil.knowledge(player).orElse(null);
+        long unit = EmcUtil.value(template);
+        if (provider == null || unit <= 0 || !provider.hasKnowledge(template)) {
+            throw NOT_LEARNED.create(template.getHoverName());
+        }
+        BigInteger cost = BigInteger.valueOf(unit).multiply(BigInteger.valueOf(count));
+        if (!EmcUtil.tryRemoveEmc(player, cost)) {
+            throw NOT_ENOUGH.create();
+        }
+        int remaining = count;
+        int maxStack = Math.max(1, template.getMaxStackSize());
+        while (remaining > 0) {
+            int amount = Math.min(remaining, maxStack);
+            InventoryUtil.giveOrDrop(player, template.copyWithCount(amount));
+            remaining -= amount;
+        }
+        Component name = template.getHoverName();
+        ctx.getSource().sendSuccess(() -> Component.translatable("command.peqol.buy", count, name, EmcUtil.format(cost)).withStyle(ChatFormatting.GREEN), false);
+        return count;
+    }
+
+    private static int value(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        ItemStack stack = ItemArgument.getItem(ctx, "item").createItemStack(1, false);
+        long unit = EmcUtil.value(stack);
+        if (unit <= 0) {
+            ctx.getSource().sendFailure(Component.translatable("message.peqol.no_emc", stack.getHoverName()));
+            return 0;
+        }
+        long sell = EmcUtil.sellValue(stack);
+        ServerPlayer player = ctx.getSource().getPlayer();
+        Component known = player == null ? Component.empty() : EmcUtil.isKnown(player, stack)
+                ? Component.translatable("command.peqol.value.known").withStyle(ChatFormatting.GREEN)
+                : Component.translatable("command.peqol.value.unknown").withStyle(ChatFormatting.RED);
+        long affordable = player == null ? 0 : EmcUtil.affordable(EmcUtil.getEmc(player), unit);
+        ctx.getSource().sendSuccess(() -> Component.translatable("command.peqol.value", stack.getHoverName(),
+                Component.literal(EmcUtil.format(unit)).withStyle(ChatFormatting.YELLOW), EmcUtil.format(sell), known, EmcUtil.format(affordable)), false);
+        return (int) Math.min(Integer.MAX_VALUE, unit);
+    }
+
+    private static int unlearned(CommandSourceStack source) throws CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+        IKnowledgeProvider provider = EmcUtil.knowledge(player).orElse(null);
+        if (provider == null) {
+            return 0;
+        }
+        Map<Item, ItemStack> unknown = new LinkedHashMap<>();
+        Inventory inventory = player.getInventory();
+        for (int i = 0; i < inventory.getContainerSize(); i++) {
+            ItemStack stack = inventory.getItem(i);
+            if (!stack.isEmpty() && EmcUtil.hasValue(stack) && !provider.hasKnowledge(stack)) {
+                unknown.putIfAbsent(stack.getItem(), stack);
+            }
+        }
+        if (unknown.isEmpty()) {
+            source.sendSuccess(() -> Component.translatable("command.peqol.unlearned.none").withStyle(ChatFormatting.GREEN), false);
+            return 0;
+        }
+        source.sendSuccess(() -> Component.translatable("command.peqol.unlearned.header", unknown.size()).withStyle(ChatFormatting.GOLD), false);
+        for (ItemStack stack : unknown.values()) {
+            source.sendSuccess(() -> Component.literal(" - ").append(stack.getHoverName())
+                    .append(Component.literal(" (" + EmcUtil.format(EmcUtil.value(stack)) + " EMC)").withStyle(ChatFormatting.DARK_GRAY))
+                    .withStyle(ChatFormatting.GRAY), false);
+        }
+        return unknown.size();
+    }
+
+    private static int starsFill(CommandSourceStack source) throws CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+        IKnowledgeProvider provider = EmcUtil.knowledge(player).orElse(null);
+        if (provider == null) {
+            return 0;
+        }
+        BigInteger emc = provider.getEmc();
+        long[] budget = {emc.min(BigInteger.valueOf(Long.MAX_VALUE)).longValue()};
+        long start = budget[0];
+        InventoryUtil.forEachStack(player, stack -> budget[0] -= EmcUtil.chargeHolder(stack, budget[0]));
+        long spent = start - budget[0];
+        if (spent <= 0) {
+            source.sendFailure(Component.translatable("command.peqol.stars.nothing"));
+            return 0;
+        }
+        provider.setEmc(emc.subtract(BigInteger.valueOf(spent)));
+        provider.syncEmc(player);
+        source.sendSuccess(() -> Component.translatable("command.peqol.stars.filled", EmcUtil.format(spent)).withStyle(ChatFormatting.GREEN), false);
+        return 1;
+    }
+
+    private static int starsDrain(CommandSourceStack source) throws CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+        BigInteger[] total = {BigInteger.ZERO};
+        InventoryUtil.forEachStack(player, stack -> total[0] = total[0].add(BigInteger.valueOf(EmcUtil.drainHolder(stack, Long.MAX_VALUE))));
+        if (total[0].signum() <= 0) {
+            source.sendFailure(Component.translatable("command.peqol.stars.nothing"));
+            return 0;
+        }
+        EmcUtil.addEmc(player, total[0]);
+        BigInteger drained = total[0];
+        source.sendSuccess(() -> Component.translatable("command.peqol.stars.drained", EmcUtil.format(drained)).withStyle(ChatFormatting.GREEN), false);
+        return 1;
     }
 
     private static BigInteger parseAmount(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {

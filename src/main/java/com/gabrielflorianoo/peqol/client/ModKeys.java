@@ -22,7 +22,15 @@ public final class ModKeys {
     public static final KeyMapping TOGGLE_SIPHON = new KeyMapping("key.peqol.toggle_siphon", KeyConflictContext.IN_GAME,
             InputConstants.UNKNOWN, CATEGORY);
 
-    public static final KeyMapping[] ALL = {OPEN_TABLET, OPEN_BAG, QUICK_BURN, TOGGLE_HUD, TOGGLE_RESTOCKER, TOGGLE_SIPHON};
+    public static final KeyMapping TOGGLE_MENDING = new KeyMapping("key.peqol.toggle_mending", KeyConflictContext.IN_GAME,
+            InputConstants.UNKNOWN, CATEGORY);
+    public static final KeyMapping TOGGLE_SATIATION = new KeyMapping("key.peqol.toggle_satiation", KeyConflictContext.IN_GAME,
+            InputConstants.UNKNOWN, CATEGORY);
+    public static final KeyMapping TOGGLE_STELLAR = new KeyMapping("key.peqol.toggle_stellar", KeyConflictContext.IN_GAME,
+            InputConstants.UNKNOWN, CATEGORY);
+
+    public static final KeyMapping[] ALL = {OPEN_TABLET, OPEN_BAG, QUICK_BURN, TOGGLE_HUD, TOGGLE_RESTOCKER, TOGGLE_SIPHON,
+            TOGGLE_MENDING, TOGGLE_SATIATION, TOGGLE_STELLAR};
 
     private ModKeys() {
     }

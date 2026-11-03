@@ -2,7 +2,10 @@ package com.gabrielflorianoo.peqol.event;
 
 import com.gabrielflorianoo.peqol.config.PEQoLConfig;
 import com.gabrielflorianoo.peqol.item.RestockerTalismanItem;
+import com.gabrielflorianoo.peqol.item.MendingCharmItem;
+import com.gabrielflorianoo.peqol.item.SatiationCharmItem;
 import com.gabrielflorianoo.peqol.item.SiphonCharmItem;
+import com.gabrielflorianoo.peqol.item.StellarLinkItem;
 import com.gabrielflorianoo.peqol.item.ToggleableItem;
 import com.gabrielflorianoo.peqol.util.EmcUtil;
 import com.gabrielflorianoo.peqol.util.InventoryUtil;
@@ -16,6 +19,9 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
+import com.gabrielflorianoo.peqol.block.AlchemicalExporterBlock;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -29,9 +35,36 @@ public final class CommonEvents {
         if (event.phase != TickEvent.Phase.END || !(event.player instanceof ServerPlayer player) || player.isSpectator()) {
             return;
         }
-        if (player.tickCount % PEQoLConfig.COMMON.restockerInterval.get() == 0
-                && InventoryUtil.contains(player, s -> s.getItem() instanceof RestockerTalismanItem && ToggleableItem.isActive(s))) {
+        int tick = player.tickCount;
+        if (tick % PEQoLConfig.COMMON.restockerInterval.get() == 0 && hasActive(player, RestockerTalismanItem.class)) {
             RestockerTalismanItem.restock(player);
+        }
+        if (tick % PEQoLConfig.COMMON.mendingInterval.get() == 0 && hasActive(player, MendingCharmItem.class)) {
+            MendingCharmItem.mend(player);
+        }
+        if (tick % PEQoLConfig.COMMON.satiationInterval.get() == 0) {
+            ItemStack charm = InventoryUtil.findFirstStack(player, s -> s.getItem() instanceof SatiationCharmItem && ToggleableItem.isActive(s));
+            if (!charm.isEmpty()) {
+                SatiationCharmItem.feed(player, charm);
+            }
+        }
+        if (tick % 20 == 0 && hasActive(player, StellarLinkItem.class)) {
+            StellarLinkItem.charge(player);
+        }
+    }
+
+    public static boolean hasActive(net.minecraft.world.entity.player.Player player, Class<? extends ToggleableItem> type) {
+        return InventoryUtil.contains(player, s -> type.isInstance(s.getItem()) && ToggleableItem.isActive(s));
+    }
+
+    /**
+     * Sneak + right click with an item normally skips the block; the Exporter uses it to set stock targets.
+     */
+    @SubscribeEvent
+    public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+        if (event.getEntity().isShiftKeyDown() && !event.getItemStack().isEmpty() && event.getHand() == net.minecraft.world.InteractionHand.MAIN_HAND
+                && event.getLevel().getBlockState(event.getPos()).getBlock() instanceof AlchemicalExporterBlock) {
+            event.setUseBlock(Event.Result.ALLOW);
         }
     }
 

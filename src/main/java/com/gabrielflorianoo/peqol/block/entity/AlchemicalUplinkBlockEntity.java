@@ -28,6 +28,7 @@ public class AlchemicalUplinkBlockEntity extends BaseEmcBlockEntity implements I
     private long lastSecondTransferred;
     private long transferredThisSecond;
     private int ticks;
+    private int lastSignal;
 
     public AlchemicalUplinkBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.ALCHEMICAL_UPLINK.get(), pos, state);
@@ -63,6 +64,26 @@ public class AlchemicalUplinkBlockEntity extends BaseEmcBlockEntity implements I
             EmcUtil.addEmc(owner, BigInteger.valueOf(amount));
             uplink.totalTransferred = uplink.totalTransferred.add(BigInteger.valueOf(amount));
             uplink.transferredThisSecond += amount;
+        }
+    }
+
+    /**
+     * @return 0-15 comparator signal based on how full the buffer is.
+     */
+    public int getComparatorSignal() {
+        if (getStoredEmc() <= 0) {
+            return 0;
+        }
+        return 1 + (int) Math.min(14, getStoredEmc() * 14.0 / getMaximumEmc());
+    }
+
+    @Override
+    protected void storedEmcChanged() {
+        int before = lastSignal;
+        super.storedEmcChanged();
+        lastSignal = getComparatorSignal();
+        if (before != lastSignal && level != null && !level.isClientSide) {
+            level.updateNeighbourForOutputSignal(worldPosition, getBlockState().getBlock());
         }
     }
 

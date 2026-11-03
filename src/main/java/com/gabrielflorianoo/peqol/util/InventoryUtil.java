@@ -1,5 +1,6 @@
 package com.gabrielflorianoo.peqol.util;
 
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -30,13 +31,33 @@ public final class InventoryUtil {
         return -1;
     }
 
+    /**
+     * Searches main inventory, offhand and (if installed) Curios slots.
+     */
     public static ItemStack findFirstStack(Player player, Predicate<ItemStack> predicate) {
         int slot = findFirst(player, predicate);
-        return slot < 0 ? ItemStack.EMPTY : player.getInventory().getItem(slot);
+        if (slot >= 0) {
+            return player.getInventory().getItem(slot);
+        }
+        return CuriosCompat.findFirst(player, predicate);
     }
 
     public static boolean contains(Player player, Predicate<ItemStack> predicate) {
-        return findFirst(player, predicate) >= 0;
+        return !findFirstStack(player, predicate).isEmpty();
+    }
+
+    /**
+     * Visits every non-empty stack: main inventory, armor, offhand and Curios.
+     */
+    public static void forEachStack(Player player, Consumer<ItemStack> consumer) {
+        Inventory inventory = player.getInventory();
+        for (int i = 0; i < inventory.getContainerSize(); i++) {
+            ItemStack stack = inventory.getItem(i);
+            if (!stack.isEmpty()) {
+                consumer.accept(stack);
+            }
+        }
+        CuriosCompat.forEach(player, consumer);
     }
 
     /**

@@ -3,7 +3,10 @@ package com.gabrielflorianoo.peqol.network;
 import com.gabrielflorianoo.peqol.config.PEQoLConfig;
 import com.gabrielflorianoo.peqol.item.EmcChequeItem;
 import com.gabrielflorianoo.peqol.item.RestockerTalismanItem;
+import com.gabrielflorianoo.peqol.item.MendingCharmItem;
+import com.gabrielflorianoo.peqol.item.SatiationCharmItem;
 import com.gabrielflorianoo.peqol.item.SiphonCharmItem;
+import com.gabrielflorianoo.peqol.item.StellarLinkItem;
 import com.gabrielflorianoo.peqol.item.ToggleableItem;
 import com.gabrielflorianoo.peqol.util.EmcUtil;
 import com.gabrielflorianoo.peqol.util.InventoryUtil;
@@ -40,6 +43,9 @@ public final class ServerActions {
             case QUICK_BURN -> quickBurn(player);
             case TOGGLE_RESTOCKER -> toggle(player, RestockerTalismanItem.class);
             case TOGGLE_SIPHON -> toggle(player, SiphonCharmItem.class);
+            case TOGGLE_MENDING -> toggle(player, MendingCharmItem.class);
+            case TOGGLE_SATIATION -> toggle(player, SatiationCharmItem.class);
+            case TOGGLE_STELLAR -> toggle(player, StellarLinkItem.class);
         }
     }
 

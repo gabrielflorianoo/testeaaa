@@ -50,6 +50,23 @@ public final class PEQoLConfig {
         public final ForgeConfigSpec.BooleanValue restockerBlocksOnly;
         public final ForgeConfigSpec.BooleanValue restockerWholeHotbar;
 
+        // Pick block
+        public final ForgeConfigSpec.BooleanValue pickBlockEnabled;
+        public final ForgeConfigSpec.BooleanValue pickBlockRequiresRestocker;
+        public final ForgeConfigSpec.IntValue pickBlockAmount;
+
+        // Charms
+        public final ForgeConfigSpec.IntValue mendingInterval;
+        public final ForgeConfigSpec.IntValue mendingPointsPerCycle;
+        public final ForgeConfigSpec.DoubleValue mendingCostMultiplier;
+        public final ForgeConfigSpec.IntValue satiationInterval;
+        public final ForgeConfigSpec.LongValue stellarLinkRate;
+
+        // Buy command
+        public final ForgeConfigSpec.BooleanValue buyEnabled;
+        public final ForgeConfigSpec.BooleanValue buyRequiresTablet;
+        public final ForgeConfigSpec.IntValue buyMaxCount;
+
         // Siphon
         public final ForgeConfigSpec.IntValue siphonMaxFilters;
         public final ForgeConfigSpec.BooleanValue siphonLearnsItems;
@@ -104,6 +121,42 @@ public final class PEQoLConfig {
                     .define("wholeHotbar", true);
             builder.pop();
 
+            builder.comment("Alchemical pick block: middle clicking a block you don't carry creates it from personal EMC").push("pickBlock");
+            pickBlockEnabled = builder.define("enabled", true);
+            pickBlockRequiresRestocker = builder.comment("Requires an active Alchemical Restocker in the inventory.")
+                    .define("requiresRestocker", true);
+            pickBlockAmount = builder.comment("How many items are created per pick (capped at the max stack size).")
+                    .defineInRange("amount", 64, 1, 64);
+            builder.pop();
+
+            builder.comment("Alchemical Mending Charm").push("mending");
+            mendingInterval = builder.comment("Ticks between repair cycles.")
+                    .defineInRange("interval", 20, 1, 1200);
+            mendingPointsPerCycle = builder.comment("Maximum durability points restored per item per cycle.")
+                    .defineInRange("pointsPerCycle", 32, 1, 100_000);
+            mendingCostMultiplier = builder.comment("Repairing the full durability costs (item EMC value * this).")
+                    .defineInRange("costMultiplier", 1.0, 0.0, 1000.0);
+            builder.pop();
+
+            builder.comment("Charm of Satiation").push("satiation");
+            satiationInterval = builder.comment("Ticks between hunger checks.")
+                    .defineInRange("interval", 40, 1, 1200);
+            builder.pop();
+
+            builder.comment("Stellar Link").push("stellarLink");
+            stellarLinkRate = builder.comment("Maximum EMC per second moved from personal EMC into Klein Stars.")
+                    .defineInRange("ratePerSecond", 1_000_000L, 1L, Long.MAX_VALUE);
+            builder.pop();
+
+            builder.comment("/peqol buy").push("buy");
+            buyEnabled = builder.comment("Allow creating learned items from personal EMC with /peqol buy.")
+                    .define("enabled", true);
+            buyRequiresTablet = builder.comment("/peqol buy requires a Transmutation Tablet in the inventory.")
+                    .define("requiresTablet", true);
+            buyMaxCount = builder.comment("Maximum items per /peqol buy.")
+                    .defineInRange("maxCount", 2304, 1, 100_000);
+            builder.pop();
+
             builder.comment("Siphon Charm").push("siphon");
             siphonMaxFilters = builder.comment("Maximum amount of items a Siphon Charm can filter.")
                     .defineInRange("maxFilters", 27, 1, 256);
@@ -147,6 +200,7 @@ public final class PEQoLConfig {
         public final ForgeConfigSpec.BooleanValue hudShowKnowledge;
         public final ForgeConfigSpec.BooleanValue hudCompactNumbers;
         public final ForgeConfigSpec.BooleanValue hudBackground;
+        public final ForgeConfigSpec.BooleanValue hudShowActiveCharms;
 
         public final ForgeConfigSpec.BooleanValue tooltipAffordable;
         public final ForgeConfigSpec.BooleanValue tooltipSellValue;
@@ -168,6 +222,8 @@ public final class PEQoLConfig {
             hudCompactNumbers = builder.comment("Use compact numbers like 1.25M instead of 1,250,000.")
                     .define("compactNumbers", true);
             hudBackground = builder.define("background", true);
+            hudShowActiveCharms = builder.comment("List the active QoL+ charms under the EMC line.")
+                    .define("showActiveCharms", true);
             builder.pop();
 
             builder.comment("Extra tooltip lines (shown while holding SHIFT, like ProjectE's own)").push("tooltips");
