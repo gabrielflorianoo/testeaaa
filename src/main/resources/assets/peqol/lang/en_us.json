@@ -349,5 +349,22 @@
   "jei.peqol.info.machine_upgrade": "Right click an Alchemical Exporter, Vacuum or Downlink (that you own) to raise its tier, up to 3. Each tier makes the machine faster and stronger, and the tier is kept when wrenched.",
   "message.peqol.upgrade.done": "Upgraded to tier %s",
   "message.peqol.upgrade.max": "Already at the maximum tier",
-  "info.peqol.tier": "Tier: %s/%s"
+  "info.peqol.tier": "Tier: %s/%s",
+  "command.peqol.home.none": "No homes yet. Use /peqol home set <name>",
+  "command.peqol.home.header": "Homes (%s/%s) - click to teleport:",
+  "command.peqol.home.hover": "Teleport for %s EMC",
+  "command.peqol.home.full": "You can have at most %s homes",
+  "command.peqol.home.set": "Home '%s' set here",
+  "command.peqol.home.unknown": "No home named '%s'",
+  "command.peqol.home.deleted": "Home '%s' deleted",
+  "command.peqol.home.done": "Teleported to '%s'",
+  "command.peqol.help.home": "named homes with EMC teleport (set, list, del)",
+  "command.peqol.fav.none": "No favorites yet. Use /peqol fav add <item>",
+  "command.peqol.fav.header": "Favorites - click to buy:",
+  "command.peqol.fav.added": "%s added to favorites",
+  "command.peqol.fav.already": "%s is already a favorite",
+  "command.peqol.fav.removed": "%s removed from favorites",
+  "command.peqol.fav.missing": "%s isn't a favorite",
+  "command.peqol.help.fav": "favorite items with quick buy buttons",
+  "key.peqol.favorites": "Show Favorites (quick buy)"
 }

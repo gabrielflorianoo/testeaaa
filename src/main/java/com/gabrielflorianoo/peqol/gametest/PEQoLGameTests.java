@@ -357,4 +357,20 @@ public class PEQoLGameTests {
         helper.assertTrue(downlink.getMaximumEmc() == baseMax * 2, "Tier 1 doubles the downlink rate");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void homesAndFavoritesRoundTrip(GameTestHelper helper) {
+        Player player = helper.makeMockPlayer();
+        net.minecraft.core.GlobalPos pos = net.minecraft.core.GlobalPos.of(helper.getLevel().dimension(), new BlockPos(10, 64, -5));
+        com.gabrielflorianoo.peqol.util.PlayerData.setHome(player, "base", pos);
+        helper.assertTrue(pos.equals(com.gabrielflorianoo.peqol.util.PlayerData.homes(player).get("base")), "Home should be saved");
+        helper.assertTrue(com.gabrielflorianoo.peqol.util.PlayerData.removeHome(player, "base"), "Home should be removed");
+        helper.assertTrue(com.gabrielflorianoo.peqol.util.PlayerData.homes(player).isEmpty(), "No homes left");
+        ResourceLocation diamond = new ResourceLocation("minecraft", "diamond");
+        helper.assertTrue(com.gabrielflorianoo.peqol.util.PlayerData.setFavorite(player, diamond, true), "Favorite added");
+        helper.assertFalse(com.gabrielflorianoo.peqol.util.PlayerData.setFavorite(player, diamond, true), "Favorite not added twice");
+        helper.assertTrue(com.gabrielflorianoo.peqol.util.PlayerData.favorites(player).size() == 1, "One favorite");
+        helper.assertTrue(com.gabrielflorianoo.peqol.util.PlayerData.setFavorite(player, diamond, false), "Favorite removed");
+        helper.succeed();
+    }
 }

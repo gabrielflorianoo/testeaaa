@@ -349,5 +349,22 @@
   "jei.peqol.info.machine_upgrade": "Clique direito num Exportador, Aspirador ou Descida Alquímica (seus) para subir o nível, até 3. Cada nível deixa a máquina mais rápida e forte, e o nível é mantido ao usar a chave.",
   "message.peqol.upgrade.done": "Melhorado para o nível %s",
   "message.peqol.upgrade.max": "Já está no nível máximo",
-  "info.peqol.tier": "Nível: %s/%s"
+  "info.peqol.tier": "Nível: %s/%s",
+  "command.peqol.home.none": "Nenhuma casa ainda. Use /peqol home set <nome>",
+  "command.peqol.home.header": "Casas (%s/%s) - clique para teleportar:",
+  "command.peqol.home.hover": "Teleportar por %s EMC",
+  "command.peqol.home.full": "Você pode ter no máximo %s casas",
+  "command.peqol.home.set": "Casa '%s' definida aqui",
+  "command.peqol.home.unknown": "Nenhuma casa chamada '%s'",
+  "command.peqol.home.deleted": "Casa '%s' apagada",
+  "command.peqol.home.done": "Teleportou para '%s'",
+  "command.peqol.help.home": "casas com nome e teleporte por EMC (set, list, del)",
+  "command.peqol.fav.none": "Nenhum favorito ainda. Use /peqol fav add <item>",
+  "command.peqol.fav.header": "Favoritos - clique para comprar:",
+  "command.peqol.fav.added": "%s adicionado aos favoritos",
+  "command.peqol.fav.already": "%s já é favorito",
+  "command.peqol.fav.removed": "%s removido dos favoritos",
+  "command.peqol.fav.missing": "%s não é favorito",
+  "command.peqol.help.fav": "itens favoritos com botões de compra rápida",
+  "key.peqol.favorites": "Mostrar Favoritos (compra rápida)"
 }

@@ -87,6 +87,19 @@ public final class PEQoLCommand {
                                         .executes(ctx -> xpFromEmc(ctx.getSource(), IntegerArgumentType.getInteger(ctx, "points"))))))
                 .then(Commands.literal("stats").executes(ctx -> stats(ctx.getSource())))
                 .then(Commands.literal("back").executes(ctx -> back(ctx.getSource())))
+                .then(Commands.literal("home")
+                        .executes(ctx -> homeList(ctx.getSource()))
+                        .then(Commands.literal("list").executes(ctx -> homeList(ctx.getSource())))
+                        .then(Commands.literal("set").then(Commands.argument("name", StringArgumentType.word()).executes(PEQoLCommand::homeSet)))
+                        .then(Commands.literal("del").then(Commands.argument("name", StringArgumentType.word()).executes(PEQoLCommand::homeDel)))
+                        .then(Commands.argument("name", StringArgumentType.word())
+                                .suggests((ctx, builder) -> net.minecraft.commands.SharedSuggestionProvider.suggest(
+                                        ctx.getSource().getPlayer() == null ? java.util.List.<String>of() : new java.util.ArrayList<String>(com.gabrielflorianoo.peqol.util.PlayerData.homes(ctx.getSource().getPlayer()).keySet()), builder))
+                                .executes(PEQoLCommand::homeTeleport)))
+                .then(Commands.literal("fav")
+                        .executes(ctx -> favList(ctx.getSource()))
+                        .then(Commands.literal("add").then(Commands.argument("item", ItemArgument.item(buildContext)).executes(ctx -> favSet(ctx, true))))
+                        .then(Commands.literal("remove").then(Commands.argument("item", ItemArgument.item(buildContext)).executes(ctx -> favSet(ctx, false)))))
                 .then(Commands.literal("tablet").executes(ctx -> {
                     com.gabrielflorianoo.peqol.network.ServerActions.openTablet(ctx.getSource().getPlayerOrException());
                     return 1;
@@ -165,7 +178,7 @@ public final class PEQoLCommand {
 
     private static int help(CommandSourceStack source) {
         source.sendSuccess(() -> Component.translatable("command.peqol.help.header").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD), false);
-        String[] entries = {"balance", "pay", "withdraw", "buy", "sell", "value", "known", "tablet", "bag", "autostock", "learnall", "gift", "share", "back", "xp", "stats", "handbook", "worth", "burn", "missing", "unlearned", "stars", "knowledge", "top"};
+        String[] entries = {"balance", "pay", "withdraw", "buy", "sell", "value", "known", "tablet", "bag", "fav", "home", "autostock", "learnall", "gift", "share", "back", "xp", "stats", "handbook", "worth", "burn", "missing", "unlearned", "stars", "knowledge", "top"};
         for (String entry : entries) {
             source.sendSuccess(() -> Component.literal("/peqol " + entry).withStyle(ChatFormatting.GOLD)
                     .append(Component.literal(" - ").withStyle(ChatFormatting.DARK_GRAY))
@@ -433,6 +446,141 @@ public final class PEQoLCommand {
             }));
         }
         return bag;
+    }
+
+    private static int homeList(CommandSourceStack source) throws CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+        Map<String, net.minecraft.core.GlobalPos> homes = com.gabrielflorianoo.peqol.util.PlayerData.homes(player);
+        if (homes.isEmpty()) {
+            source.sendSuccess(() -> Component.translatable("command.peqol.home.none").withStyle(ChatFormatting.YELLOW), false);
+            return 0;
+        }
+        source.sendSuccess(() -> Component.translatable("command.peqol.home.header", homes.size(), PEQoLConfig.COMMON.maxHomes.get()).withStyle(ChatFormatting.GOLD), false);
+        for (Map.Entry<String, net.minecraft.core.GlobalPos> entry : homes.entrySet()) {
+            net.minecraft.core.BlockPos pos = entry.getValue().pos();
+            BigInteger cost = com.gabrielflorianoo.peqol.item.AlchemicalAnchorItem.cost(player, pos, entry.getValue().dimension().location());
+            source.sendSuccess(() -> Component.literal(" ").append(Component.literal("[" + entry.getKey() + "]").withStyle(style -> style.withColor(ChatFormatting.AQUA)
+                            .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/peqol home " + entry.getKey()))
+                            .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable("command.peqol.home.hover", EmcUtil.format(cost))))))
+                    .append(Component.literal(" " + pos.getX() + ", " + pos.getY() + ", " + pos.getZ() + " (" + entry.getValue().dimension().location() + ")")
+                            .withStyle(ChatFormatting.GRAY)), false);
+        }
+        return homes.size();
+    }
+
+    private static int homeSet(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        ServerPlayer player = ctx.getSource().getPlayerOrException();
+        String name = StringArgumentType.getString(ctx, "name");
+        int max = PEQoLConfig.COMMON.maxHomes.get();
+        Map<String, net.minecraft.core.GlobalPos> homes = com.gabrielflorianoo.peqol.util.PlayerData.homes(player);
+        if (max <= 0) {
+            throw DISABLED.create();
+        }
+        if (!homes.containsKey(name) && homes.size() >= max) {
+            ctx.getSource().sendFailure(Component.translatable("command.peqol.home.full", max));
+            return 0;
+        }
+        com.gabrielflorianoo.peqol.util.PlayerData.setHome(player, name, net.minecraft.core.GlobalPos.of(player.level().dimension(), player.blockPosition()));
+        ctx.getSource().sendSuccess(() -> Component.translatable("command.peqol.home.set", name).withStyle(ChatFormatting.GREEN), false);
+        return 1;
+    }
+
+    private static int homeDel(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        ServerPlayer player = ctx.getSource().getPlayerOrException();
+        String name = StringArgumentType.getString(ctx, "name");
+        if (!com.gabrielflorianoo.peqol.util.PlayerData.removeHome(player, name)) {
+            ctx.getSource().sendFailure(Component.translatable("command.peqol.home.unknown", name));
+            return 0;
+        }
+        ctx.getSource().sendSuccess(() -> Component.translatable("command.peqol.home.deleted", name).withStyle(ChatFormatting.YELLOW), false);
+        return 1;
+    }
+
+    private static int homeTeleport(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        if (PEQoLConfig.COMMON.maxHomes.get() <= 0) {
+            throw DISABLED.create();
+        }
+        ServerPlayer player = ctx.getSource().getPlayerOrException();
+        String name = StringArgumentType.getString(ctx, "name");
+        net.minecraft.core.GlobalPos home = com.gabrielflorianoo.peqol.util.PlayerData.homes(player).get(name);
+        if (home == null) {
+            ctx.getSource().sendFailure(Component.translatable("command.peqol.home.unknown", name));
+            return 0;
+        }
+        return teleportPaid(ctx.getSource(), player, home, Component.translatable("command.peqol.home.done", name));
+    }
+
+    /**
+     * Teleports the player to a safe spot at {@code target}, paying the Alchemical Anchor price.
+     */
+    private static int teleportPaid(CommandSourceStack source, ServerPlayer player, net.minecraft.core.GlobalPos target, Component success) {
+        net.minecraft.server.level.ServerLevel level = player.server.getLevel(target.dimension());
+        if (level == null) {
+            source.sendFailure(Component.translatable("message.peqol.anchor.no_dimension"));
+            return 0;
+        }
+        net.minecraft.core.BlockPos safe = findSafeSpot(level, target.pos());
+        if (safe == null) {
+            source.sendFailure(Component.translatable("message.peqol.anchor.obstructed"));
+            return 0;
+        }
+        BigInteger cost = player.getAbilities().instabuild ? BigInteger.ZERO
+                : com.gabrielflorianoo.peqol.item.AlchemicalAnchorItem.cost(player, safe, target.dimension().location());
+        if (cost.signum() > 0 && !EmcUtil.tryRemoveEmc(player, cost)) {
+            source.sendFailure(Component.translatable("message.peqol.anchor.too_expensive", EmcUtil.format(cost)));
+            return 0;
+        }
+        player.teleportTo(level, safe.getX() + 0.5, safe.getY(), safe.getZ() + 0.5, player.getYRot(), player.getXRot());
+        player.fallDistance = 0;
+        level.playSound(null, safe, net.minecraft.sounds.SoundEvents.ENDERMAN_TELEPORT, net.minecraft.sounds.SoundSource.PLAYERS, 0.8F, 1F);
+        player.awardStat(ModStats.ANCHOR_TELEPORTS);
+        source.sendSuccess(() -> success.copy().append(Component.literal(" (" + EmcUtil.format(cost) + " EMC)").withStyle(ChatFormatting.GRAY))
+                .withStyle(ChatFormatting.LIGHT_PURPLE), false);
+        return 1;
+    }
+
+    private static int favList(CommandSourceStack source) throws CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+        java.util.List<net.minecraft.resources.ResourceLocation> favorites = com.gabrielflorianoo.peqol.util.PlayerData.favorites(player);
+        if (favorites.isEmpty()) {
+            source.sendSuccess(() -> Component.translatable("command.peqol.fav.none").withStyle(ChatFormatting.YELLOW), false);
+            return 0;
+        }
+        source.sendSuccess(() -> Component.translatable("command.peqol.fav.header").withStyle(ChatFormatting.GOLD), false);
+        BigInteger emc = EmcUtil.getEmc(player);
+        for (net.minecraft.resources.ResourceLocation id : favorites) {
+            Item item = ForgeRegistries.ITEMS.getValue(id);
+            if (item == null) {
+                continue;
+            }
+            ItemStack stack = new ItemStack(item);
+            long unit = EmcUtil.value(stack);
+            MutableComponent line = Component.literal(" ").append(stack.getHoverName().copy().withStyle(ChatFormatting.WHITE));
+            if (unit > 0) {
+                line.append(Component.literal(" " + EmcUtil.compact(BigInteger.valueOf(unit)) + " EMC ").withStyle(ChatFormatting.YELLOW))
+                        .append(buyButton(stack, 1, unit, emc)).append(" ")
+                        .append(buyButton(stack, Math.max(1, stack.getMaxStackSize()), unit, emc));
+            }
+            source.sendSuccess(() -> line, false);
+        }
+        return favorites.size();
+    }
+
+    private static int favSet(CommandContext<CommandSourceStack> ctx, boolean add) throws CommandSyntaxException {
+        ServerPlayer player = ctx.getSource().getPlayerOrException();
+        ItemStack template = ItemArgument.getItem(ctx, "item").createItemStack(1, false);
+        net.minecraft.resources.ResourceLocation id = ForgeRegistries.ITEMS.getKey(template.getItem());
+        if (id == null) {
+            return 0;
+        }
+        boolean changed = com.gabrielflorianoo.peqol.util.PlayerData.setFavorite(player, id, add);
+        Component name = template.getHoverName();
+        if (add) {
+            ctx.getSource().sendSuccess(() -> Component.translatable(changed ? "command.peqol.fav.added" : "command.peqol.fav.already", name).withStyle(ChatFormatting.GREEN), false);
+        } else {
+            ctx.getSource().sendSuccess(() -> Component.translatable(changed ? "command.peqol.fav.removed" : "command.peqol.fav.missing", name).withStyle(ChatFormatting.YELLOW), false);
+        }
+        return changed ? 1 : 0;
     }
 
     private static int back(CommandSourceStack source) throws CommandSyntaxException {

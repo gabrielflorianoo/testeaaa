@@ -80,6 +80,8 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 | `share <jogador>` / `accept` | Oferece todo o seu conhecimento a outro jogador; ele aceita clicando em **[Aceitar]** no chat ou com `/peqol accept` |
 | `tablet` | Abre a transmutação (igual à tecla J) |
 | `bag [cor]` | Abre uma bolsa alquímica, opcionalmente escolhendo a cor (ex.: `/peqol bag red`) |
+| `home set\|del <nome>` / `home [list]` / `home <nome>` | Casas com nome (até 5, configurável). A lista tem botões clicáveis e o teleporte custa EMC como a Âncora |
+| `fav add\|remove <item>` / `fav` | Itens favoritos com botões de compra rápida (também existe tecla) |
 | `back` | Teleporta para onde você morreu por último, pagando EMC (mesma fórmula da Âncora). Procura um lugar seguro, sem lava |
 | `stats` | Mostra as suas estatísticas do QoL+ |
 | `burn hand\|inventory` | Queima a mão ou o inventário principal. A hotbar, a armadura, a mão secundária, os itens com NBT e as Estrelas de Klein são preservados |
@@ -173,6 +175,7 @@ A quality-of-life addon for ProjectE on Forge 1.20.1. It includes:
 - A Siphon Charm that turns filtered pickups into EMC.
 - Tradeable EMC Cheques and Knowledge Scrolls for sharing knowledge.
 - Uplink, Importer and Exporter blocks that bridge automation and personal EMC.
+- Named homes (`/peqol home`) and favorites with quick-buy buttons (`/peqol fav` + keybind).
 - Machine upgrades (tiers 1-3 for Exporter, Vacuum, Downlink) and a peqol_emc scoreboard objective.
 - Unlearned-item slot markers, Siphon junk mode, CHANGELOG and tag-based releases.
 - Buttons on the transmutation screen (learn/burn inventory), EMC goal progress bar on the HUD.

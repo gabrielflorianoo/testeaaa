@@ -1,5 +1,9 @@
 # ProjectE QoL+ changelog
 
+## 1.7.0
+- Named homes: `/peqol home set|del|list|<name>` with EMC-paid teleports and clickable list
+- Favorites: `/peqol fav add|remove <item>` and `/peqol fav` with quick-buy buttons, plus a keybind
+
 ## 1.6.0
 - Alchemical Machine Upgrade: tiers 1-3 for the Exporter (speed, items), Vacuum (speed, +2 radius) and Downlink (rate); kept when wrenched
 - `peqol_emc` scoreboard objective kept up to date with every player's EMC

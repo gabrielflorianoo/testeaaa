@@ -102,6 +102,7 @@ public final class PEQoLConfig {
         // Misc items / commands
         public final ForgeConfigSpec.LongValue voidPouchCost;
         public final ForgeConfigSpec.BooleanValue backEnabled;
+        public final ForgeConfigSpec.IntValue maxHomes;
         public final ForgeConfigSpec.BooleanValue siphonCatchesMobDrops;
 
         // Prospector / server QoL
@@ -267,6 +268,8 @@ public final class PEQoLConfig {
                     .defineInRange("voidPouchCost", 64L, 0L, Long.MAX_VALUE);
             backEnabled = builder.comment("Allow /peqol back (teleport to your last death point, paid like the Alchemical Anchor).")
                     .define("backEnabled", true);
+            maxHomes = builder.comment("Maximum named homes per player for /peqol home (0 disables homes).")
+                    .defineInRange("maxHomes", 5, 0, 100);
             siphonCatchesMobDrops = builder.comment("Mobs you kill drop filtered items straight into your EMC when a Siphon Charm is active.")
                     .define("siphonCatchesMobDrops", true);
             builder.pop();
