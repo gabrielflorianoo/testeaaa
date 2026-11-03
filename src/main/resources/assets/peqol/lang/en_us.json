@@ -303,5 +303,12 @@
   "info.peqol.condenser.progress": "Next item: %s%%",
   "info.peqol.collector.sun": "Light: %s",
   "info.peqol.collector.goal": "Fuel upgrade needs %s EMC",
-  "command.peqol.help.handbook": "get the Alchemist's Handbook"
+  "command.peqol.help.handbook": "get the Alchemist's Handbook",
+  "command.peqol.share.sent": "Offered your knowledge to %s (expires in 60s)",
+  "command.peqol.share.received": "%s wants to share their transmutation knowledge with you.",
+  "command.peqol.share.accept_button": "[Accept]",
+  "command.peqol.share.none": "No pending knowledge offer (or the sender went offline)",
+  "command.peqol.share.accepted": "%s accepted your knowledge and learned %s items",
+  "command.peqol.help.share": "offer all your knowledge to a player (/peqol accept)",
+  "command.peqol.client.set": "%s = %s"
 }

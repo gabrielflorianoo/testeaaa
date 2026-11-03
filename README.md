@@ -73,6 +73,7 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 | `sell <item> [qtd]` | Queima uma quantidade exata de um item do inventário (sem quantidade, queima todos) |
 | `xp toemc [pontos]` / `xp fromemc <pontos>` | Converte experiência em EMC e vice-versa (32 EMC por ponto, configurável) |
 | `gift <jogador> <item> [qtd]` | Cria um item aprendido com o seu EMC direto no inventário de outro jogador |
+| `share <jogador>` / `accept` | Oferece todo o seu conhecimento a outro jogador; ele aceita clicando em **[Aceitar]** no chat ou com `/peqol accept` |
 | `back` | Teleporta para onde você morreu por último, pagando EMC (mesma fórmula da Âncora). Procura um lugar seguro, sem lava |
 | `stats` | Mostra as suas estatísticas do QoL+ |
 | `burn hand\|inventory` | Queima a mão ou o inventário principal. A hotbar, a armadura, a mão secundária, os itens com NBT e as Estrelas de Klein são preservados |
@@ -126,6 +127,15 @@ Se o [Curios](https://www.curseforge.com/minecraft/mc-mods/curios) estiver insta
 - **Colar**: Sifão e Saciedade.
 - **Anel**: Reparo, Elo Estelar e Fundição.
 
+## Ajustes no jogo (`/peqolclient`)
+Comandos só do cliente, que salvam na config na hora:
+- `/peqolclient hud corner top_left|top_right|bottom_left|bottom_right`
+- `/peqolclient hud mode always|tablet_in_inventory|never`
+- `/peqolclient hud offset <x> <y>`
+- `/peqolclient hud compact|rate|charms|held|stars|background` (liga/desliga cada parte do HUD)
+- `/peqolclient tooltips affordable|sellvalue|contents|noemc`
+- `/peqolclient machineinfo|learntoasts|milestones`
+
 ## Configuração
 - `config/peqol-common.toml`: permite desativar `pay`, `withdraw`, `burn` e a queima rápida, e definir se é preciso ter a Tábua. Também controla o intervalo e o limite do Reabastecedor, o buffer da Conexão, a velocidade do Exportador, o aprender ao coletar (desligado por padrão) e outras opções.
 - `config/peqol-client.toml`: HUD e tooltips.
@@ -148,6 +158,7 @@ A quality-of-life addon for ProjectE on Forge 1.20.1. It includes:
 - A Siphon Charm that turns filtered pickups into EMC.
 - Tradeable EMC Cheques and Knowledge Scrolls for sharing knowledge.
 - Uplink, Importer and Exporter blocks that bridge automation and personal EMC.
+- `/peqol share` + `/peqol accept` (knowledge sharing with consent), `/peqolclient` to tweak HUD and tooltips in game.
 - Alchemist's Handbook (in-game guide book), richer look-at info (condenser target/progress, collector light, EMC/s).
 - Alchemical Prospector, `/peqol gift`, starter knowledge and learn-on-craft server options.
 - Pocket Workbench, Void Pouch, `/peqol back`, Siphon catching mob drops.

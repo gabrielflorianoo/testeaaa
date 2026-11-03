@@ -303,5 +303,12 @@
   "info.peqol.condenser.progress": "Próximo item: %s%%",
   "info.peqol.collector.sun": "Luz: %s",
   "info.peqol.collector.goal": "Melhoria de combustível precisa de %s EMC",
-  "command.peqol.help.handbook": "recebe o Manual do Alquimista"
+  "command.peqol.help.handbook": "recebe o Manual do Alquimista",
+  "command.peqol.share.sent": "Ofereceu seu conhecimento para %s (expira em 60s)",
+  "command.peqol.share.received": "%s quer compartilhar o conhecimento de transmutação com você.",
+  "command.peqol.share.accept_button": "[Aceitar]",
+  "command.peqol.share.none": "Nenhuma oferta de conhecimento pendente (ou quem ofereceu saiu)",
+  "command.peqol.share.accepted": "%s aceitou seu conhecimento e aprendeu %s itens",
+  "command.peqol.help.share": "oferece todo seu conhecimento a um jogador (/peqol accept)",
+  "command.peqol.client.set": "%s = %s"
 }

@@ -87,6 +87,10 @@ public final class PEQoLCommand {
                                         .executes(ctx -> xpFromEmc(ctx.getSource(), IntegerArgumentType.getInteger(ctx, "points"))))))
                 .then(Commands.literal("stats").executes(ctx -> stats(ctx.getSource())))
                 .then(Commands.literal("back").executes(ctx -> back(ctx.getSource())))
+                .then(Commands.literal("share")
+                        .then(Commands.argument("player", EntityArgument.player())
+                                .executes(PEQoLCommand::share)))
+                .then(Commands.literal("accept").executes(ctx -> accept(ctx.getSource())))
                 .then(Commands.literal("handbook").executes(ctx -> {
                     InventoryUtil.giveOrDrop(ctx.getSource().getPlayerOrException(), com.gabrielflorianoo.peqol.util.Handbook.create());
                     return 1;
@@ -156,7 +160,7 @@ public final class PEQoLCommand {
 
     private static int help(CommandSourceStack source) {
         source.sendSuccess(() -> Component.translatable("command.peqol.help.header").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD), false);
-        String[] entries = {"balance", "pay", "withdraw", "buy", "sell", "value", "known", "autostock", "learnall", "gift", "back", "xp", "stats", "handbook", "worth", "burn", "missing", "unlearned", "stars", "knowledge", "top"};
+        String[] entries = {"balance", "pay", "withdraw", "buy", "sell", "value", "known", "autostock", "learnall", "gift", "share", "back", "xp", "stats", "handbook", "worth", "burn", "missing", "unlearned", "stars", "knowledge", "top"};
         for (String entry : entries) {
             source.sendSuccess(() -> Component.literal("/peqol " + entry).withStyle(ChatFormatting.GOLD)
                     .append(Component.literal(" - ").withStyle(ChatFormatting.DARK_GRAY))
@@ -377,6 +381,39 @@ public final class PEQoLCommand {
                 .withStyle(ChatFormatting.GREEN), false);
         target.sendSystemMessage(Component.translatable("command.peqol.gift.received", count, name, sender.getDisplayName()).withStyle(ChatFormatting.GREEN));
         return count;
+    }
+
+    private static int share(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        if (!PEQoLConfig.COMMON.knowledgeScrollEnabled.get()) {
+            throw DISABLED.create();
+        }
+        ServerPlayer sender = ctx.getSource().getPlayerOrException();
+        ServerPlayer target = EntityArgument.getPlayer(ctx, "player");
+        if (sender == target) {
+            throw SELF.create();
+        }
+        com.gabrielflorianoo.peqol.util.KnowledgeShare.offer(sender, target);
+        ctx.getSource().sendSuccess(() -> Component.translatable("command.peqol.share.sent", target.getDisplayName()).withStyle(ChatFormatting.GREEN), false);
+        target.sendSystemMessage(Component.translatable("command.peqol.share.received", sender.getDisplayName())
+                .append(" ")
+                .append(Component.translatable("command.peqol.share.accept_button").withStyle(style -> style.withColor(ChatFormatting.GREEN).withUnderlined(true)
+                        .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/peqol accept"))))
+                .withStyle(ChatFormatting.LIGHT_PURPLE));
+        return 1;
+    }
+
+    private static int accept(CommandSourceStack source) throws CommandSyntaxException {
+        ServerPlayer target = source.getPlayerOrException();
+        com.gabrielflorianoo.peqol.util.KnowledgeShare.Offer offer = com.gabrielflorianoo.peqol.util.KnowledgeShare.take(target);
+        ServerPlayer sender = offer == null ? null : source.getServer().getPlayerList().getPlayer(offer.sender());
+        if (sender == null) {
+            source.sendFailure(Component.translatable("command.peqol.share.none"));
+            return 0;
+        }
+        int learned = com.gabrielflorianoo.peqol.util.KnowledgeShare.teach(sender, target);
+        source.sendSuccess(() -> Component.translatable("message.peqol.scroll.learned", learned).withStyle(ChatFormatting.GREEN), false);
+        sender.sendSystemMessage(Component.translatable("command.peqol.share.accepted", target.getDisplayName(), learned).withStyle(ChatFormatting.GREEN));
+        return learned;
     }
 
     private static int back(CommandSourceStack source) throws CommandSyntaxException {
