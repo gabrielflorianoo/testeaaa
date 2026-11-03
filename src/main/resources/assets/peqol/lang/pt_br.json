@@ -267,5 +267,12 @@
   "message.peqol.learned_inventory": "Aprendeu %s itens novos (queimou um de cada por %s EMC)",
   "message.peqol.learned_inventory.none": "Nada novo para aprender no seu inventário",
   "key.peqol.learn_inventory": "Aprender Inventário (queima 1 de cada item não aprendido)",
-  "command.peqol.help.learnall": "aprende tudo do inventário, queimando só 1 de cada"
+  "command.peqol.help.learnall": "aprende tudo do inventário, queimando só 1 de cada",
+  "item.peqol.pocket_workbench": "Bancada de Bolso",
+  "item.peqol.pocket_workbench.desc": "Clique direito para abrir uma bancada em qualquer lugar.",
+  "item.peqol.void_pouch": "Bolsa do Vazio",
+  "item.peqol.void_pouch.desc": "Clique direito para abrir seu baú do ender (%s EMC).",
+  "command.peqol.back.none": "Você ainda não morreu",
+  "command.peqol.back.done": "Voltou ao ponto de morte por %s EMC",
+  "command.peqol.help.back": "teleporta para onde você morreu por último (EMC)"
 }

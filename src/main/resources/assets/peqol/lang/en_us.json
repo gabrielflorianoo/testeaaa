@@ -267,5 +267,12 @@
   "message.peqol.learned_inventory": "Learned %s new items (burned one of each for %s EMC)",
   "message.peqol.learned_inventory.none": "Nothing new to learn in your inventory",
   "key.peqol.learn_inventory": "Learn Inventory (burn 1 of each unlearned item)",
-  "command.peqol.help.learnall": "learn everything in your inventory, burning only 1 of each"
+  "command.peqol.help.learnall": "learn everything in your inventory, burning only 1 of each",
+  "item.peqol.pocket_workbench": "Pocket Workbench",
+  "item.peqol.pocket_workbench.desc": "Right click to open a crafting table anywhere.",
+  "item.peqol.void_pouch": "Void Pouch",
+  "item.peqol.void_pouch.desc": "Right click to open your ender chest (%s EMC).",
+  "command.peqol.back.none": "You haven't died yet",
+  "command.peqol.back.done": "Returned to your death point for %s EMC",
+  "command.peqol.help.back": "teleport to where you last died (EMC)"
 }

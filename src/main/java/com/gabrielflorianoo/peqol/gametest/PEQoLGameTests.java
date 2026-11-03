@@ -294,4 +294,14 @@ public class PEQoLGameTests {
         helper.assertTrue(com.gabrielflorianoo.peqol.network.MachineInfoRequestPacket.describe(null).isEmpty(), "No block entity = no info");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void backFindsSafeSpot(GameTestHelper helper) {
+        BlockPos start = helper.absolutePos(new BlockPos(1, 0, 1));
+        helper.setBlock(new BlockPos(1, 0, 1), Blocks.STONE);
+        helper.setBlock(new BlockPos(1, 1, 1), Blocks.STONE);
+        BlockPos safe = com.gabrielflorianoo.peqol.command.PEQoLCommand.findSafeSpot(helper.getLevel(), start);
+        helper.assertTrue(safe != null && safe.getY() == start.getY() + 2, "Safe spot should be right above the two stone blocks, got " + safe);
+        helper.succeed();
+    }
 }

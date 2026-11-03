@@ -99,6 +99,11 @@ public final class PEQoLConfig {
         public final ForgeConfigSpec.BooleanValue xpEnabled;
         public final ForgeConfigSpec.LongValue xpEmcPerPoint;
 
+        // Misc items / commands
+        public final ForgeConfigSpec.LongValue voidPouchCost;
+        public final ForgeConfigSpec.BooleanValue backEnabled;
+        public final ForgeConfigSpec.BooleanValue siphonCatchesMobDrops;
+
         // Blacklist
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> blacklist;
 
@@ -247,6 +252,15 @@ public final class PEQoLConfig {
             xpEnabled = builder.define("enabled", true);
             xpEmcPerPoint = builder.comment("EMC per experience point (same rate both ways).")
                     .defineInRange("emcPerPoint", 32L, 1L, 1_000_000_000L);
+            builder.pop();
+
+            builder.comment("Misc").push("misc");
+            voidPouchCost = builder.comment("EMC paid every time the Void Pouch opens your ender chest.")
+                    .defineInRange("voidPouchCost", 64L, 0L, Long.MAX_VALUE);
+            backEnabled = builder.comment("Allow /peqol back (teleport to your last death point, paid like the Alchemical Anchor).")
+                    .define("backEnabled", true);
+            siphonCatchesMobDrops = builder.comment("Mobs you kill drop filtered items straight into your EMC when a Siphon Charm is active.")
+                    .define("siphonCatchesMobDrops", true);
             builder.pop();
 
             builder.comment("Blacklist for every feature that CREATES items from personal EMC (buy, pick block, restocker, exporter, wand...).",

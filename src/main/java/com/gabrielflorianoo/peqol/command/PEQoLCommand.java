@@ -86,6 +86,7 @@ public final class PEQoLCommand {
                                 .then(Commands.argument("points", IntegerArgumentType.integer(1, 1_000_000))
                                         .executes(ctx -> xpFromEmc(ctx.getSource(), IntegerArgumentType.getInteger(ctx, "points"))))))
                 .then(Commands.literal("stats").executes(ctx -> stats(ctx.getSource())))
+                .then(Commands.literal("back").executes(ctx -> back(ctx.getSource())))
                 .then(Commands.literal("learnall").executes(ctx -> {
                     int learned = com.gabrielflorianoo.peqol.network.ServerActions.learnInventory(ctx.getSource().getPlayerOrException(), true);
                     return Math.max(learned, 0);
@@ -145,7 +146,7 @@ public final class PEQoLCommand {
 
     private static int help(CommandSourceStack source) {
         source.sendSuccess(() -> Component.translatable("command.peqol.help.header").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD), false);
-        String[] entries = {"balance", "pay", "withdraw", "buy", "sell", "value", "known", "autostock", "learnall", "xp", "stats", "worth", "burn", "missing", "unlearned", "stars", "knowledge", "top"};
+        String[] entries = {"balance", "pay", "withdraw", "buy", "sell", "value", "known", "autostock", "learnall", "back", "xp", "stats", "worth", "burn", "missing", "unlearned", "stars", "knowledge", "top"};
         for (String entry : entries) {
             source.sendSuccess(() -> Component.literal("/peqol " + entry).withStyle(ChatFormatting.GOLD)
                     .append(Component.literal(" - ").withStyle(ChatFormatting.DARK_GRAY))
@@ -328,6 +329,57 @@ public final class PEQoLCommand {
         player.giveExperiencePoints(points);
         source.sendSuccess(() -> Component.translatable("command.peqol.xp.fromemc", points, EmcUtil.format(cost)).withStyle(ChatFormatting.GREEN), false);
         return points;
+    }
+
+    private static int back(CommandSourceStack source) throws CommandSyntaxException {
+        if (!PEQoLConfig.COMMON.backEnabled.get()) {
+            throw DISABLED.create();
+        }
+        ServerPlayer player = source.getPlayerOrException();
+        java.util.Optional<net.minecraft.core.GlobalPos> death = player.getLastDeathLocation();
+        if (death.isEmpty()) {
+            source.sendFailure(Component.translatable("command.peqol.back.none"));
+            return 0;
+        }
+        net.minecraft.server.level.ServerLevel level = player.server.getLevel(death.get().dimension());
+        if (level == null) {
+            source.sendFailure(Component.translatable("message.peqol.anchor.no_dimension"));
+            return 0;
+        }
+        net.minecraft.core.BlockPos safe = findSafeSpot(level, death.get().pos());
+        if (safe == null) {
+            source.sendFailure(Component.translatable("message.peqol.anchor.obstructed"));
+            return 0;
+        }
+        BigInteger cost = player.getAbilities().instabuild ? BigInteger.ZERO
+                : com.gabrielflorianoo.peqol.item.AlchemicalAnchorItem.cost(player, safe, death.get().dimension().location());
+        if (cost.signum() > 0 && !EmcUtil.tryRemoveEmc(player, cost)) {
+            source.sendFailure(Component.translatable("message.peqol.anchor.too_expensive", EmcUtil.format(cost)));
+            return 0;
+        }
+        player.teleportTo(level, safe.getX() + 0.5, safe.getY(), safe.getZ() + 0.5, player.getYRot(), player.getXRot());
+        player.fallDistance = 0;
+        level.playSound(null, safe, net.minecraft.sounds.SoundEvents.ENDERMAN_TELEPORT, net.minecraft.sounds.SoundSource.PLAYERS, 0.8F, 1F);
+        player.awardStat(ModStats.ANCHOR_TELEPORTS);
+        source.sendSuccess(() -> Component.translatable("command.peqol.back.done", EmcUtil.format(cost)).withStyle(ChatFormatting.LIGHT_PURPLE), false);
+        return 1;
+    }
+
+    /**
+     * First spot at or above {@code start} (up to 64 blocks) where a player fits and isn't standing in lava.
+     */
+    @org.jetbrains.annotations.Nullable
+    public static net.minecraft.core.BlockPos findSafeSpot(net.minecraft.server.level.ServerLevel level, net.minecraft.core.BlockPos start) {
+        net.minecraft.core.BlockPos pos = new net.minecraft.core.BlockPos(start.getX(), Math.max(start.getY(), level.getMinBuildHeight() + 1), start.getZ());
+        for (int i = 0; i < 64 && pos.getY() < level.getMaxBuildHeight() - 1; i++, pos = pos.above()) {
+            if (level.getBlockState(pos).getCollisionShape(level, pos).isEmpty()
+                    && level.getBlockState(pos.above()).getCollisionShape(level, pos.above()).isEmpty()
+                    && !level.getFluidState(pos).is(net.minecraft.tags.FluidTags.LAVA)
+                    && !level.getFluidState(pos.above()).is(net.minecraft.tags.FluidTags.LAVA)) {
+                return pos;
+            }
+        }
+        return null;
     }
 
     private static int stats(CommandSourceStack source) throws CommandSyntaxException {

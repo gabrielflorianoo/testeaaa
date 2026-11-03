@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "pattern": [" S ", "LEL", " L "],
+  "key": {
+    "S": { "item": "minecraft:string" },
+    "L": { "tag": "forge:leather" },
+    "E": { "item": "minecraft:ender_chest" }
+  },
+  "result": { "item": "peqol:void_pouch" }
+}

@@ -33,7 +33,7 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
 
 ### Itens
 - **Reabastecedor Alquímico**: se uma ferramenta aprendida quebrar na sua mão, ele cria uma nova com EMC. Enquanto está ativo no inventário, completa as pilhas de blocos da hotbar (e da mão secundária) usando o seu EMC. Só funciona com itens aprendidos e sem NBT. Ideal para construir.
-- **Amuleto de Sifão**: itens coletados que estão no filtro viram EMC pessoal na hora (e são aprendidos), mesmo com o inventário cheio. Para adicionar ou remover um item do filtro, agache e clique com o botão direito segurando o item na outra mão. Agachar e clicar com a outra mão vazia lista o filtro.
+- **Amuleto de Sifão**: itens coletados que estão no filtro viram EMC pessoal na hora (e são aprendidos), mesmo com o inventário cheio. Também pega os drops filtrados dos mobs que você mata. Para adicionar ou remover um item do filtro, agache e clique com o botão direito segurando o item na outra mão. Agachar e clicar com a outra mão vazia lista o filtro.
 - **Amuleto de Reparo Alquímico**: repara as ferramentas e armaduras danificadas usando EMC. Um reparo completo custa cerca do valor do item.
 - **Amuleto da Saciedade**: escolha uma comida aprendida (agache e clique com o botão direito segurando a comida na outra mão). Ele come automaticamente quando a fome cairia sem desperdício, pagando com EMC.
 - **Elo Estelar**: mantém as Estrelas de Klein do inventário (e dos slots do Curios) carregadas com o seu EMC pessoal.
@@ -43,6 +43,8 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
 - **Amuleto da Fundição**: os minérios e materiais brutos coletados chegam já fundidos. Cada item custa 16 EMC (configurável).
 - **Âncora Alquímica**: agache e clique num bloco para ancorar o ponto; clique com o botão direito para teleportar até lá pagando EMC (base + distância, mais caro entre dimensões). Funciona entre dimensões e tem cooldown.
 - **Chave do Filósofo**: agache e clique com o botão direito em qualquer máquina do ProjectE (condensador, coletor, relé, baú alquímico...) ou do QoL+ para pegá-la com o **EMC, o inventário e as configurações intactos**. O tooltip do item mostra o EMC guardado. Respeita proteções de área.
+- **Bancada de Bolso**: abre uma mesa de trabalho em qualquer lugar.
+- **Bolsa do Vazio**: abre o seu baú do Ender em qualquer lugar, por 64 EMC (configurável).
 - **Cheque de EMC**: o `/peqol withdraw` transforma EMC em um item que pode ser trocado entre jogadores. Clique com o botão direito para resgatar; agachado, você resgata a pilha inteira. O cheque não tem valor de EMC, então não dá para queimá-lo e duplicar EMC.
 - **Pergaminho do Conhecimento**: grava tudo o que você aprendeu. Outro jogador clica com o botão direito e aprende tudo o que está gravado, ótimo para servidores. Agachar e clicar com o botão direito apaga o pergaminho.
 
@@ -68,6 +70,7 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 | `worth [hand\|inventory]` | Mostra quanto vale a mão ou o inventário |
 | `sell <item> [qtd]` | Queima uma quantidade exata de um item do inventário (sem quantidade, queima todos) |
 | `xp toemc [pontos]` / `xp fromemc <pontos>` | Converte experiência em EMC e vice-versa (32 EMC por ponto, configurável) |
+| `back` | Teleporta para onde você morreu por último, pagando EMC (mesma fórmula da Âncora). Procura um lugar seguro, sem lava |
 | `stats` | Mostra as suas estatísticas do QoL+ |
 | `burn hand\|inventory` | Queima a mão ou o inventário principal. A hotbar, a armadura, a mão secundária, os itens com NBT e as Estrelas de Klein são preservados |
 | `buy <item> [qtd]` | Cria itens aprendidos com o seu EMC, com autocompletar (ex.: `/peqol buy minecraft:diamond 64`) |
@@ -102,6 +105,8 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 | Descida Alquímica | Matéria Escura ×2, Tocha de Redstone ×2, Conexão Alquímica |
 | Chave do Filósofo | Ferro ×2, Matéria Escura, Pó de Covalência Médio |
 | Medidor Alquímico | Comparador, Redstone ×2, Matéria Escura, Pó de Covalência Baixo |
+| Bancada de Bolso | Mesa de Trabalho, Pó de Covalência Baixo, Couro (sem forma) |
+| Bolsa do Vazio | Linha, Couro ×3, Baú do Ender |
 | Amuleto da Fundição | Pó de Covalência Baixo ×4, Fornalha ×4, Faixa de Ferro |
 
 ## Extras
@@ -137,6 +142,7 @@ A quality-of-life addon for ProjectE on Forge 1.20.1. It includes:
 - A Siphon Charm that turns filtered pickups into EMC.
 - Tradeable EMC Cheques and Knowledge Scrolls for sharing knowledge.
 - Uplink, Importer and Exporter blocks that bridge automation and personal EMC.
+- Pocket Workbench, Void Pouch, `/peqol back`, Siphon catching mob drops.
 - Look-at machine info panel, `/peqol learnall` (+ keybind), lens container burning with confirmation.
 - Alchemical Gauge (comparator by EMC magnitude), `/peqol sell|xp|stats`, sneak quick-burn, learn toasts.
 - Philosopher's Wrench (pick up ProjectE machines with EMC/contents), Alchemical Downlink, `/peqol autostock`.

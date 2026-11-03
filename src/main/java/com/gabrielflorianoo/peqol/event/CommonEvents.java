@@ -9,6 +9,7 @@ import com.gabrielflorianoo.peqol.item.SiphonCharmItem;
 import com.gabrielflorianoo.peqol.item.SmeltingCharmItem;
 import com.gabrielflorianoo.peqol.registry.ModStats;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import com.gabrielflorianoo.peqol.item.StellarLinkItem;
 import com.gabrielflorianoo.peqol.item.ToggleableItem;
 import com.gabrielflorianoo.peqol.util.EmcUtil;
@@ -64,6 +65,31 @@ public final class CommonEvents {
 
     public static boolean hasActive(net.minecraft.world.entity.player.Player player, Class<? extends ToggleableItem> type) {
         return InventoryUtil.contains(player, s -> type.isInstance(s.getItem()) && ToggleableItem.isActive(s));
+    }
+
+    /**
+     * Siphon Charm also catches filtered drops of mobs you kill.
+     */
+    @SubscribeEvent(priority = EventPriority.LOW)
+    public static void onLivingDrops(LivingDropsEvent event) {
+        if (event.isCanceled() || !PEQoLConfig.COMMON.siphonCatchesMobDrops.get() || !(event.getSource().getEntity() instanceof ServerPlayer player)) {
+            return;
+        }
+        java.util.Iterator<ItemEntity> iterator = event.getDrops().iterator();
+        while (iterator.hasNext()) {
+            ItemEntity drop = iterator.next();
+            ItemStack stack = drop.getItem();
+            if (stack.isEmpty() || EmcUtil.isEmcHolder(stack)) {
+                continue;
+            }
+            ItemStack charm = InventoryUtil.findFirstStack(player, s -> s.getItem() instanceof SiphonCharmItem && ToggleableItem.isActive(s) && SiphonCharmItem.matches(s, stack));
+            if (charm.isEmpty()) {
+                continue;
+            }
+            if (EmcUtil.burn(player, stack, PEQoLConfig.COMMON.siphonLearnsItems.get()).signum() > 0) {
+                iterator.remove();
+            }
+        }
     }
 
     /**

@@ -26,6 +26,8 @@ public final class ModCreativeTab {
                 output.accept(ModItems.APPRAISAL_LENS.get());
                 output.accept(ModItems.ALCHEMICAL_ANCHOR.get());
                 output.accept(ModItems.SMELTING_CHARM.get());
+                output.accept(ModItems.POCKET_WORKBENCH.get());
+                output.accept(ModItems.VOID_POUCH.get());
                 output.accept(ModItems.KNOWLEDGE_SCROLL.get());
                 output.accept(ModItems.ALCHEMICAL_UPLINK.get());
                 output.accept(ModItems.ALCHEMICAL_IMPORTER.get());
