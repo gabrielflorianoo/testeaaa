@@ -32,3 +32,8 @@ jobs:
         with:
           name: peqol-jar
           path: build/libs/*.jar
+
+      - name: Game test summary
+        if: always()
+        run: |
+          grep -hE "GameTest|tests? (passed|failed)|required tests|peqol" run/logs/latest.log | tail -n 40 || true
