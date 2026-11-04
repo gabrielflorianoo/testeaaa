@@ -5,7 +5,6 @@ import com.gabrielflorianoo.peqol.config.PEQoLConfig;
 import com.gabrielflorianoo.peqol.util.EmcUtil;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -136,7 +135,7 @@ public class ArchitectBottleItem extends MagicItem {
             data[i * 4 + 3] = index;
         }
         //Top to bottom, without drops or neighbour updates, so attached blocks don't pop off and duplicate
-        taken.sort(Comparator.comparingInt(BlockPos::getY).reversed());
+        taken.sort((p1, p2) -> Integer.compare(p2.getY(), p1.getY()));
         for (BlockPos pos : taken) {
             BlockState state = level.getBlockState(pos);
             level.setBlock(pos, state.getFluidState().createLegacyBlock(), REMOVE_FLAGS);
