@@ -1,5 +1,16 @@
 # ProjectE QoL+ changelog
 
+## 1.17.0
+- Seven new magic items with their own mechanics:
+  - Tempus Stone: accelerate a single block (random ticks and block entity tickers), stacking up to 32x;
+    #peqol:tempus_blacklist keeps ProjectE collectors/relays out
+  - Dowsing Rod: attune to a block, private particle trail to the nearest one (forge:ores tags match variants)
+  - Courier's Sigil: bind a container, send the off-hand stack or the whole backpack there from anywhere
+  - Gaia's Brush: soak in a biome and paint it elsewhere (biomes resent to clients)
+  - Wayfinder's Compass: locate 14 kinds of structures through #peqol:wayfinder/* structure tags, trail while held
+  - Soulbinding Rune: soulbound items are kept on death (stored on the player until respawn)
+  - Architect's Bottle: bottle up to 12x12x12 of blocks and pour them out elsewhere, rotated to your facing
+
 ## 1.16.0
 - Six more magic items:
   - Storm Staff: lightning where you look (sneak: harmless flash)

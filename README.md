@@ -76,6 +76,13 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
 - **Cetro das Nuvens**: conjura uma **plataforma de nuvem** 3x3 sob os seus pés (agachado: um bloco à sua frente). As nuvens somem sozinhas depois de 10 s e cair nelas não machuca.
 - **Jarro de Almas**: **aprisiona uma criatura** (aldeões com as trocas, mascotes, animais...) e solta onde você clicar. Jogadores e chefes não podem ser presos.
 - **Lanterna Guardiã**: ligada e carregada (ou no cinto do Curios), **monstros não nascem naturalmente** num raio de 32 blocos ao seu redor. 128 EMC por minuto.
+- **Pedra Tempus**: clique num bloco e **o tempo corre mais rápido para ele** por 30 s (plantações, mudas, cana, fornalhas, suportes de poções, geradores de monstros, máquinas de outros mods...). Cada uso no mesmo bloco dobra a velocidade: 4x → 8x → 16x → 32x. Coletores e relés do ProjectE são imunes.
+- **Forquilha de Radiestesia**: agache e clique num bloco para sintonizar (um minério, detrito ancestral, gerador de monstros...). Depois, clique e um **rastro de luz que só você vê** leva até o mais próximo, dizendo a distância e se está acima ou abaixo. Minério de ferro também acha o de ardósia, e assim por diante.
+- **Selo do Mensageiro**: vincule a um baú (ou barril, gaveta, interface do AE2/RS...) e **mande itens para lá de qualquer lugar**, até de outra dimensão: clique para enviar o item da outra mão, ou agache e clique no ar para enviar o inventário inteiro (menos a barra de atalhos).
+- **Pincel de Gaia**: **pinta biomas**. Embeba o pincel no bioma onde você está e pinte um quadrado de 9x9 em outro lugar. A cor da grama e da água, a chuva/neve e as criaturas que nascem mudam junto. Pinte um campo de cogumelos ao redor da base e nunca mais nasce monstro lá.
+- **Bússola do Andarilho**: escolha o que procurar (vila, templo, ruínas, naufrágio, tesouro enterrado, mina, portal em ruínas, monumento, mansão, cidade ancestral, fortaleza do Fim, fortaleza do Nether, bastião, cidade do End) e ela encontra o mais próximo; segurando a bússola, um rastro de luz aponta o caminho. Se não achar nada, devolve o EMC.
+- **Runa do Vínculo**: com um item na outra mão, **vincula ele à sua alma**: itens vinculados não caem quando você morre. A runa pode ser reutilizada.
+- **Frasco do Arquiteto**: clique em dois cantos e **a construção inteira entra no frasco** (até 12x12x12). Clique em outro lugar para despejá-la de volta, **girada** para ficar virada do mesmo jeito em relação a você. Blocos com dados (baús, fornalhas...) ficam no lugar.
 
 ### Blocos (ficam vinculados a quem os coloca)
 - **Conexão Alquímica**: recebe EMC de Coletores e Relés e manda direto para o seu EMC pessoal. Enquanto você está offline, guarda o EMC num buffer.
@@ -169,6 +176,13 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 | Cetro das Nuvens | Lã ×2, Membrana de Phantom, Graveto ×2 |
 | Jarro de Almas | Tábuas, Vidro ×5, Areia das Almas |
 | Lanterna Guardiã | Ouro ×4, Pó de Covalência Médio ×2, Lanterna das Almas, Matéria Escura |
+| Pedra Tempus | Ouro ×4, Relógio ×2, Matéria Escura ×2, Bloco de Diamante |
+| Forquilha de Radiestesia | Fragmento de Ametista ×2, Graveto ×2 |
+| Selo do Mensageiro | Papel, Favo de Mel ×2, Olho do Ender, Baú do Ender |
+| Pincel de Gaia | Folhas, Matéria Escura, Graveto ×2 |
+| Bússola do Andarilho | Mapa ×4, Pó de Covalência Médio ×4, Bússola de Recuperação |
+| Runa do Vínculo | Areia das Almas ×4, Obsidiana Chorona ×4, Matéria Vermelha |
+| Frasco do Arquiteto | Vidro ×7, Matéria Escura, Bafo de Dragão |
 | Bancada de Bolso | Mesa de Trabalho, Pó de Covalência Baixo, Couro (sem forma) |
 | Bolsa do Vazio | Linha, Couro ×3, Baú do Ender |
 | Melhoria de Máquina (×2) | Pó de Covalência Alto ×4, Redstone ×4, Matéria Escura |
@@ -277,7 +291,7 @@ A quality-of-life addon for ProjectE on Forge 1.20.1. It includes:
 - `/peqol known` with clickable buy buttons, knowledge progress %, held-item value on the HUD and EMC milestone toasts.
 - Alchemical pick block (middle click creates the block from EMC).
 - Mending, Satiation and Stellar Link charms.
-- Magic items: Blink Rod (teleport where you look), Chronal Echo (rewind a few seconds), Lumen Wand (invisible lights), Transmutation Scepter (turn blocks into another block for the EMC difference), Verdant Orb (area bonemeal), Void Sponge (drain fluids), Eye of the Seer (creatures glow through walls), Gravitational Staff (pull items/XP, shockwave), Storm Staff (lightning), Prismatic Wand (magic beam), Recall Mirror (home from any dimension), Cloud Scepter (temporary platforms), Soul Jar (carry mobs and villagers) and Warding Lantern (no hostile spawns around you).
+- Magic items: Blink Rod (teleport where you look), Chronal Echo (rewind a few seconds), Lumen Wand (invisible lights), Transmutation Scepter (turn blocks into another block for the EMC difference), Verdant Orb (area bonemeal), Void Sponge (drain fluids), Eye of the Seer (creatures glow through walls), Gravitational Staff (pull items/XP, shockwave), Storm Staff (lightning), Prismatic Wand (magic beam), Recall Mirror (home from any dimension), Cloud Scepter (temporary platforms), Soul Jar (carry mobs and villagers) Warding Lantern (no hostile spawns around you), Tempus Stone (accelerate a block), Dowsing Rod (trail to the nearest block of a kind), Courier's Sigil (send items to a chest from anywhere), Gaia's Brush (paint biomes), Wayfinder's Compass (find structures), Soulbinding Rune (keep items on death) and Architect's Bottle (move whole builds, rotated).
 - Stock-keeping mode for the Exporter and a comparator output for the Uplink.
 - Optional Curios support.
 - `/peqol` commands: help, balance, pay, withdraw, buy, value, worth, burn, missing, unlearned, stars, top, knowledge.
