@@ -28,7 +28,6 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.chunk.ChunkAccess;
-import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -66,7 +65,6 @@ public class GaiaBrushItem extends MagicItem {
     public static int paint(ServerLevel level, BlockPos center, int radius, Holder<Biome> biome) {
         int minX = center.getX() - radius, maxX = center.getX() + radius;
         int minZ = center.getZ() - radius, maxZ = center.getZ() + radius;
-        BoundingBox box = new BoundingBox(minX, level.getMinBuildHeight(), minZ, maxX, level.getMaxBuildHeight() - 1, maxZ);
         List<ChunkAccess> chunks = new ArrayList<>();
         for (int cx = SectionPos.blockToSectionCoord(minX); cx <= SectionPos.blockToSectionCoord(maxX); cx++) {
             for (int cz = SectionPos.blockToSectionCoord(minZ); cz <= SectionPos.blockToSectionCoord(maxZ); cz++) {
@@ -76,7 +74,10 @@ public class GaiaBrushItem extends MagicItem {
         for (ChunkAccess chunk : chunks) {
             chunk.fillBiomesFromNoise((x, y, z, sampler) -> {
                 Holder<Biome> current = chunk.getNoiseBiome(x, y, z);
-                return box.isInside(QuartPos.toBlock(x), QuartPos.toBlock(y), QuartPos.toBlock(z)) ? biome : current;
+                //Every 4x4x4 biome cell that touches the area is painted, so the edges are clean
+                int bx = QuartPos.toBlock(x);
+                int bz = QuartPos.toBlock(z);
+                return bx + 3 >= minX && bx <= maxX && bz + 3 >= minZ && bz <= maxZ ? biome : current;
             }, level.getChunkSource().randomState().sampler());
             chunk.setUnsaved(true);
         }

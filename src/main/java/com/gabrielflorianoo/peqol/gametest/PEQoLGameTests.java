@@ -702,7 +702,12 @@ public class PEQoLGameTests {
         int kept = com.gabrielflorianoo.peqol.item.magic.SoulbindingRuneItem.keepFromDrops(dead, drops);
         helper.assertTrue(kept == 1 && drops.size() == 1 && drops.get(0).getItem().is(Items.DIRT), "Only the sword is kept, the dirt drops");
         com.gabrielflorianoo.peqol.item.magic.SoulbindingRuneItem.restore(dead, respawned);
-        helper.assertTrue(respawned.getInventory().contains(new ItemStack(Items.DIAMOND_SWORD)), "The sword comes back after respawning");
+        boolean back = false;
+        for (int i = 0; i < respawned.getInventory().getContainerSize(); i++) {
+            ItemStack stack = respawned.getInventory().getItem(i);
+            back |= stack.is(Items.DIAMOND_SWORD) && com.gabrielflorianoo.peqol.item.magic.SoulbindingRuneItem.isSoulbound(stack);
+        }
+        helper.assertTrue(back, "The sword comes back after respawning, still soulbound");
         com.gabrielflorianoo.peqol.item.magic.SoulbindingRuneItem.setSoulbound(sword, false);
         helper.assertFalse(com.gabrielflorianoo.peqol.item.magic.SoulbindingRuneItem.isSoulbound(sword), "Unbinding works");
         helper.succeed();
@@ -722,7 +727,8 @@ public class PEQoLGameTests {
         net.minecraft.core.Holder<net.minecraft.world.level.biome.Biome> mushroom = helper.getLevel().registryAccess()
                 .registryOrThrow(net.minecraft.core.registries.Registries.BIOME).getHolderOrThrow(net.minecraft.world.level.biome.Biomes.MUSHROOM_FIELDS);
         com.gabrielflorianoo.peqol.item.magic.GaiaBrushItem.paint(helper.getLevel(), pos, 4, mushroom);
-        helper.assertTrue(helper.getLevel().getBiome(pos).is(net.minecraft.world.level.biome.Biomes.MUSHROOM_FIELDS), "The area is now a mushroom field");
+        helper.assertTrue(helper.getLevel().getNoiseBiome(net.minecraft.core.QuartPos.fromBlock(pos.getX()), net.minecraft.core.QuartPos.fromBlock(pos.getY()),
+                net.minecraft.core.QuartPos.fromBlock(pos.getZ())).is(net.minecraft.world.level.biome.Biomes.MUSHROOM_FIELDS), "The area is now a mushroom field");
 
         net.minecraft.network.chat.Component east = com.gabrielflorianoo.peqol.item.magic.WayfinderCompassItem.direction(BlockPos.ZERO, new BlockPos(100, 0, 3));
         helper.assertTrue(east.getContents() instanceof net.minecraft.network.chat.contents.TranslatableContents t && t.getKey().endsWith(".east"), "Positive X is east");
