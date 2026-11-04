@@ -114,7 +114,7 @@ public class VoidSpongeItem extends MagicItem {
         if (!player.getAbilities().instabuild && drained > 0) {
             EmcUtil.tryRemoveEmc(serverPlayer, BigInteger.valueOf(cost * drained));
         }
-        level.playSound(null, center, SoundEvents.SPONGE_ABSORB, SoundSource.PLAYERS, 1F, 0.7F);
+        level.playSound(null, center, SoundEvents.BUCKET_FILL, SoundSource.PLAYERS, 1F, 0.7F);
         level.playSound(null, center, SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 0.4F, 0.5F);
         player.getCooldowns().addCooldown(this, 10);
         return InteractionResultHolder.success(stack);
