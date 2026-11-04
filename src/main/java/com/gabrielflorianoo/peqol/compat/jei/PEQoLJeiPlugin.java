@@ -29,6 +29,29 @@ public class PEQoLJeiPlugin implements IModPlugin {
     }
 
     @Override
+    public void registerRecipeTransferHandlers(@NotNull mezz.jei.api.registration.IRecipeTransferRegistration registration) {
+        registration.addRecipeTransferHandler(new AlchemicalCraftingTransferHandler(registration.getTransferHelper()), mezz.jei.api.constants.RecipeTypes.CRAFTING);
+    }
+
+    @Override
+    public void registerRecipeCatalysts(@NotNull mezz.jei.api.registration.IRecipeCatalystRegistration registration) {
+        registration.addRecipeCatalyst(new ItemStack(ModItems.ALCHEMICAL_CRAFTING_TABLE.get()), mezz.jei.api.constants.RecipeTypes.CRAFTING);
+        registration.addRecipeCatalyst(new ItemStack(ModItems.ALCHEMICAL_CRAFTING_TABLET.get()), mezz.jei.api.constants.RecipeTypes.CRAFTING);
+    }
+
+    @Override
+    public void registerGuiHandlers(@NotNull mezz.jei.api.registration.IGuiHandlerRegistration registration) {
+        registration.addGuiContainerHandler(com.gabrielflorianoo.peqol.client.AlchemicalCraftingScreen.class,
+                new mezz.jei.api.gui.handlers.IGuiContainerHandler<com.gabrielflorianoo.peqol.client.AlchemicalCraftingScreen>() {
+                    @NotNull
+                    @Override
+                    public java.util.List<net.minecraft.client.renderer.Rect2i> getGuiExtraAreas(@NotNull com.gabrielflorianoo.peqol.client.AlchemicalCraftingScreen screen) {
+                        return java.util.List.of(screen.panelArea());
+                    }
+                });
+    }
+
+    @Override
     public void registerRecipes(@NotNull IRecipeRegistration registration) {
         for (RegistryObject<Item> entry : ModItems.ITEMS.getEntries()) {
             Item item = entry.get();

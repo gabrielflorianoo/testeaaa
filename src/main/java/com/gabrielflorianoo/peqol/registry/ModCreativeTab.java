@@ -22,6 +22,8 @@ public final class ModCreativeTab {
                 output.accept(ModItems.SATIATION_CHARM.get());
                 output.accept(ModItems.STELLAR_LINK.get());
                 output.accept(ModItems.ILLUMINATION_CHARM.get());
+                output.accept(ModItems.ALCHEMICAL_CRAFTING_TABLE.get());
+                output.accept(ModItems.ALCHEMICAL_CRAFTING_TABLET.get());
                 output.accept(ModItems.CONSTRUCTION_WAND.get());
                 output.accept(ModItems.APPRAISAL_LENS.get());
                 output.accept(ModItems.ALCHEMICAL_ANCHOR.get());

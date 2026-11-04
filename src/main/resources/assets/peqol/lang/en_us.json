@@ -672,5 +672,17 @@
   "item.peqol.architect_bottle": "Architect's Bottle",
   "item.peqol.architect_bottle.desc": "Click two corners to bottle a build. Click with a full bottle to pour it out somewhere else.",
   "item.peqol.architect_bottle.desc2": "Up to %s blocks per side, %s EMC per block",
-  "jei.peqol.info.architect_bottle": "Moves whole builds: right click one corner and then the opposite one, and every block in between flies into the bottle (block entities like chests stay in place). Right click a spot with the full bottle to pour the build out, centred there and turned to face the same way relative to you. Sneak + right click picks a new first corner."
+  "jei.peqol.info.architect_bottle": "Moves whole builds: right click one corner and then the opposite one, and every block in between flies into the bottle (block entities like chests stay in place). Right click a spot with the full bottle to pour the build out, centred there and turned to face the same way relative to you. Sneak + right click picks a new first corner.",
+  "block.peqol.alchemical_crafting_table": "Alchemical Crafting Table",
+  "item.peqol.alchemical_crafting_tablet": "Alchemical Crafting Tablet",
+  "item.peqol.alchemical_crafting_tablet.desc": "A crafting table that uses your learned items as ingredients, paid with EMC.",
+  "item.peqol.alchemical_crafting_tablet.desc2": "Right click to open it anywhere",
+  "container.peqol.alchemical_crafting": "Alchemical Crafting",
+  "gui.peqol.alchemical_crafting.search": "Search learned...",
+  "gui.peqol.alchemical_crafting.known": "%s learned items",
+  "gui.peqol.alchemical_crafting.cost": "%s EMC per craft",
+  "gui.peqol.alchemical_crafting.clear": "Clear the grid",
+  "gui.peqol.alchemical_crafting.not_learned": "You haven't learned these ingredients",
+  "jei.peqol.info.alchemical_crafting_table": "A crafting table connected to your transmutation knowledge. The panel on the left lists everything you have learned: click an item to pick it as a ghost ingredient and click grid slots to place it (shift + click puts it in the first free slot, clicking a ghost removes it). Ghost ingredients are not consumed: every craft pays their EMC value instead, so shift + clicking the result crafts as many as your EMC and inventory allow. Real items still work as usual. With JEI, the + button of any crafting recipe fills the grid with ghosts.",
+  "jei.peqol.info.alchemical_crafting_tablet": "The Alchemical Crafting Table in your pocket: right click to open it anywhere. Learned items become ghost ingredients paid with EMC on every craft, and JEI's + button fills the grid for you."
 }

@@ -14,6 +14,9 @@ public final class ModMenus {
 
     public static final RegistryObject<MenuType<FilterMenu>> FILTER = MENUS.register("filter", () -> IForgeMenuType.create(FilterMenu::fromNetwork));
 
+    public static final RegistryObject<MenuType<com.gabrielflorianoo.peqol.menu.AlchemicalCraftingMenu>> ALCHEMICAL_CRAFTING = MENUS.register("alchemical_crafting",
+            () -> IForgeMenuType.create(com.gabrielflorianoo.peqol.menu.AlchemicalCraftingMenu::fromNetwork));
+
     private ModMenus() {
     }
 }

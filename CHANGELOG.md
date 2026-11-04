@@ -1,5 +1,11 @@
 # ProjectE QoL+ changelog
 
+## 1.18.0
+- Alchemical Crafting Table (block) and Alchemical Crafting Tablet (portable): crafting grid whose slots can hold
+  ghost ingredients taken from your transmutation knowledge; each craft pays their EMC value instead of consuming
+  them. Searchable panel of learned items, shift-click bulk crafting, real items still work, JEI recipe transfer
+  fills the grid with ghosts (missing knowledge highlighted)
+
 ## 1.17.0
 - Seven new magic items with their own mechanics:
   - Tempus Stone: accelerate a single block (random ticks and block entity tickers), stacking up to 32x;

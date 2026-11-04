@@ -176,6 +176,11 @@ public final class ModItems {
     public static final RegistryObject<com.gabrielflorianoo.peqol.item.magic.ArchitectBottleItem> ARCHITECT_BOTTLE = ITEMS.register("architect_bottle",
             () -> new com.gabrielflorianoo.peqol.item.magic.ArchitectBottleItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
 
+    public static final RegistryObject<Item> ALCHEMICAL_CRAFTING_TABLE = ITEMS.register("alchemical_crafting_table",
+            () -> new net.minecraft.world.item.BlockItem(ModBlocks.ALCHEMICAL_CRAFTING_TABLE.get(), new Item.Properties().rarity(Rarity.RARE)));
+    public static final RegistryObject<com.gabrielflorianoo.peqol.item.AlchemicalCraftingTabletItem> ALCHEMICAL_CRAFTING_TABLET = ITEMS.register("alchemical_crafting_tablet",
+            () -> new com.gabrielflorianoo.peqol.item.AlchemicalCraftingTabletItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+
     private static Item.Properties charm() {
         return new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).fireResistant();
     }

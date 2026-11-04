@@ -736,4 +736,37 @@ public class PEQoLGameTests {
         helper.assertTrue(north.getContents() instanceof net.minecraft.network.chat.contents.TranslatableContents t && t.getKey().endsWith(".north"), "Negative Z is north");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void alchemicalCraftingWithGhosts(GameTestHelper helper) {
+        Player player = helper.makeMockPlayer();
+        player.getAbilities().instabuild = true;
+        com.gabrielflorianoo.peqol.menu.AlchemicalCraftingMenu menu = new com.gabrielflorianoo.peqol.menu.AlchemicalCraftingMenu(0, player.getInventory(),
+                net.minecraft.world.inventory.ContainerLevelAccess.NULL);
+        //2x2 oak planks = crafting table, every plank is a ghost
+        for (int slot : new int[]{0, 1, 3, 4}) {
+            menu.setGhost(slot, new ItemStack(Items.OAK_PLANKS, 64));
+        }
+        helper.assertTrue(menu.isGhost(0) && menu.isGhost(4) && !menu.isGhost(2), "Ghosts are where they were put");
+        helper.assertTrue(menu.getCraftSlots().getItem(0).getCount() == 1, "A ghost is a single item");
+        helper.assertTrue(menu.ghostCost() == 4 * EmcUtil.value(new ItemStack(Items.OAK_PLANKS)), "The cost is the EMC of the ghosts, got " + menu.ghostCost());
+        helper.assertTrue(menu.slots.get(0).getItem().is(Items.CRAFTING_TABLE), "The recipe is found, got " + menu.slots.get(0).getItem());
+        helper.assertFalse(menu.slots.get(1).mayPickup(player), "Ghosts can't be taken out");
+        menu.quickMoveStack(player, 0);
+        menu.quickMoveStack(player, 0);
+        helper.assertTrue(player.getInventory().countItem(Items.CRAFTING_TABLE) == 2, "Two tables crafted, got " + player.getInventory().countItem(Items.CRAFTING_TABLE));
+        helper.assertTrue(menu.isGhost(0) && menu.getCraftSlots().getItem(0).is(Items.OAK_PLANKS), "Ghosts are not consumed");
+        helper.assertTrue(menu.slots.get(0).getItem().is(Items.CRAFTING_TABLE), "The result is still there for the next craft");
+        //A real stick next to the ghosts: the real one is consumed
+        menu.clearGrid();
+        menu.setGhost(1, new ItemStack(Items.OAK_PLANKS));
+        menu.getCraftSlots().setItem(4, new ItemStack(Items.OAK_PLANKS, 3));
+        helper.assertTrue(menu.slots.get(0).getItem().is(Items.STICK), "Planks over planks make sticks, got " + menu.slots.get(0).getItem());
+        menu.quickMoveStack(player, 0);
+        helper.assertTrue(menu.getCraftSlots().getItem(4).getCount() == 2, "The real planks lost one, got " + menu.getCraftSlots().getItem(4).getCount());
+        helper.assertTrue(menu.isGhost(1), "The ghost plank stays");
+        menu.removed(player);
+        helper.assertTrue(player.getInventory().countItem(Items.OAK_PLANKS) == 2, "Real planks go back to the player, ghosts vanish");
+        helper.succeed();
+    }
 }

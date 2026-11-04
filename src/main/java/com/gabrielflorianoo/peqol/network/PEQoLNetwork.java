@@ -34,6 +34,11 @@ public final class PEQoLNetwork {
                 .decoder(MachineInfoPacket::decode)
                 .consumerMainThread(MachineInfoPacket::handle)
                 .add();
+        CHANNEL.messageBuilder(GhostIngredientPacket.class, 4, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(GhostIngredientPacket::encode)
+                .decoder(GhostIngredientPacket::decode)
+                .consumerMainThread(GhostIngredientPacket::handle)
+                .add();
     }
 
     public static void sendToServer(Object packet) {

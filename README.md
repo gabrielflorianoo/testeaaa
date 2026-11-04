@@ -61,6 +61,13 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
 - **Cheque de EMC**: o `/peqol withdraw` transforma EMC em um item que pode ser trocado entre jogadores. Clique com o botão direito para resgatar; agachado, você resgata a pilha inteira. O cheque não tem valor de EMC, então não dá para queimá-lo e duplicar EMC.
 - **Pergaminho do Conhecimento**: grava tudo o que você aprendeu. Outro jogador clica com o botão direito e aprende tudo o que está gravado, ótimo para servidores. Agachar e clicar com o botão direito apaga o pergaminho.
 
+### Mesa de Trabalho Alquímica (craftar com EMC)
+- **Mesa de Trabalho Alquímica** (bloco) e **Tábua de Trabalho Alquímica** (item, abre em qualquer lugar): uma mesa de trabalho ligada ao seu conhecimento de transmutação.
+- O painel da esquerda lista **tudo o que você aprendeu**, com busca. Clique num item para pegá-lo como **ingrediente fantasma** e clique nos espaços da grade para colocá-lo (shift + clique põe no primeiro espaço livre; clicar num fantasma o remove; o botão ✖ limpa a grade).
+- Fantasmas **não são gastos**: cada craft paga o valor de EMC deles. Shift + clique no resultado crafta quantos o seu EMC e o seu inventário permitirem. O custo por craft aparece embaixo da seta.
+- Itens de verdade continuam funcionando normalmente e podem ser misturados com fantasmas.
+- Com o **JEI**, o botão **+** de qualquer receita de mesa de trabalho preenche a grade com fantasmas dos ingredientes que você já aprendeu.
+
 ### Itens mágicos (pagos com EMC pessoal, configuráveis em `magic`)
 - **Bastão do Salto**: clique com o botão direito e você se teleporta na hora para onde está olhando (até 32 blocos, 16 EMC por bloco). Sem dano de queda.
 - **Eco Cronal**: enquanto você carrega o pingente, ele lembra onde você estava a cada segundo. Clique com o botão direito para **voltar 5 segundos no tempo**: você retorna à posição de antes e recupera a vida que tinha. Salva de quedas na lava e de lutas perdidas (recarga de 20 s).
@@ -183,6 +190,8 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 | Bússola do Andarilho | Mapa ×4, Pó de Covalência Médio ×4, Bússola de Recuperação |
 | Runa do Vínculo | Areia das Almas ×4, Obsidiana Chorona ×4, Matéria Vermelha |
 | Frasco do Arquiteto | Vidro ×7, Matéria Escura, Bafo de Dragão |
+| Mesa de Trabalho Alquímica | Pó de Covalência Baixo ×4, Mesa de Transmutação ×2, Matéria Escura ×2, Mesa de Trabalho |
+| Tábua de Trabalho Alquímica | Pó de Covalência Médio ×4, Tábua de Transmutação ×2, Matéria Escura ×2, Mesa de Trabalho Alquímica |
 | Bancada de Bolso | Mesa de Trabalho, Pó de Covalência Baixo, Couro (sem forma) |
 | Bolsa do Vazio | Linha, Couro ×3, Baú do Ender |
 | Melhoria de Máquina (×2) | Pó de Covalência Alto ×4, Redstone ×4, Matéria Escura |
@@ -292,6 +301,7 @@ A quality-of-life addon for ProjectE on Forge 1.20.1. It includes:
 - Alchemical pick block (middle click creates the block from EMC).
 - Mending, Satiation and Stellar Link charms.
 - Magic items: Blink Rod (teleport where you look), Chronal Echo (rewind a few seconds), Lumen Wand (invisible lights), Transmutation Scepter (turn blocks into another block for the EMC difference), Verdant Orb (area bonemeal), Void Sponge (drain fluids), Eye of the Seer (creatures glow through walls), Gravitational Staff (pull items/XP, shockwave), Storm Staff (lightning), Prismatic Wand (magic beam), Recall Mirror (home from any dimension), Cloud Scepter (temporary platforms), Soul Jar (carry mobs and villagers) Warding Lantern (no hostile spawns around you), Tempus Stone (accelerate a block), Dowsing Rod (trail to the nearest block of a kind), Courier's Sigil (send items to a chest from anywhere), Gaia's Brush (paint biomes), Wayfinder's Compass (find structures), Soulbinding Rune (keep items on death) and Architect's Bottle (move whole builds, rotated).
+- Alchemical Crafting Table / Tablet: craft with learned items as EMC-paid ghost ingredients (searchable knowledge panel, bulk shift-click crafting, JEI + button support).
 - Stock-keeping mode for the Exporter and a comparator output for the Uplink.
 - Optional Curios support.
 - `/peqol` commands: help, balance, pay, withdraw, buy, value, worth, burn, missing, unlearned, stars, top, knowledge.

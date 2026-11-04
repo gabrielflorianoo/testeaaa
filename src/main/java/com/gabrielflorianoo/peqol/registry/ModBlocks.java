@@ -31,6 +31,10 @@ public final class ModBlocks {
                     .sound(SoundType.WOOL).noOcclusion().noLootTable().isValidSpawn((state, level, pos, type) -> false)
                     .isSuffocating((state, level, pos) -> false).isViewBlocking((state, level, pos) -> false)));
 
+    public static final RegistryObject<com.gabrielflorianoo.peqol.block.AlchemicalCraftingTableBlock> ALCHEMICAL_CRAFTING_TABLE = BLOCKS.register("alchemical_crafting_table",
+            () -> new com.gabrielflorianoo.peqol.block.AlchemicalCraftingTableBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).strength(2.5F, 6F)
+                    .sound(SoundType.WOOD).lightLevel(state -> 7)));
+
     public static final RegistryObject<AlchemicalUplinkBlock> ALCHEMICAL_UPLINK = BLOCKS.register("alchemical_uplink",
             () -> new AlchemicalUplinkBlock(machineProperties(MapColor.COLOR_PURPLE)));
     public static final RegistryObject<AlchemicalImporterBlock> ALCHEMICAL_IMPORTER = BLOCKS.register("alchemical_importer",

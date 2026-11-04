@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "CTC",
+    "DWD",
+    "CTC"
+  ],
+  "key": {
+    "C": {
+      "item": "projecte:low_covalence_dust"
+    },
+    "T": {
+      "item": "projecte:transmutation_table"
+    },
+    "D": {
+      "item": "projecte:dark_matter"
+    },
+    "W": {
+      "item": "minecraft:crafting_table"
+    }
+  },
+  "result": {
+    "item": "peqol:alchemical_crafting_table"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "alchemical_crafting_table"
+    }
+  ]
+}

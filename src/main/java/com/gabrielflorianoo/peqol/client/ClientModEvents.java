@@ -17,6 +17,7 @@ public final class ClientModEvents {
     @SubscribeEvent
     public static void clientSetup(net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent event) {
         event.enqueueWork(() -> net.minecraft.client.gui.screens.MenuScreens.register(com.gabrielflorianoo.peqol.registry.ModMenus.FILTER.get(), FilterScreen::new));
+        event.enqueueWork(() -> net.minecraft.client.gui.screens.MenuScreens.register(com.gabrielflorianoo.peqol.registry.ModMenus.ALCHEMICAL_CRAFTING.get(), AlchemicalCraftingScreen::new));
     }
 
     @SubscribeEvent

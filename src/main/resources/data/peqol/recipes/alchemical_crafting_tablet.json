@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "MTM",
+    "DAD",
+    "MTM"
+  ],
+  "key": {
+    "M": {
+      "item": "projecte:medium_covalence_dust"
+    },
+    "T": {
+      "item": "projecte:transmutation_tablet"
+    },
+    "D": {
+      "item": "projecte:dark_matter"
+    },
+    "A": {
+      "item": "peqol:alchemical_crafting_table"
+    }
+  },
+  "result": {
+    "item": "peqol:alchemical_crafting_tablet"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "alchemical_crafting_tablet"
+    }
+  ]
+}

@@ -672,5 +672,17 @@
   "item.peqol.architect_bottle": "Frasco do Arquiteto",
   "item.peqol.architect_bottle.desc": "Clique em dois cantos para engarrafar uma construção. Clique com o frasco cheio para despejá-la em outro lugar.",
   "item.peqol.architect_bottle.desc2": "Até %s blocos por lado, %s EMC por bloco",
-  "jei.peqol.info.architect_bottle": "Move construções inteiras: clique direito num canto e depois no canto oposto, e todos os blocos entre eles voam para o frasco (blocos com dados, como baús, ficam no lugar). Clique direito num lugar com o frasco cheio para despejar a construção, centralizada ali e virada do mesmo jeito em relação a você. Agache + clique direito escolhe um novo primeiro canto."
+  "jei.peqol.info.architect_bottle": "Move construções inteiras: clique direito num canto e depois no canto oposto, e todos os blocos entre eles voam para o frasco (blocos com dados, como baús, ficam no lugar). Clique direito num lugar com o frasco cheio para despejar a construção, centralizada ali e virada do mesmo jeito em relação a você. Agache + clique direito escolhe um novo primeiro canto.",
+  "block.peqol.alchemical_crafting_table": "Mesa de Trabalho Alquímica",
+  "item.peqol.alchemical_crafting_tablet": "Tábua de Trabalho Alquímica",
+  "item.peqol.alchemical_crafting_tablet.desc": "Uma mesa de trabalho que usa seus itens aprendidos como ingredientes, pagos com EMC.",
+  "item.peqol.alchemical_crafting_tablet.desc2": "Clique direito para abrir em qualquer lugar",
+  "container.peqol.alchemical_crafting": "Trabalho Alquímico",
+  "gui.peqol.alchemical_crafting.search": "Buscar aprendidos...",
+  "gui.peqol.alchemical_crafting.known": "%s itens aprendidos",
+  "gui.peqol.alchemical_crafting.cost": "%s EMC por craft",
+  "gui.peqol.alchemical_crafting.clear": "Limpar a grade",
+  "gui.peqol.alchemical_crafting.not_learned": "Você não aprendeu esses ingredientes",
+  "jei.peqol.info.alchemical_crafting_table": "Uma mesa de trabalho ligada ao seu conhecimento de transmutação. O painel da esquerda lista tudo o que você aprendeu: clique num item para escolhê-lo como ingrediente fantasma e clique nos espaços da grade para colocá-lo (shift + clique põe no primeiro espaço livre, clicar num fantasma o remove). Ingredientes fantasmas não são gastos: cada craft paga o valor de EMC deles, então shift + clique no resultado crafta quantos o seu EMC e inventário permitirem. Itens de verdade continuam funcionando normalmente. Com o JEI, o botão + de qualquer receita preenche a grade com fantasmas.",
+  "jei.peqol.info.alchemical_crafting_tablet": "A Mesa de Trabalho Alquímica no bolso: clique direito para abrir em qualquer lugar. Itens aprendidos viram ingredientes fantasmas pagos com EMC a cada craft, e o botão + do JEI preenche a grade para você."
 }
