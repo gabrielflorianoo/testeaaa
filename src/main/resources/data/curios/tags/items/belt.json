@@ -6,6 +6,7 @@
     {
       "id": "projecte:transmutation_tablet",
       "required": false
-    }
+    },
+    "peqol:feather_charm"
   ]
 }

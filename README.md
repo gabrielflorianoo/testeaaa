@@ -49,6 +49,10 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
 - **Âncora Alquímica**: agache e clique num bloco para ancorar o ponto; clique com o botão direito para teleportar até lá pagando EMC (base + distância, mais caro entre dimensões). Funciona entre dimensões e tem cooldown.
 - **Chave do Filósofo**: agache e clique com o botão direito em qualquer máquina do ProjectE (condensador, coletor, relé, baú alquímico...) ou do QoL+ para pegá-la com o **EMC, o inventário e as configurações intactos**. O tooltip do item mostra o EMC guardado. Respeita proteções de área.
 - **Prospector Alquímico**: escaneia os minérios num raio de 12 blocos e mostra quantos são, quanto valem em EMC e os mais valiosos.
+- **Amuletos de efeito** (pagos com EMC por minuto enquanto estão ligados): **Visão** (visão noturna), **Pressa** (Pressa II), **Fôlego** (respiração aquática) e **Força** (Força I).
+- **Amuleto da Imortalidade**: se você fosse morrer, ele salva você como um Totem da Imortalidade, pagando 1M de EMC (configurável). Tem recarga e não funciona contra `/kill` nem o vazio.
+- **Amuleto da Pena**: o dano de queda vira custo de EMC (32 por bloco; os 3 primeiros blocos são de graça).
+- **Amuleto da Sabedoria**: os orbes de experiência coletados viram EMC, na mesma taxa do `/peqol xp`.
 - **Ampulheta Celestial**: clique com o botão direito para pular para a manhã; agache e clique para limpar o tempo. Os dois são pagos com EMC, anunciados no servidor e podem ser desligados na config.
 - **Bancada de Bolso**: abre uma mesa de trabalho em qualquer lugar.
 - **Bolsa do Vazio**: abre o seu baú do Ender em qualquer lugar, por 64 EMC (configurável).
@@ -136,6 +140,8 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 | Melhoria de Máquina (×2) | Pó de Covalência Alto ×4, Redstone ×4, Matéria Escura |
 | Colheitadeira Alquímica | Enxada de Matéria Escura, Matéria Escura ×2, Faixa da Deusa da Colheita, Pó de Covalência Baixo |
 | Pasto Alquímico | Trigo ×4, Cenoura Dourada ×2, Matéria Escura ×2, Terra |
+| Amuletos de Visão / Pressa / Fôlego / Força / Pena / Sabedoria | Pó de Covalência Baixo ×4, Faixa de Ferro e ×4 de: Olho do Ender / Açúcar / Cristal de Prismarinho / Pó de Blaze / Pena / Lápis-lazúli |
+| Amuleto da Imortalidade | Pó de Covalência Alto ×2, Matéria Vermelha ×2, Totem da Imortalidade |
 | Ampulheta Celestial | Ouro ×4, Pó de Covalência Alto ×2, Relógio |
 | Display Alquímico | Painel de Vidro ×5, Pedra Luminosa, Pó de Covalência Baixo |
 | Escavadeira Alquímica | Matéria Escura ×4, Picareta de Matéria Escura, Matéria Vermelha ×2, Aspirador Alquímico, Funil |
@@ -161,9 +167,9 @@ Com o Jade instalado, as informações das máquinas do QoL+ (dono, buffer, nív
 
 ## Curios (opcional)
 Se o [Curios](https://www.curseforge.com/minecraft/mc-mods/curios) estiver instalado, os itens podem ficar nos slots dele e continuam funcionando:
-- **Cinto**: Reabastecedor, Iluminação e Tábua de Transmutação.
-- **Colar**: Sifão e Saciedade.
-- **Anel**: Reparo, Elo Estelar e Fundição.
+- **Cinto**: Reabastecedor, Iluminação, Pena e Tábua de Transmutação.
+- **Colar**: Sifão, Saciedade, Visão, Fôlego e Imortalidade.
+- **Anel**: Reparo, Elo Estelar, Fundição, Pressa, Força e Sabedoria.
 
 ## Ajustes no jogo (`/peqolclient`)
 Comandos só do cliente, que salvam na config na hora:

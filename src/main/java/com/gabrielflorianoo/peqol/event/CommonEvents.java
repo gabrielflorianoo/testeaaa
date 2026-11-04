@@ -62,6 +62,15 @@ public final class CommonEvents {
         if (tick % PEQoLConfig.COMMON.illuminationInterval.get() == 0 && hasActive(player, IlluminationCharmItem.class)) {
             IlluminationCharmItem.illuminate(player);
         }
+        if (tick % com.gabrielflorianoo.peqol.item.EffectCharmItem.INTERVAL == 0) {
+            //One payment per kind of effect charm, even if several copies are carried
+            java.util.Set<net.minecraft.world.item.Item> applied = new java.util.HashSet<>();
+            InventoryUtil.forEachStack(player, stack -> {
+                if (stack.getItem() instanceof com.gabrielflorianoo.peqol.item.EffectCharmItem charm && ToggleableItem.isActive(stack) && applied.add(charm)) {
+                    charm.apply(player);
+                }
+            });
+        }
     }
 
     public static boolean hasActive(net.minecraft.world.entity.player.Player player, Class<? extends ToggleableItem> type) {
@@ -142,6 +151,53 @@ public final class CommonEvents {
                 player.displayClientMessage(Component.translatable("message.peqol.learned", event.getCrafting().getHoverName()).withStyle(ChatFormatting.LIGHT_PURPLE), true);
             }
         }
+    }
+
+    /**
+     * Charm of Undying: cheat death for EMC.
+     */
+    @SubscribeEvent(priority = EventPriority.LOW)
+    public static void onDeath(net.minecraftforge.event.entity.living.LivingDeathEvent event) {
+        if (event.isCanceled() || !(event.getEntity() instanceof ServerPlayer player)
+                || event.getSource().is(net.minecraft.tags.DamageTypeTags.BYPASSES_INVULNERABILITY)) {
+            return;
+        }
+        ItemStack charm = InventoryUtil.findFirstStack(player, s -> s.getItem() instanceof com.gabrielflorianoo.peqol.item.UndyingCharmItem && ToggleableItem.isActive(s));
+        if (!charm.isEmpty() && ((com.gabrielflorianoo.peqol.item.UndyingCharmItem) charm.getItem()).trySave(player)) {
+            event.setCanceled(true);
+        }
+    }
+
+    /**
+     * Feather Charm: pay EMC instead of taking fall damage.
+     */
+    @SubscribeEvent
+    public static void onFall(net.minecraftforge.event.entity.living.LivingFallEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer player) || event.getDistance() <= 3 || !hasActive(player, com.gabrielflorianoo.peqol.item.FeatherCharmItem.class)) {
+            return;
+        }
+        if (com.gabrielflorianoo.peqol.item.FeatherCharmItem.absorb(player, event.getDistance())) {
+            event.setDamageMultiplier(0);
+        }
+    }
+
+    /**
+     * Charm of Wisdom: experience orbs become EMC.
+     */
+    @SubscribeEvent
+    public static void onXpPickup(net.minecraftforge.event.entity.player.PlayerXpEvent.PickupXp event) {
+        if (!(event.getEntity() instanceof ServerPlayer player) || !hasActive(player, com.gabrielflorianoo.peqol.item.WisdomCharmItem.class)) {
+            return;
+        }
+        net.minecraft.world.entity.ExperienceOrb orb = event.getOrb();
+        int value = orb.getValue();
+        if (value <= 0) {
+            return;
+        }
+        event.setCanceled(true);
+        orb.discard();
+        player.take(orb, 1);
+        EmcUtil.addEmc(player, BigInteger.valueOf(PEQoLConfig.COMMON.xpEmcPerPoint.get()).multiply(BigInteger.valueOf(value)));
     }
 
     /**

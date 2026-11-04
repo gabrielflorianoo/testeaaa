@@ -3,6 +3,9 @@
   "values": [
     "peqol:mending_charm",
     "peqol:stellar_link",
-    "peqol:smelting_charm"
+    "peqol:smelting_charm",
+    "peqol:haste_charm",
+    "peqol:strength_charm",
+    "peqol:wisdom_charm"
   ]
 }

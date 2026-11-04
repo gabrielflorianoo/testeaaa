@@ -5,6 +5,10 @@ import com.gabrielflorianoo.peqol.item.AlchemicalAnchorItem;
 import com.gabrielflorianoo.peqol.item.AppraisalLensItem;
 import com.gabrielflorianoo.peqol.item.PhilosophersWrenchItem;
 import com.gabrielflorianoo.peqol.item.SmeltingCharmItem;
+import com.gabrielflorianoo.peqol.item.EffectCharmItem;
+import com.gabrielflorianoo.peqol.item.FeatherCharmItem;
+import com.gabrielflorianoo.peqol.item.UndyingCharmItem;
+import com.gabrielflorianoo.peqol.item.WisdomCharmItem;
 import com.gabrielflorianoo.peqol.item.CelestialHourglassItem;
 import com.gabrielflorianoo.peqol.item.MachineUpgradeItem;
 import com.gabrielflorianoo.peqol.item.ProspectorItem;
@@ -106,6 +110,25 @@ public final class ModItems {
             () -> new OwnedBlockItem(ModBlocks.ALCHEMICAL_PASTURE.get(), new Item.Properties().rarity(Rarity.UNCOMMON), "alchemical_pasture"));
     public static final RegistryObject<CelestialHourglassItem> CELESTIAL_HOURGLASS = ITEMS.register("celestial_hourglass",
             () -> new CelestialHourglassItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).fireResistant()));
+
+    public static final RegistryObject<EffectCharmItem> VISION_CHARM = ITEMS.register("vision_charm",
+            () -> new EffectCharmItem(charm(), () -> net.minecraft.world.effect.MobEffects.NIGHT_VISION, 0, () -> com.gabrielflorianoo.peqol.config.PEQoLConfig.COMMON.visionCost));
+    public static final RegistryObject<EffectCharmItem> HASTE_CHARM = ITEMS.register("haste_charm",
+            () -> new EffectCharmItem(charm(), () -> net.minecraft.world.effect.MobEffects.DIG_SPEED, 1, () -> com.gabrielflorianoo.peqol.config.PEQoLConfig.COMMON.hasteCost));
+    public static final RegistryObject<EffectCharmItem> BREATH_CHARM = ITEMS.register("breath_charm",
+            () -> new EffectCharmItem(charm(), () -> net.minecraft.world.effect.MobEffects.WATER_BREATHING, 0, () -> com.gabrielflorianoo.peqol.config.PEQoLConfig.COMMON.breathCost));
+    public static final RegistryObject<EffectCharmItem> STRENGTH_CHARM = ITEMS.register("strength_charm",
+            () -> new EffectCharmItem(charm(), () -> net.minecraft.world.effect.MobEffects.DAMAGE_BOOST, 0, () -> com.gabrielflorianoo.peqol.config.PEQoLConfig.COMMON.strengthCost));
+    public static final RegistryObject<UndyingCharmItem> UNDYING_CHARM = ITEMS.register("undying_charm",
+            () -> new UndyingCharmItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+    public static final RegistryObject<FeatherCharmItem> FEATHER_CHARM = ITEMS.register("feather_charm",
+            () -> new FeatherCharmItem(charm()));
+    public static final RegistryObject<WisdomCharmItem> WISDOM_CHARM = ITEMS.register("wisdom_charm",
+            () -> new WisdomCharmItem(charm()));
+
+    private static Item.Properties charm() {
+        return new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).fireResistant();
+    }
 
     private ModItems() {
     }

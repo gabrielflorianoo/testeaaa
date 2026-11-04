@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "LSL",
+    "SBS",
+    "LSL"
+  ],
+  "key": {
+    "L": {
+      "item": "projecte:low_covalence_dust"
+    },
+    "S": {
+      "item": "minecraft:sugar"
+    },
+    "B": {
+      "item": "projecte:iron_band"
+    }
+  },
+  "result": {
+    "item": "peqol:haste_charm"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "haste_charm"
+    }
+  ]
+}

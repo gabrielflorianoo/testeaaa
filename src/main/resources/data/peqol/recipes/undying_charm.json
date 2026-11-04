@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " H ",
+    "RTR",
+    " H "
+  ],
+  "key": {
+    "H": {
+      "item": "projecte:high_covalence_dust"
+    },
+    "R": {
+      "item": "projecte:red_matter"
+    },
+    "T": {
+      "item": "minecraft:totem_of_undying"
+    }
+  },
+  "result": {
+    "item": "peqol:undying_charm"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "undying_charm"
+    }
+  ]
+}

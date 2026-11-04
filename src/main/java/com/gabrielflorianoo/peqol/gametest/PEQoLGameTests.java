@@ -546,4 +546,15 @@ public class PEQoLGameTests {
         helper.assertTrue(stacks.get(1).is(Items.DIAMOND) && stacks.get(1).getCount() == 1, "Diamonds unlimited");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void effectAndFeatherCharmCosts(GameTestHelper helper) {
+        com.gabrielflorianoo.peqol.item.EffectCharmItem vision = ModItems.VISION_CHARM.get();
+        helper.assertTrue(vision.getEffect() == net.minecraft.world.effect.MobEffects.NIGHT_VISION, "Vision charm gives night vision");
+        helper.assertTrue(vision.costPerInterval() == 6, "64 EMC/min over 5 s should cost 6, got " + vision.costPerInterval());
+        helper.assertTrue(ModItems.HASTE_CHARM.get().getEffect() == net.minecraft.world.effect.MobEffects.DIG_SPEED, "Haste charm gives haste");
+        helper.assertTrue(com.gabrielflorianoo.peqol.item.FeatherCharmItem.costFor(2F) == 0, "Short falls are free");
+        helper.assertTrue(com.gabrielflorianoo.peqol.item.FeatherCharmItem.costFor(10F) == 7 * 32, "10 block fall costs 7 blocks worth");
+        helper.succeed();
+    }
 }

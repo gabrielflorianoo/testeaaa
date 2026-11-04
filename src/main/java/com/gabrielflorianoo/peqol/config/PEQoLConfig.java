@@ -113,6 +113,15 @@ public final class PEQoLConfig {
         public final ForgeConfigSpec.BooleanValue giveHandbook;
         public final ForgeConfigSpec.BooleanValue scoreboard;
 
+        // Effect / protection charms
+        public final ForgeConfigSpec.LongValue visionCost;
+        public final ForgeConfigSpec.LongValue hasteCost;
+        public final ForgeConfigSpec.LongValue breathCost;
+        public final ForgeConfigSpec.LongValue strengthCost;
+        public final ForgeConfigSpec.LongValue undyingCost;
+        public final ForgeConfigSpec.IntValue undyingCooldown;
+        public final ForgeConfigSpec.LongValue featherCostPerBlock;
+
         // Blacklist
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> blacklist;
 
@@ -305,6 +314,16 @@ public final class PEQoLConfig {
                     .define("giveHandbook", true);
             giftEnabled = builder.comment("Allow /peqol gift (create an item from your EMC directly in another player's inventory).")
                     .define("giftEnabled", true);
+            builder.pop();
+
+            builder.comment("Effect and protection charms (costs in EMC)").push("effectCharms");
+            visionCost = builder.comment("Charm of Vision (night vision): EMC per minute.").defineInRange("visionPerMinute", 64L, 0L, Long.MAX_VALUE);
+            hasteCost = builder.comment("Charm of Haste (Haste II): EMC per minute.").defineInRange("hastePerMinute", 512L, 0L, Long.MAX_VALUE);
+            breathCost = builder.comment("Charm of Breath (water breathing): EMC per minute.").defineInRange("breathPerMinute", 128L, 0L, Long.MAX_VALUE);
+            strengthCost = builder.comment("Charm of Strength (Strength I): EMC per minute.").defineInRange("strengthPerMinute", 1024L, 0L, Long.MAX_VALUE);
+            undyingCost = builder.comment("Charm of Undying: EMC paid every time it saves you from death.").defineInRange("undyingCost", 1_000_000L, 0L, Long.MAX_VALUE);
+            undyingCooldown = builder.comment("Charm of Undying: cooldown in ticks.").defineInRange("undyingCooldown", 1200, 0, 72_000);
+            featherCostPerBlock = builder.comment("Feather Charm: EMC per block of fall (beyond the first 3).").defineInRange("featherPerBlock", 32L, 0L, Long.MAX_VALUE);
             builder.pop();
 
             builder.comment("Blacklist for every feature that CREATES items from personal EMC (buy, pick block, restocker, exporter, wand...).",

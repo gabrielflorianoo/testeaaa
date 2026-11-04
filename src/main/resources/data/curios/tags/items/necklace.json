@@ -2,6 +2,9 @@
   "replace": false,
   "values": [
     "peqol:siphon_charm",
-    "peqol:satiation_charm"
+    "peqol:satiation_charm",
+    "peqol:vision_charm",
+    "peqol:breath_charm",
+    "peqol:undying_charm"
   ]
 }

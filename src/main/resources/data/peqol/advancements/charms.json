@@ -75,6 +75,90 @@
           }
         ]
       }
+    },
+    "has_vision_charm": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "peqol:vision_charm"
+            ]
+          }
+        ]
+      }
+    },
+    "has_haste_charm": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "peqol:haste_charm"
+            ]
+          }
+        ]
+      }
+    },
+    "has_breath_charm": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "peqol:breath_charm"
+            ]
+          }
+        ]
+      }
+    },
+    "has_strength_charm": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "peqol:strength_charm"
+            ]
+          }
+        ]
+      }
+    },
+    "has_feather_charm": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "peqol:feather_charm"
+            ]
+          }
+        ]
+      }
+    },
+    "has_wisdom_charm": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "peqol:wisdom_charm"
+            ]
+          }
+        ]
+      }
+    },
+    "has_undying_charm": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "peqol:undying_charm"
+            ]
+          }
+        ]
+      }
     }
   },
   "requirements": [
@@ -83,7 +167,14 @@
       "has_satiation_charm",
       "has_stellar_link",
       "has_illumination_charm",
-      "has_smelting_charm"
+      "has_smelting_charm",
+      "has_vision_charm",
+      "has_haste_charm",
+      "has_breath_charm",
+      "has_strength_charm",
+      "has_feather_charm",
+      "has_wisdom_charm",
+      "has_undying_charm"
     ]
   ]
 }

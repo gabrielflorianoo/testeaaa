@@ -1,5 +1,12 @@
 # ProjectE QoL+ changelog
 
+## 1.14.0
+- Effect charms paid with EMC per minute: Vision (night vision), Haste (Haste II), Breath (water breathing), Strength
+- Charm of Undying: cheat death like a totem for a large EMC fee (cooldown, not against /kill or the void)
+- Feather Charm: fall damage paid with EMC per block
+- Charm of Wisdom: experience orbs become EMC
+- Curios slots and advancement criteria for all of them
+
 ## 1.13.0
 - Alchemical Gauge threshold mode (`/peqol gauge threshold <amount>`, sneak + empty hand toggles)
 - 5 new advancements (Excavator, Interface, Harvester/Pasture, Trade Post, Hourglass)

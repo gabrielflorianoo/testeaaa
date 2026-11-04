@@ -26,6 +26,13 @@ public final class ModCreativeTab {
                 output.accept(ModItems.APPRAISAL_LENS.get());
                 output.accept(ModItems.ALCHEMICAL_ANCHOR.get());
                 output.accept(ModItems.SMELTING_CHARM.get());
+                output.accept(ModItems.VISION_CHARM.get());
+                output.accept(ModItems.HASTE_CHARM.get());
+                output.accept(ModItems.BREATH_CHARM.get());
+                output.accept(ModItems.STRENGTH_CHARM.get());
+                output.accept(ModItems.FEATHER_CHARM.get());
+                output.accept(ModItems.WISDOM_CHARM.get());
+                output.accept(ModItems.UNDYING_CHARM.get());
                 output.accept(ModItems.POCKET_WORKBENCH.get());
                 output.accept(ModItems.VOID_POUCH.get());
                 output.accept(ModItems.PROSPECTOR.get());
