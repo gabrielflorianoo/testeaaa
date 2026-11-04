@@ -59,6 +59,8 @@ public final class ModCreativeTab {
                 output.accept(ModItems.WAYFINDER_COMPASS.get());
                 output.accept(ModItems.SOULBINDING_RUNE.get());
                 output.accept(ModItems.ARCHITECT_BOTTLE.get());
+                output.accept(ModItems.UNDO_HOURGLASS.get());
+                output.accept(ModItems.REALITY_SEAL.get());
                 output.accept(ModItems.VOID_POUCH.get());
                 output.accept(ModItems.PROSPECTOR.get());
                 output.accept(ModItems.KNOWLEDGE_SCROLL.get());

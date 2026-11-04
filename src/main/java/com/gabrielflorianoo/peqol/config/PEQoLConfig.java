@@ -210,6 +210,8 @@ public final class PEQoLConfig {
         public final ForgeConfigSpec.LongValue soulbindCost;
         public final ForgeConfigSpec.IntValue architectMaxSize;
         public final ForgeConfigSpec.LongValue architectCostPerBlock;
+        public final ForgeConfigSpec.IntValue realityRadius;
+        public final ForgeConfigSpec.LongValue realityCostPerBlock;
 
         Common(ForgeConfigSpec.Builder builder) {
             builder.comment("Keybind driven actions (validated on the server)").push("keybinds");
@@ -494,6 +496,8 @@ public final class PEQoLConfig {
             soulbindCost = builder.comment("Soulbinding Rune: EMC per item bound.").defineInRange("soulbindCost", 8192L, 0L, Long.MAX_VALUE);
             architectMaxSize = builder.comment("Architect's Bottle: maximum size of each side of the bottled area.").defineInRange("architectMaxSize", 12, 2, 48);
             architectCostPerBlock = builder.comment("Architect's Bottle: EMC per block bottled.").defineInRange("architectCostPerBlock", 4L, 0L, Long.MAX_VALUE);
+            realityRadius = builder.comment("Reality Seal: explosions within this distance of you don't break blocks.").defineInRange("realityRadius", 48, 8, 256);
+            realityCostPerBlock = builder.comment("Reality Seal: EMC per block saved from an explosion.").defineInRange("realityCostPerBlock", 2L, 0L, Long.MAX_VALUE);
             builder.pop();
         }
     }

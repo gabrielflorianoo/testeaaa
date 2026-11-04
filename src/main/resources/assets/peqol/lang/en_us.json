@@ -684,5 +684,16 @@
   "gui.peqol.alchemical_crafting.clear": "Clear the grid",
   "gui.peqol.alchemical_crafting.not_learned": "You haven't learned these ingredients",
   "jei.peqol.info.alchemical_crafting_table": "A crafting table connected to your transmutation knowledge. The panel on the left lists everything you have learned: click an item to pick it as a ghost ingredient and click grid slots to place it (shift + click puts it in the first free slot, clicking a ghost removes it). Ghost ingredients are not consumed: every craft pays their EMC value instead, so shift + clicking the result crafts as many as your EMC and inventory allow. Real items still work as usual. With JEI, the + button of any crafting recipe fills the grid with ghosts.",
-  "jei.peqol.info.alchemical_crafting_tablet": "The Alchemical Crafting Table in your pocket: right click to open it anywhere. Learned items become ghost ingredients paid with EMC on every craft, and JEI's + button fills the grid for you."
+  "jei.peqol.info.alchemical_crafting_tablet": "The Alchemical Crafting Table in your pocket: right click to open it anywhere. Learned items become ghost ingredients paid with EMC on every craft, and JEI's + button fills the grid for you.",
+  "message.peqol.undo.nothing": "Nothing to undo",
+  "message.peqol.undo.done": "Undid %s action(s), %s left",
+  "item.peqol.undo_hourglass": "Hourglass of Undoing",
+  "item.peqol.undo_hourglass.desc": "Right click: undo your last block broken or placed. Sneak: the last 8.",
+  "item.peqol.undo_hourglass.desc2": "Remembers 64 actions for 5 minutes while carried",
+  "jei.peqol.info.undo_hourglass": "Ctrl+Z for the world. While it is in your inventory, the hourglass remembers the last 64 blocks you broke or placed (for 5 minutes). Right click to undo the most recent one, sneak + right click to undo the last 8. Placed blocks come back to your inventory; broken blocks reappear for their EMC value (the drops you already picked up are yours to keep). Blocks with inventories are not tracked.",
+  "message.peqol.reality.saved": "Reality held: %s blocks saved from the explosion (%s EMC)",
+  "item.peqol.reality_seal": "Reality Seal",
+  "item.peqol.reality_seal.desc": "Right click to toggle. While active, explosions near you can't destroy blocks.",
+  "item.peqol.reality_seal.desc2": "Radius %s, %s EMC per block saved",
+  "jei.peqol.info.reality_seal": "Keeps the world intact: while switched on and in your inventory (or a Curios slot), every explosion within 48 blocks of you (creepers, TNT, ghast fireballs, withers, beds in the Nether...) leaves the blocks untouched. Creatures still take the damage. Each block saved costs a little EMC."
 }

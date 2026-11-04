@@ -90,6 +90,8 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
 - **Bússola do Andarilho**: escolha o que procurar (vila, templo, ruínas, naufrágio, tesouro enterrado, mina, portal em ruínas, monumento, mansão, cidade ancestral, fortaleza do Fim, fortaleza do Nether, bastião, cidade do End) e ela encontra o mais próximo; segurando a bússola, um rastro de luz aponta o caminho. Se não achar nada, devolve o EMC.
 - **Runa do Vínculo**: com um item na outra mão, **vincula ele à sua alma**: itens vinculados não caem quando você morre. A runa pode ser reutilizada.
 - **Frasco do Arquiteto**: clique em dois cantos e **a construção inteira entra no frasco** (até 12x12x12). Clique em outro lugar para despejá-la de volta, **girada** para ficar virada do mesmo jeito em relação a você. Blocos com dados (baús, fornalhas...) ficam no lugar.
+- **Ampulheta do Desfazer**: **Ctrl+Z para o mundo**. Enquanto está no inventário, lembra os últimos 64 blocos que você quebrou ou colocou (por 5 min). Clique direito desfaz o último; agachado, os últimos 8. Blocos colocados voltam para o inventário; blocos quebrados reaparecem pelo valor de EMC deles.
+- **Selo da Realidade**: ligado e carregado (ou no cinto do Curios), **explosões perto de você não destroem blocos**: creeper, TNT, ghast, wither... As criaturas ainda levam dano. Custa 2 EMC por bloco salvo.
 
 ### Blocos (ficam vinculados a quem os coloca)
 - **Conexão Alquímica**: recebe EMC de Coletores e Relés e manda direto para o seu EMC pessoal. Enquanto você está offline, guarda o EMC num buffer.
@@ -192,6 +194,8 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 | Frasco do Arquiteto | Vidro ×7, Matéria Escura, Bafo de Dragão |
 | Mesa de Trabalho Alquímica | Pó de Covalência Baixo ×4, Mesa de Transmutação ×2, Matéria Escura ×2, Mesa de Trabalho |
 | Tábua de Trabalho Alquímica | Pó de Covalência Médio ×4, Tábua de Transmutação ×2, Matéria Escura ×2, Mesa de Trabalho Alquímica |
+| Ampulheta do Desfazer | Ouro ×4, Matéria Escura ×2, Areia das Almas ×2, Relógio |
+| Selo da Realidade | Obsidiana Chorona ×4, Cristal do End ×2, Matéria Escura ×2, Estrela do Nether |
 | Bancada de Bolso | Mesa de Trabalho, Pó de Covalência Baixo, Couro (sem forma) |
 | Bolsa do Vazio | Linha, Couro ×3, Baú do Ender |
 | Melhoria de Máquina (×2) | Pó de Covalência Alto ×4, Redstone ×4, Matéria Escura |

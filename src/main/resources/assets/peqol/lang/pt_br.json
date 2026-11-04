@@ -684,5 +684,16 @@
   "gui.peqol.alchemical_crafting.clear": "Limpar a grade",
   "gui.peqol.alchemical_crafting.not_learned": "Você não aprendeu esses ingredientes",
   "jei.peqol.info.alchemical_crafting_table": "Uma mesa de trabalho ligada ao seu conhecimento de transmutação. O painel da esquerda lista tudo o que você aprendeu: clique num item para escolhê-lo como ingrediente fantasma e clique nos espaços da grade para colocá-lo (shift + clique põe no primeiro espaço livre, clicar num fantasma o remove). Ingredientes fantasmas não são gastos: cada craft paga o valor de EMC deles, então shift + clique no resultado crafta quantos o seu EMC e inventário permitirem. Itens de verdade continuam funcionando normalmente. Com o JEI, o botão + de qualquer receita preenche a grade com fantasmas.",
-  "jei.peqol.info.alchemical_crafting_tablet": "A Mesa de Trabalho Alquímica no bolso: clique direito para abrir em qualquer lugar. Itens aprendidos viram ingredientes fantasmas pagos com EMC a cada craft, e o botão + do JEI preenche a grade para você."
+  "jei.peqol.info.alchemical_crafting_tablet": "A Mesa de Trabalho Alquímica no bolso: clique direito para abrir em qualquer lugar. Itens aprendidos viram ingredientes fantasmas pagos com EMC a cada craft, e o botão + do JEI preenche a grade para você.",
+  "message.peqol.undo.nothing": "Nada para desfazer",
+  "message.peqol.undo.done": "%s ação(ões) desfeita(s), restam %s",
+  "item.peqol.undo_hourglass": "Ampulheta do Desfazer",
+  "item.peqol.undo_hourglass.desc": "Clique direito: desfaz o último bloco quebrado ou colocado. Agachado: os últimos 8.",
+  "item.peqol.undo_hourglass.desc2": "Lembra 64 ações por 5 minutos enquanto carregada",
+  "jei.peqol.info.undo_hourglass": "Ctrl+Z para o mundo. Enquanto está no seu inventário, a ampulheta lembra os últimos 64 blocos que você quebrou ou colocou (por 5 minutos). Clique direito para desfazer o mais recente, agache + clique direito para desfazer os últimos 8. Blocos colocados voltam para o inventário; blocos quebrados reaparecem pelo valor de EMC deles (os drops que você já pegou continuam seus). Blocos com inventário não são registrados.",
+  "message.peqol.reality.saved": "A realidade resistiu: %s blocos salvos da explosão (%s EMC)",
+  "item.peqol.reality_seal": "Selo da Realidade",
+  "item.peqol.reality_seal.desc": "Clique direito para ligar/desligar. Ligado, explosões perto de você não destroem blocos.",
+  "item.peqol.reality_seal.desc2": "Raio %s, %s EMC por bloco salvo",
+  "jei.peqol.info.reality_seal": "Mantém o mundo intacto: enquanto ligado e no seu inventário (ou num espaço do Curios), toda explosão a até 48 blocos de você (creepers, TNT, bolas de fogo de ghast, withers, camas no Nether...) deixa os blocos intactos. As criaturas ainda levam o dano. Cada bloco salvo custa um pouco de EMC."
 }

@@ -181,6 +181,11 @@ public final class ModItems {
     public static final RegistryObject<com.gabrielflorianoo.peqol.item.AlchemicalCraftingTabletItem> ALCHEMICAL_CRAFTING_TABLET = ITEMS.register("alchemical_crafting_tablet",
             () -> new com.gabrielflorianoo.peqol.item.AlchemicalCraftingTabletItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
 
+    public static final RegistryObject<com.gabrielflorianoo.peqol.item.magic.UndoHourglassItem> UNDO_HOURGLASS = ITEMS.register("undo_hourglass",
+            () -> new com.gabrielflorianoo.peqol.item.magic.UndoHourglassItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+    public static final RegistryObject<com.gabrielflorianoo.peqol.item.magic.RealitySealItem> REALITY_SEAL = ITEMS.register("reality_seal",
+            () -> new com.gabrielflorianoo.peqol.item.magic.RealitySealItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+
     private static Item.Properties charm() {
         return new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).fireResistant();
     }

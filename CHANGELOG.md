@@ -1,5 +1,9 @@
 # ProjectE QoL+ changelog
 
+## 1.19.0
+- Hourglass of Undoing: Ctrl+Z for blocks you broke or placed (64 actions, 5 minutes; broken blocks come back for their EMC)
+- Reality Seal: explosions near you don't destroy blocks while it is active (EMC per block saved, Curios belt)
+
 ## 1.18.0
 - Alchemical Crafting Table (block) and Alchemical Crafting Tablet (portable): crafting grid whose slots can hold
   ghost ingredients taken from your transmutation knowledge; each craft pays their EMC value instead of consuming

@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "pattern": [
+    "GDG",
+    "SCS",
+    "GDG"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "D": {
+      "item": "projecte:dark_matter"
+    },
+    "S": {
+      "item": "minecraft:soul_sand"
+    },
+    "C": {
+      "item": "minecraft:clock"
+    }
+  },
+  "result": {
+    "item": "peqol:undo_hourglass"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "undo_hourglass"
+    }
+  ]
+}

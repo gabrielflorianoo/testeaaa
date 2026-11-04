@@ -84,6 +84,26 @@ public final class CommonEvents {
     public static void onLogout(net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent event) {
         com.gabrielflorianoo.peqol.item.magic.ChronalEchoItem.forget(event.getEntity().getUUID());
         com.gabrielflorianoo.peqol.item.magic.WardingLanternItem.forget(event.getEntity().getUUID());
+        com.gabrielflorianoo.peqol.item.magic.UndoHourglassItem.forget(event.getEntity().getUUID());
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void onBreakForUndo(net.minecraftforge.event.level.BlockEvent.BreakEvent event) {
+        if (!event.isCanceled() && event.getLevel() instanceof net.minecraft.world.level.Level level) {
+            com.gabrielflorianoo.peqol.item.magic.UndoHourglassItem.record(event.getPlayer(), level, event.getPos(), event.getState(), true);
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void onPlaceForUndo(net.minecraftforge.event.level.BlockEvent.EntityPlaceEvent event) {
+        if (!event.isCanceled() && event.getEntity() instanceof ServerPlayer player && event.getLevel() instanceof net.minecraft.world.level.Level level) {
+            com.gabrielflorianoo.peqol.item.magic.UndoHourglassItem.record(player, level, event.getPos(), event.getPlacedBlock(), false);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onExplosion(net.minecraftforge.event.level.ExplosionEvent.Detonate event) {
+        com.gabrielflorianoo.peqol.item.magic.RealitySealItem.onDetonate(event);
     }
 
     /**

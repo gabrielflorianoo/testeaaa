@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "pattern": [
+    "OEO",
+    "DND",
+    "OEO"
+  ],
+  "key": {
+    "O": {
+      "item": "minecraft:crying_obsidian"
+    },
+    "E": {
+      "item": "minecraft:end_crystal"
+    },
+    "D": {
+      "item": "projecte:dark_matter"
+    },
+    "N": {
+      "item": "minecraft:nether_star"
+    }
+  },
+  "result": {
+    "item": "peqol:reality_seal"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "reality_seal"
+    }
+  ]
+}
