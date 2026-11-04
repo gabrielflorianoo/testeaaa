@@ -1,5 +1,17 @@
 # ProjectE QoL+ changelog
 
+## 1.15.0
+- Eight EMC-powered magic items:
+  - Blink Rod: teleport to where you look (cost per block, no fall damage)
+  - Chronal Echo: rewind your position and health a few seconds back in time
+  - Lumen Wand: invisible light sources (shown while holding the wand), sneak to dispel nearby ones
+  - Transmutation Scepter: imprint a block and transmute 1/9/25 connected blocks into it, paying only the EMC difference
+  - Verdant Orb: bonemeal every plant around a block, paid per growth
+  - Void Sponge: drain every fluid in a sphere and dry waterlogged blocks
+  - Eye of the Seer: every creature nearby glows through walls
+  - Gravitational Staff: pull items and XP to you, sneak for a shockwave against hostile mobs
+- New `magic` config section, textures, recipes, translations, JEI pages, game tests
+
 ## 1.14.0
 - Effect charms paid with EMC per minute: Vision (night vision), Haste (Haste II), Breath (water breathing), Strength
 - Charm of Undying: cheat death like a totem for a large EMC fee (cooldown, not against /kill or the void)

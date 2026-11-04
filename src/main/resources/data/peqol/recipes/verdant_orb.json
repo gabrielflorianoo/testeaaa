@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "pattern": [
+    "BSB",
+    "MEM",
+    "BSB"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:bone_block"
+    },
+    "S": {
+      "tag": "minecraft:saplings"
+    },
+    "M": {
+      "item": "projecte:medium_covalence_dust"
+    },
+    "E": {
+      "item": "minecraft:emerald_block"
+    }
+  },
+  "result": {
+    "item": "peqol:verdant_orb"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "verdant_orb"
+    }
+  ]
+}

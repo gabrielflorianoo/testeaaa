@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "pattern": [
+    " CG",
+    " BC",
+    "B  "
+  ],
+  "key": {
+    "C": {
+      "item": "projecte:medium_covalence_dust"
+    },
+    "G": {
+      "item": "minecraft:glowstone"
+    },
+    "B": {
+      "item": "minecraft:blaze_rod"
+    }
+  },
+  "result": {
+    "item": "peqol:lumen_wand"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "lumen_wand"
+    }
+  ]
+}

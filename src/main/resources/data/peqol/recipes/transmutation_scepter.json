@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "pattern": [
+    " DT",
+    " GD",
+    "G  "
+  ],
+  "key": {
+    "D": {
+      "item": "projecte:dark_matter"
+    },
+    "T": {
+      "item": "projecte:transmutation_table"
+    },
+    "G": {
+      "item": "minecraft:gold_block"
+    }
+  },
+  "result": {
+    "item": "peqol:transmutation_scepter"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "transmutation_scepter"
+    }
+  ]
+}

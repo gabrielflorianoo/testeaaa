@@ -131,6 +131,23 @@ public final class ModItems {
     public static final RegistryObject<com.gabrielflorianoo.peqol.item.PocketSmelterItem> POCKET_SMELTER = ITEMS.register("pocket_smelter",
             () -> new com.gabrielflorianoo.peqol.item.PocketSmelterItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).fireResistant()));
 
+    public static final RegistryObject<com.gabrielflorianoo.peqol.item.magic.BlinkRodItem> BLINK_ROD = ITEMS.register("blink_rod",
+            () -> new com.gabrielflorianoo.peqol.item.magic.BlinkRodItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).fireResistant()));
+    public static final RegistryObject<com.gabrielflorianoo.peqol.item.magic.ChronalEchoItem> CHRONAL_ECHO = ITEMS.register("chronal_echo",
+            () -> new com.gabrielflorianoo.peqol.item.magic.ChronalEchoItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+    public static final RegistryObject<com.gabrielflorianoo.peqol.item.magic.LumenWandItem> LUMEN_WAND = ITEMS.register("lumen_wand",
+            () -> new com.gabrielflorianoo.peqol.item.magic.LumenWandItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).fireResistant()));
+    public static final RegistryObject<com.gabrielflorianoo.peqol.item.magic.TransmutationScepterItem> TRANSMUTATION_SCEPTER = ITEMS.register("transmutation_scepter",
+            () -> new com.gabrielflorianoo.peqol.item.magic.TransmutationScepterItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+    public static final RegistryObject<com.gabrielflorianoo.peqol.item.magic.VerdantOrbItem> VERDANT_ORB = ITEMS.register("verdant_orb",
+            () -> new com.gabrielflorianoo.peqol.item.magic.VerdantOrbItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).fireResistant()));
+    public static final RegistryObject<com.gabrielflorianoo.peqol.item.magic.VoidSpongeItem> VOID_SPONGE = ITEMS.register("void_sponge",
+            () -> new com.gabrielflorianoo.peqol.item.magic.VoidSpongeItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).fireResistant()));
+    public static final RegistryObject<com.gabrielflorianoo.peqol.item.magic.SeerEyeItem> SEER_EYE = ITEMS.register("seer_eye",
+            () -> new com.gabrielflorianoo.peqol.item.magic.SeerEyeItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).fireResistant()));
+    public static final RegistryObject<com.gabrielflorianoo.peqol.item.magic.GravityStaffItem> GRAVITY_STAFF = ITEMS.register("gravity_staff",
+            () -> new com.gabrielflorianoo.peqol.item.magic.GravityStaffItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).fireResistant()));
+
     private static Item.Properties charm() {
         return new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).fireResistant();
     }

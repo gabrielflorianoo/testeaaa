@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "pattern": [
+    " OL",
+    " DO",
+    "D  "
+  ],
+  "key": {
+    "O": {
+      "item": "minecraft:obsidian"
+    },
+    "L": {
+      "item": "minecraft:lodestone"
+    },
+    "D": {
+      "item": "projecte:dark_matter"
+    }
+  },
+  "result": {
+    "item": "peqol:gravity_staff"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "gravity_staff"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "pattern": [
+    "OSO",
+    "SDS",
+    "OSO"
+  ],
+  "key": {
+    "O": {
+      "item": "minecraft:obsidian"
+    },
+    "S": {
+      "item": "minecraft:sponge"
+    },
+    "D": {
+      "item": "projecte:dark_matter"
+    }
+  },
+  "result": {
+    "item": "peqol:void_sponge"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "void_sponge"
+    }
+  ]
+}

@@ -43,6 +43,17 @@ public final class ClientForgeEvents {
         }
         EmcHudOverlay.INSTANCE.tick(mc.player);
         MachineInfoOverlay.INSTANCE.tick(mc);
+        if (mc.player.tickCount % 8 == 0 && (mc.player.getMainHandItem().getItem() instanceof com.gabrielflorianoo.peqol.item.magic.LumenWandItem
+                || mc.player.getOffhandItem().getItem() instanceof com.gabrielflorianoo.peqol.item.magic.LumenWandItem)) {
+            //Show the invisible lights conjured by the wand
+            net.minecraft.core.BlockPos center = mc.player.blockPosition();
+            int r = 12;
+            for (net.minecraft.core.BlockPos pos : net.minecraft.core.BlockPos.betweenClosed(center.offset(-r, -r, -r), center.offset(r, r, r))) {
+                if (mc.level.getBlockState(pos).is(net.minecraft.world.level.block.Blocks.LIGHT)) {
+                    mc.level.addParticle(net.minecraft.core.particles.ParticleTypes.END_ROD, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 0, 0.01, 0);
+                }
+            }
+        }
         if (mc.screen != null) {
             return;
         }

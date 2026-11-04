@@ -165,6 +165,26 @@ public final class PEQoLConfig {
         public final ForgeConfigSpec.BooleanValue knowledgeScrollEnabled;
         public final ForgeConfigSpec.IntValue knowledgeScrollMaxEntries;
 
+        // Magic items
+        public final ForgeConfigSpec.IntValue blinkRange;
+        public final ForgeConfigSpec.LongValue blinkCostPerBlock;
+        public final ForgeConfigSpec.IntValue echoSeconds;
+        public final ForgeConfigSpec.LongValue echoCost;
+        public final ForgeConfigSpec.IntValue echoCooldown;
+        public final ForgeConfigSpec.LongValue lumenCost;
+        public final ForgeConfigSpec.IntValue verdantRadius;
+        public final ForgeConfigSpec.LongValue verdantCostPerGrowth;
+        public final ForgeConfigSpec.IntValue verdantMaxGrowths;
+        public final ForgeConfigSpec.IntValue spongeRadius;
+        public final ForgeConfigSpec.LongValue spongeCostPerBlock;
+        public final ForgeConfigSpec.IntValue seerRadius;
+        public final ForgeConfigSpec.IntValue seerDuration;
+        public final ForgeConfigSpec.LongValue seerCost;
+        public final ForgeConfigSpec.IntValue gravityRadius;
+        public final ForgeConfigSpec.LongValue gravityCost;
+        public final ForgeConfigSpec.IntValue gravityRepelRadius;
+        public final ForgeConfigSpec.LongValue gravityRepelCost;
+
         Common(ForgeConfigSpec.Builder builder) {
             builder.comment("Keybind driven actions (validated on the server)").push("keybinds");
             keybindTabletRequiresItem = builder.comment("Opening the transmutation GUI with the keybind requires a Transmutation Tablet somewhere in the inventory.")
@@ -402,6 +422,26 @@ public final class PEQoLConfig {
                     .define("enabled", true);
             knowledgeScrollMaxEntries = builder.comment("Maximum amount of entries recorded in a single scroll (keeps item NBT small).")
                     .defineInRange("maxEntries", 4096, 1, 100_000);
+            builder.pop();
+            builder.comment("EMC-powered magic items").push("magic");
+            blinkRange = builder.comment("Blink Rod: maximum teleport distance in blocks.").defineInRange("blinkRange", 32, 4, 128);
+            blinkCostPerBlock = builder.comment("Blink Rod: EMC per block travelled.").defineInRange("blinkCostPerBlock", 16L, 0L, Long.MAX_VALUE);
+            echoSeconds = builder.comment("Chronal Echo: how many seconds back in time it takes you.").defineInRange("echoSeconds", 5, 1, 30);
+            echoCost = builder.comment("Chronal Echo: EMC per rewind.").defineInRange("echoCost", 4096L, 0L, Long.MAX_VALUE);
+            echoCooldown = builder.comment("Chronal Echo: cooldown in ticks.").defineInRange("echoCooldown", 400, 0, 72000);
+            lumenCost = builder.comment("Lumen Wand: EMC per light conjured.").defineInRange("lumenCost", 32L, 0L, Long.MAX_VALUE);
+            verdantRadius = builder.comment("Verdant Orb: horizontal radius of the growth pulse.").defineInRange("verdantRadius", 4, 1, 8);
+            verdantCostPerGrowth = builder.comment("Verdant Orb: EMC per growth step.").defineInRange("verdantCostPerGrowth", 48L, 0L, Long.MAX_VALUE);
+            verdantMaxGrowths = builder.comment("Verdant Orb: maximum growth steps per use.").defineInRange("verdantMaxGrowths", 64, 1, 1024);
+            spongeRadius = builder.comment("Void Sponge: radius of the drained sphere.").defineInRange("spongeRadius", 4, 1, 8);
+            spongeCostPerBlock = builder.comment("Void Sponge: EMC per fluid block drained.").defineInRange("spongeCostPerBlock", 4L, 0L, Long.MAX_VALUE);
+            seerRadius = builder.comment("Eye of the Seer: radius in blocks.").defineInRange("seerRadius", 48, 8, 128);
+            seerDuration = builder.comment("Eye of the Seer: glowing duration in ticks.").defineInRange("seerDuration", 300, 20, 6000);
+            seerCost = builder.comment("Eye of the Seer: EMC per use.").defineInRange("seerCost", 1024L, 0L, Long.MAX_VALUE);
+            gravityRadius = builder.comment("Gravitational Staff: radius for pulling items and XP.").defineInRange("gravityRadius", 16, 2, 48);
+            gravityCost = builder.comment("Gravitational Staff: EMC per pull.").defineInRange("gravityCost", 32L, 0L, Long.MAX_VALUE);
+            gravityRepelRadius = builder.comment("Gravitational Staff: radius of the shockwave (sneak).").defineInRange("gravityRepelRadius", 6, 2, 16);
+            gravityRepelCost = builder.comment("Gravitational Staff: EMC per shockwave.").defineInRange("gravityRepelCost", 512L, 0L, Long.MAX_VALUE);
             builder.pop();
         }
     }

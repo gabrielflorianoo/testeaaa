@@ -36,6 +36,14 @@ public final class ModCreativeTab {
                 output.accept(ModItems.POCKET_WORKBENCH.get());
                 output.accept(ModItems.ALCHEMIST_TOOLKIT.get());
                 output.accept(ModItems.POCKET_SMELTER.get());
+                output.accept(ModItems.BLINK_ROD.get());
+                output.accept(ModItems.CHRONAL_ECHO.get());
+                output.accept(ModItems.LUMEN_WAND.get());
+                output.accept(ModItems.TRANSMUTATION_SCEPTER.get());
+                output.accept(ModItems.VERDANT_ORB.get());
+                output.accept(ModItems.VOID_SPONGE.get());
+                output.accept(ModItems.SEER_EYE.get());
+                output.accept(ModItems.GRAVITY_STAFF.get());
                 output.accept(ModItems.VOID_POUCH.get());
                 output.accept(ModItems.PROSPECTOR.get());
                 output.accept(ModItems.KNOWLEDGE_SCROLL.get());

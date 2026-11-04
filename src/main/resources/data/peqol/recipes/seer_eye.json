@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "pattern": [
+    "ADA",
+    "SES",
+    "ADA"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "D": {
+      "item": "projecte:medium_covalence_dust"
+    },
+    "S": {
+      "item": "minecraft:spider_eye"
+    },
+    "E": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "result": {
+    "item": "peqol:seer_eye"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "seer_eye"
+    }
+  ]
+}

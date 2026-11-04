@@ -61,6 +61,16 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
 - **Cheque de EMC**: o `/peqol withdraw` transforma EMC em um item que pode ser trocado entre jogadores. Clique com o botão direito para resgatar; agachado, você resgata a pilha inteira. O cheque não tem valor de EMC, então não dá para queimá-lo e duplicar EMC.
 - **Pergaminho do Conhecimento**: grava tudo o que você aprendeu. Outro jogador clica com o botão direito e aprende tudo o que está gravado, ótimo para servidores. Agachar e clicar com o botão direito apaga o pergaminho.
 
+### Itens mágicos (pagos com EMC pessoal, configuráveis em `magic`)
+- **Bastão do Salto**: clique com o botão direito e você se teleporta na hora para onde está olhando (até 32 blocos, 16 EMC por bloco). Sem dano de queda.
+- **Eco Cronal**: enquanto você carrega o pingente, ele lembra onde você estava a cada segundo. Clique com o botão direito para **voltar 5 segundos no tempo**: você retorna à posição de antes e recupera a vida que tinha. Salva de quedas na lava e de lutas perdidas (recarga de 20 s).
+- **Varinha Lúmen**: conjura **luzes invisíveis** (brilho máximo) que impedem monstros de nascer sem estragar a construção. Segurando a varinha, as luzes brilham; agache e clique para dissipar as luzes num raio de 8 blocos.
+- **Cetro da Transmutação**: agache e clique em um bloco para gravá-lo; depois clique em outros blocos para **transformá-los** no bloco gravado (o antigo vira EMC, o novo sai do seu EMC; você só paga a diferença). Agache e clique no ar para alternar entre 1, 9 e 25 blocos conectados.
+- **Orbe Verdejante**: um pulso de vida que usa farinha de osso em **todas as plantas ao redor** (raio 4), pagando EMC por crescimento. Ignora grama e musgo.
+- **Esponja do Vazio**: drena **toda a água, lava e fluidos de outros mods** numa esfera ao redor do ponto que você olha, e seca blocos alagados.
+- **Olho do Vidente**: todas as criaturas num raio de 48 blocos **brilham através das paredes** por 15 s, e você fica sabendo quantas são hostis.
+- **Cajado Gravitacional**: clique com o botão direito para **puxar todos os itens e orbes de XP** num raio de 16 blocos até os seus pés; agache e clique para soltar uma **onda de choque** que arremessa os monstros para longe.
+
 ### Blocos (ficam vinculados a quem os coloca)
 - **Conexão Alquímica**: recebe EMC de Coletores e Relés e manda direto para o seu EMC pessoal. Enquanto você está offline, guarda o EMC num buffer.
 - **Importador Alquímico**: uma "mesa de transmutação" para automação. Itens inseridos por funis ou canos viram seu EMC e são aprendidos. Itens sem EMC ficam na origem. Se você estiver offline, guarda o EMC até você entrar.
@@ -139,6 +149,14 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 | Prospector Alquímico | Linha, Pepita de Ouro, Pó de Covalência Baixo ×2, Diamante |
 | Kit do Alquimista | Bancada, Bigorna, Cortador de Pedra, Rebolo, Matéria Escura, Tear, Mesa de Ferraria, Mesa de Cartografia, Pó de Covalência Médio |
 | Fundidor de Bolso | Pó de Covalência Médio ×4, Alto-forno ×4, Amuleto da Fundição |
+| Bastão do Salto | Fruta do Coro ×2, Olho do Ender, Matéria Escura ×2 |
+| Eco Cronal | Ouro ×4, Fragmento de Eco ×2, Relógio ×2, Matéria Escura |
+| Varinha Lúmen | Pó de Covalência Médio ×2, Pedra Luminosa, Vara de Blaze ×2 |
+| Cetro da Transmutação | Matéria Escura ×2, Mesa de Transmutação, Bloco de Ouro ×2 |
+| Orbe Verdejante | Bloco de Osso ×4, Muda ×2, Pó de Covalência Médio ×2, Bloco de Esmeralda |
+| Esponja do Vazio | Obsidiana ×4, Esponja ×4, Matéria Escura |
+| Olho do Vidente | Fragmento de Ametista ×4, Pó de Covalência Médio ×2, Olho de Aranha ×2, Olho do Ender |
+| Cajado Gravitacional | Obsidiana ×2, Magnetita, Matéria Escura ×2 |
 | Bancada de Bolso | Mesa de Trabalho, Pó de Covalência Baixo, Couro (sem forma) |
 | Bolsa do Vazio | Linha, Couro ×3, Baú do Ender |
 | Melhoria de Máquina (×2) | Pó de Covalência Alto ×4, Redstone ×4, Matéria Escura |
@@ -247,6 +265,7 @@ A quality-of-life addon for ProjectE on Forge 1.20.1. It includes:
 - `/peqol known` with clickable buy buttons, knowledge progress %, held-item value on the HUD and EMC milestone toasts.
 - Alchemical pick block (middle click creates the block from EMC).
 - Mending, Satiation and Stellar Link charms.
+- Magic items: Blink Rod (teleport where you look), Chronal Echo (rewind a few seconds), Lumen Wand (invisible lights), Transmutation Scepter (turn blocks into another block for the EMC difference), Verdant Orb (area bonemeal), Void Sponge (drain fluids), Eye of the Seer (creatures glow through walls) and Gravitational Staff (pull items/XP, shockwave).
 - Stock-keeping mode for the Exporter and a comparator output for the Uplink.
 - Optional Curios support.
 - `/peqol` commands: help, balance, pay, withdraw, buy, value, worth, burn, missing, unlearned, stars, top, knowledge.

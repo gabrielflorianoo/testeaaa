@@ -569,4 +569,58 @@ public class PEQoLGameTests {
         helper.assertTrue(com.gabrielflorianoo.peqol.item.AlchemistToolkitItem.getMode(toolkit) == com.gabrielflorianoo.peqol.item.AlchemistToolkitItem.Mode.ANVIL, "Mode 1 is the anvil");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void transmutationScepterArea(GameTestHelper helper) {
+        for (int x = 0; x < 3; x++) {
+            for (int z = 0; z < 3; z++) {
+                helper.setBlock(new BlockPos(x, 1, z), Blocks.STONE);
+            }
+        }
+        helper.setBlock(new BlockPos(2, 1, 2), Blocks.DIRT);
+        BlockPos center = helper.absolutePos(new BlockPos(1, 1, 1));
+        java.util.List<BlockPos> area = com.gabrielflorianoo.peqol.item.magic.TransmutationScepterItem.area(helper.getLevel(), center, Direction.UP, 25);
+        helper.assertTrue(area.size() == 8, "8 connected stone blocks on the plane, got " + area.size());
+        helper.assertTrue(area.get(0).equals(center), "The clicked block comes first");
+        helper.assertTrue(com.gabrielflorianoo.peqol.item.magic.TransmutationScepterItem.area(helper.getLevel(), center, Direction.UP, 1).size() == 1, "Size 1 only takes the clicked block");
+        ItemStack scepter = new ItemStack(ModItems.TRANSMUTATION_SCEPTER.get());
+        helper.assertTrue(com.gabrielflorianoo.peqol.item.magic.TransmutationScepterItem.getSize(scepter) == 1, "Default size is 1");
+        scepter.getOrCreateTag().putInt(com.gabrielflorianoo.peqol.item.magic.TransmutationScepterItem.TAG_SIZE, 2);
+        helper.assertTrue(com.gabrielflorianoo.peqol.item.magic.TransmutationScepterItem.getSize(scepter) == 25, "Third size is 25");
+        scepter.getOrCreateTag().putString(com.gabrielflorianoo.peqol.item.magic.TransmutationScepterItem.TAG_BLOCK, "minecraft:glass");
+        helper.assertTrue(com.gabrielflorianoo.peqol.item.magic.TransmutationScepterItem.getImprint(scepter) == Blocks.GLASS, "Imprint is read back");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void voidSpongeDrainsFluids(GameTestHelper helper) {
+        helper.setBlock(new BlockPos(1, 1, 1), Blocks.WATER);
+        helper.setBlock(new BlockPos(0, 1, 0), Blocks.OAK_SLAB.defaultBlockState().setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.WATERLOGGED, true));
+        helper.setBlock(new BlockPos(2, 1, 2), Blocks.LAVA);
+        BlockPos center = helper.absolutePos(new BlockPos(1, 1, 1));
+        java.util.List<BlockPos> fluids = com.gabrielflorianoo.peqol.item.magic.VoidSpongeItem.fluids(helper.getLevel(), center, 2);
+        helper.assertTrue(fluids.size() == 3, "Water, lava and the waterlogged slab, got " + fluids.size());
+        for (BlockPos pos : fluids) {
+            helper.assertTrue(com.gabrielflorianoo.peqol.item.magic.VoidSpongeItem.drain(helper.getLevel(), pos), "Drained " + pos);
+        }
+        helper.assertBlockPresent(Blocks.AIR, new BlockPos(1, 1, 1));
+        helper.assertBlockPresent(Blocks.AIR, new BlockPos(2, 1, 2));
+        helper.assertBlockPresent(Blocks.OAK_SLAB, new BlockPos(0, 1, 0));
+        helper.assertTrue(helper.getLevel().getFluidState(helper.absolutePos(new BlockPos(0, 1, 0))).isEmpty(), "The slab is dry");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void lumenAndVerdantTargets(GameTestHelper helper) {
+        helper.setBlock(new BlockPos(1, 2, 1), Blocks.LIGHT);
+        helper.assertTrue(com.gabrielflorianoo.peqol.item.magic.LumenWandItem.dispel(helper.getLevel(), helper.absolutePos(new BlockPos(1, 1, 1))) == 1, "One light dispelled");
+        helper.assertBlockPresent(Blocks.AIR, new BlockPos(1, 2, 1));
+        helper.setBlock(new BlockPos(1, 0, 1), Blocks.FARMLAND);
+        helper.setBlock(new BlockPos(1, 1, 1), Blocks.WHEAT);
+        helper.setBlock(new BlockPos(0, 0, 0), Blocks.GRASS_BLOCK);
+        java.util.List<BlockPos> plants = com.gabrielflorianoo.peqol.item.magic.VerdantOrbItem.growable(helper.getLevel(), helper.absolutePos(new BlockPos(1, 1, 1)), 2);
+        helper.assertTrue(plants.contains(helper.absolutePos(new BlockPos(1, 1, 1))), "Young wheat can grow");
+        helper.assertFalse(plants.contains(helper.absolutePos(new BlockPos(0, 0, 0))), "Grass blocks are skipped");
+        helper.succeed();
+    }
 }

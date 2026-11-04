@@ -62,6 +62,9 @@ public final class CommonEvents {
         if (tick % PEQoLConfig.COMMON.illuminationInterval.get() == 0 && hasActive(player, IlluminationCharmItem.class)) {
             IlluminationCharmItem.illuminate(player);
         }
+        if (tick % 20 == 0 && InventoryUtil.contains(player, s -> s.getItem() instanceof com.gabrielflorianoo.peqol.item.magic.ChronalEchoItem)) {
+            com.gabrielflorianoo.peqol.item.magic.ChronalEchoItem.record(player);
+        }
         if (tick % com.gabrielflorianoo.peqol.item.EffectCharmItem.INTERVAL == 0) {
             //One payment per kind of effect charm, even if several copies are carried
             java.util.Set<net.minecraft.world.item.Item> applied = new java.util.HashSet<>();
@@ -71,6 +74,11 @@ public final class CommonEvents {
                 }
             });
         }
+    }
+
+    @SubscribeEvent
+    public static void onLogout(net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent event) {
+        com.gabrielflorianoo.peqol.item.magic.ChronalEchoItem.forget(event.getEntity().getUUID());
     }
 
     public static boolean hasActive(net.minecraft.world.entity.player.Player player, Class<? extends ToggleableItem> type) {
