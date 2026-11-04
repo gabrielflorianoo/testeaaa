@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "pattern": [
+    " LR",
+    " DL",
+    "D  "
+  ],
+  "key": {
+    "L": {
+      "item": "minecraft:lightning_rod"
+    },
+    "R": {
+      "item": "minecraft:trident"
+    },
+    "D": {
+      "item": "projecte:dark_matter"
+    }
+  },
+  "result": {
+    "item": "peqol:storm_staff"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "storm_staff"
+    }
+  ]
+}

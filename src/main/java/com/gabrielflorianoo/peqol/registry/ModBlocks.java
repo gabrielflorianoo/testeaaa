@@ -26,6 +26,11 @@ public final class ModBlocks {
 
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, PEQoL.MODID);
 
+    public static final RegistryObject<com.gabrielflorianoo.peqol.block.ConjuredCloudBlock> CONJURED_CLOUD = BLOCKS.register("conjured_cloud",
+            () -> new com.gabrielflorianoo.peqol.block.ConjuredCloudBlock(BlockBehaviour.Properties.of().mapColor(MapColor.SNOW).strength(0.1F)
+                    .sound(SoundType.WOOL).noOcclusion().noLootTable().isValidSpawn((state, level, pos, type) -> false)
+                    .isSuffocating((state, level, pos) -> false).isViewBlocking((state, level, pos) -> false)));
+
     public static final RegistryObject<AlchemicalUplinkBlock> ALCHEMICAL_UPLINK = BLOCKS.register("alchemical_uplink",
             () -> new AlchemicalUplinkBlock(machineProperties(MapColor.COLOR_PURPLE)));
     public static final RegistryObject<AlchemicalImporterBlock> ALCHEMICAL_IMPORTER = BLOCKS.register("alchemical_importer",

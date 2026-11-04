@@ -623,4 +623,38 @@ public class PEQoLGameTests {
         helper.assertFalse(plants.contains(helper.absolutePos(new BlockPos(0, 0, 0))), "Grass blocks are skipped");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void soulJarStoresAndReleases(GameTestHelper helper) {
+        net.minecraft.world.entity.animal.Cow cow = helper.spawn(net.minecraft.world.entity.EntityType.COW, new BlockPos(1, 1, 1));
+        cow.setCustomName(net.minecraft.network.chat.Component.literal("Bessie"));
+        ItemStack jar = new ItemStack(ModItems.SOUL_JAR.get());
+        helper.assertTrue(com.gabrielflorianoo.peqol.item.magic.SoulJarItem.store(jar, cow), "The cow fits in the jar");
+        helper.assertTrue(cow.isRemoved(), "The cow left the world");
+        helper.assertTrue(com.gabrielflorianoo.peqol.item.magic.SoulJarItem.capturedType(jar) == net.minecraft.world.entity.EntityType.COW, "The jar knows it holds a cow");
+        helper.assertFalse(com.gabrielflorianoo.peqol.item.magic.SoulJarItem.canCapture(helper.makeMockPlayer()), "Players can't be trapped");
+        net.minecraft.world.entity.Entity released = com.gabrielflorianoo.peqol.item.magic.SoulJarItem.release(jar, helper.getLevel(),
+                net.minecraft.world.phys.Vec3.atBottomCenterOf(helper.absolutePos(new BlockPos(1, 1, 1))));
+        helper.assertTrue(released instanceof net.minecraft.world.entity.animal.Cow && "Bessie".equals(released.getCustomName().getString()), "Bessie comes back with her name");
+        helper.assertFalse(com.gabrielflorianoo.peqol.item.magic.SoulJarItem.isFilled(jar), "The jar is empty again");
+        released.discard();
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 400)
+    public static void conjuredCloudFades(GameTestHelper helper) {
+        java.util.List<BlockPos> free = com.gabrielflorianoo.peqol.item.magic.CloudScepterItem.platform(helper.getLevel(), helper.absolutePos(new BlockPos(1, 1, 1)), false);
+        helper.assertTrue(free.size() == 9, "A 3x3 platform fits in empty air, got " + free.size());
+        helper.setBlock(new BlockPos(1, 1, 1), ModBlocks.CONJURED_CLOUD.get());
+        helper.assertBlockPresent(ModBlocks.CONJURED_CLOUD.get(), new BlockPos(1, 1, 1));
+        helper.succeedWhen(() -> helper.assertBlockPresent(Blocks.AIR, new BlockPos(1, 1, 1)));
+    }
+
+    @GameTest(template = "empty")
+    public static void wardingLanternCost(GameTestHelper helper) {
+        helper.assertTrue(com.gabrielflorianoo.peqol.item.magic.WardingLanternItem.costPerInterval() == 11, "128 EMC/min over 5 s rounds up to 11, got "
+                + com.gabrielflorianoo.peqol.item.magic.WardingLanternItem.costPerInterval());
+        helper.assertFalse(com.gabrielflorianoo.peqol.item.magic.WardingLanternItem.isWarded(helper.getLevel(), 0, 0, 0), "Nobody is warded");
+        helper.succeed();
+    }
 }

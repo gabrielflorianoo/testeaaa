@@ -62,6 +62,10 @@ public final class CommonEvents {
         if (tick % PEQoLConfig.COMMON.illuminationInterval.get() == 0 && hasActive(player, IlluminationCharmItem.class)) {
             IlluminationCharmItem.illuminate(player);
         }
+        if (tick % com.gabrielflorianoo.peqol.item.magic.WardingLanternItem.INTERVAL == 0) {
+            com.gabrielflorianoo.peqol.item.magic.WardingLanternItem.refresh(player,
+                    hasActive(player, com.gabrielflorianoo.peqol.item.magic.WardingLanternItem.class));
+        }
         if (tick % 20 == 0 && InventoryUtil.contains(player, s -> s.getItem() instanceof com.gabrielflorianoo.peqol.item.magic.ChronalEchoItem)) {
             com.gabrielflorianoo.peqol.item.magic.ChronalEchoItem.record(player);
         }
@@ -79,6 +83,33 @@ public final class CommonEvents {
     @SubscribeEvent
     public static void onLogout(net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent event) {
         com.gabrielflorianoo.peqol.item.magic.ChronalEchoItem.forget(event.getEntity().getUUID());
+        com.gabrielflorianoo.peqol.item.magic.WardingLanternItem.forget(event.getEntity().getUUID());
+    }
+
+    /**
+     * Warding Lantern: no natural hostile spawns around warded players.
+     */
+    @SubscribeEvent
+    public static void onFinalizeSpawn(net.minecraftforge.event.entity.living.MobSpawnEvent.FinalizeSpawn event) {
+        if (event.getSpawnType() == net.minecraft.world.entity.MobSpawnType.NATURAL && event.getEntity() instanceof net.minecraft.world.entity.monster.Enemy
+                && com.gabrielflorianoo.peqol.item.magic.WardingLanternItem.isWarded(event.getEntity().level(), event.getX(), event.getY(), event.getZ())) {
+            event.setSpawnCancelled(true);
+        }
+    }
+
+    /**
+     * Soul Jar captures run before the entity's own interaction (so villagers don't open their trades).
+     */
+    @SubscribeEvent
+    public static void onEntityInteract(net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract event) {
+        if (!(event.getItemStack().getItem() instanceof com.gabrielflorianoo.peqol.item.magic.SoulJarItem)) {
+            return;
+        }
+        event.setCanceled(true);
+        event.setCancellationResult(net.minecraft.world.InteractionResult.SUCCESS);
+        if (event.getEntity() instanceof ServerPlayer player) {
+            com.gabrielflorianoo.peqol.item.magic.SoulJarItem.tryCapture(player, event.getHand(), event.getTarget());
+        }
     }
 
     public static boolean hasActive(net.minecraft.world.entity.player.Player player, Class<? extends ToggleableItem> type) {

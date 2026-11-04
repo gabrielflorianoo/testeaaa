@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "pattern": [
+    " WF",
+    " SW",
+    "S  "
+  ],
+  "key": {
+    "W": {
+      "tag": "minecraft:wool"
+    },
+    "F": {
+      "item": "minecraft:phantom_membrane"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "peqol:cloud_scepter"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "cloud_scepter"
+    }
+  ]
+}

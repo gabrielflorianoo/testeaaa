@@ -70,6 +70,12 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
 - **Esponja do Vazio**: drena **toda a água, lava e fluidos de outros mods** numa esfera ao redor do ponto que você olha, e seca blocos alagados.
 - **Olho do Vidente**: todas as criaturas num raio de 48 blocos **brilham através das paredes** por 15 s, e você fica sabendo quantas são hostis.
 - **Cajado Gravitacional**: clique com o botão direito para **puxar todos os itens e orbes de XP** num raio de 16 blocos até os seus pés; agache e clique para soltar uma **onda de choque** que arremessa os monstros para longe.
+- **Cajado da Tempestade**: invoca um **raio** no bloco que você olha (até 48 blocos). Agachado, é só um clarão inofensivo.
+- **Varinha Prismática**: dispara um **raio arco-íris** instantâneo que causa 10 de dano mágico (ignora armadura) na primeira criatura no caminho.
+- **Espelho do Retorno**: atravesse o espelho e saia na sua **cama** (ou âncora de renascimento, sem gastar cargas), de qualquer dimensão. Sem cama, vai para o spawn do mundo.
+- **Cetro das Nuvens**: conjura uma **plataforma de nuvem** 3x3 sob os seus pés (agachado: um bloco à sua frente). As nuvens somem sozinhas depois de 10 s e cair nelas não machuca.
+- **Jarro de Almas**: **aprisiona uma criatura** (aldeões com as trocas, mascotes, animais...) e solta onde você clicar. Jogadores e chefes não podem ser presos.
+- **Lanterna Guardiã**: ligada e carregada (ou no cinto do Curios), **monstros não nascem naturalmente** num raio de 32 blocos ao seu redor. 128 EMC por minuto.
 
 ### Blocos (ficam vinculados a quem os coloca)
 - **Conexão Alquímica**: recebe EMC de Coletores e Relés e manda direto para o seu EMC pessoal. Enquanto você está offline, guarda o EMC num buffer.
@@ -157,6 +163,12 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 | Esponja do Vazio | Obsidiana ×4, Esponja ×4, Matéria Escura |
 | Olho do Vidente | Fragmento de Ametista ×4, Pó de Covalência Médio ×2, Olho de Aranha ×2, Olho do Ender |
 | Cajado Gravitacional | Obsidiana ×2, Magnetita, Matéria Escura ×2 |
+| Cajado da Tempestade | Para-raios ×2, Tridente, Matéria Escura ×2 |
+| Varinha Prismática | Pó de Pedra Luminosa ×2, Aglomerado de Ametista, Vara de Blaze ×2 |
+| Espelho do Retorno | Ouro ×5, Pérola do Ender, Graveto |
+| Cetro das Nuvens | Lã ×2, Membrana de Phantom, Graveto ×2 |
+| Jarro de Almas | Tábuas, Vidro ×5, Areia das Almas |
+| Lanterna Guardiã | Ouro ×4, Pó de Covalência Médio ×2, Lanterna das Almas, Matéria Escura |
 | Bancada de Bolso | Mesa de Trabalho, Pó de Covalência Baixo, Couro (sem forma) |
 | Bolsa do Vazio | Linha, Couro ×3, Baú do Ender |
 | Melhoria de Máquina (×2) | Pó de Covalência Alto ×4, Redstone ×4, Matéria Escura |
@@ -265,7 +277,7 @@ A quality-of-life addon for ProjectE on Forge 1.20.1. It includes:
 - `/peqol known` with clickable buy buttons, knowledge progress %, held-item value on the HUD and EMC milestone toasts.
 - Alchemical pick block (middle click creates the block from EMC).
 - Mending, Satiation and Stellar Link charms.
-- Magic items: Blink Rod (teleport where you look), Chronal Echo (rewind a few seconds), Lumen Wand (invisible lights), Transmutation Scepter (turn blocks into another block for the EMC difference), Verdant Orb (area bonemeal), Void Sponge (drain fluids), Eye of the Seer (creatures glow through walls) and Gravitational Staff (pull items/XP, shockwave).
+- Magic items: Blink Rod (teleport where you look), Chronal Echo (rewind a few seconds), Lumen Wand (invisible lights), Transmutation Scepter (turn blocks into another block for the EMC difference), Verdant Orb (area bonemeal), Void Sponge (drain fluids), Eye of the Seer (creatures glow through walls), Gravitational Staff (pull items/XP, shockwave), Storm Staff (lightning), Prismatic Wand (magic beam), Recall Mirror (home from any dimension), Cloud Scepter (temporary platforms), Soul Jar (carry mobs and villagers) and Warding Lantern (no hostile spawns around you).
 - Stock-keeping mode for the Exporter and a comparator output for the Uplink.
 - Optional Curios support.
 - `/peqol` commands: help, balance, pay, withdraw, buy, value, worth, burn, missing, unlearned, stars, top, knowledge.

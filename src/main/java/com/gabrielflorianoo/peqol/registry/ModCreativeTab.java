@@ -44,6 +44,12 @@ public final class ModCreativeTab {
                 output.accept(ModItems.VOID_SPONGE.get());
                 output.accept(ModItems.SEER_EYE.get());
                 output.accept(ModItems.GRAVITY_STAFF.get());
+                output.accept(ModItems.STORM_STAFF.get());
+                output.accept(ModItems.PRISMATIC_WAND.get());
+                output.accept(ModItems.RECALL_MIRROR.get());
+                output.accept(ModItems.CLOUD_SCEPTER.get());
+                output.accept(ModItems.SOUL_JAR.get());
+                output.accept(ModItems.WARDING_LANTERN.get());
                 output.accept(ModItems.VOID_POUCH.get());
                 output.accept(ModItems.PROSPECTOR.get());
                 output.accept(ModItems.KNOWLEDGE_SCROLL.get());

@@ -1,5 +1,14 @@
 # ProjectE QoL+ changelog
 
+## 1.16.0
+- Six more magic items:
+  - Storm Staff: lightning where you look (sneak: harmless flash)
+  - Prismatic Wand: instant rainbow beam with magic damage
+  - Recall Mirror: back to your bed / respawn anchor (or world spawn) from any dimension
+  - Cloud Scepter: temporary cloud platforms that cushion falls and fade away
+  - Soul Jar: trap a creature (villagers keep their trades) and release it elsewhere
+  - Warding Lantern: no natural hostile spawns around you while active (Curios belt slot)
+
 ## 1.15.0
 - Eight EMC-powered magic items:
   - Blink Rod: teleport to where you look (cost per block, no fall damage)

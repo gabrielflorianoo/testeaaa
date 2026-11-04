@@ -184,6 +184,19 @@ public final class PEQoLConfig {
         public final ForgeConfigSpec.LongValue gravityCost;
         public final ForgeConfigSpec.IntValue gravityRepelRadius;
         public final ForgeConfigSpec.LongValue gravityRepelCost;
+        public final ForgeConfigSpec.IntValue stormRange;
+        public final ForgeConfigSpec.LongValue stormCost;
+        public final ForgeConfigSpec.IntValue stormCooldown;
+        public final ForgeConfigSpec.DoubleValue prismDamage;
+        public final ForgeConfigSpec.IntValue prismRange;
+        public final ForgeConfigSpec.LongValue prismCost;
+        public final ForgeConfigSpec.LongValue recallCost;
+        public final ForgeConfigSpec.IntValue recallCooldown;
+        public final ForgeConfigSpec.IntValue cloudLifetime;
+        public final ForgeConfigSpec.LongValue cloudCostPerBlock;
+        public final ForgeConfigSpec.LongValue soulJarCost;
+        public final ForgeConfigSpec.IntValue wardRadius;
+        public final ForgeConfigSpec.LongValue wardCostPerMinute;
 
         Common(ForgeConfigSpec.Builder builder) {
             builder.comment("Keybind driven actions (validated on the server)").push("keybinds");
@@ -442,6 +455,19 @@ public final class PEQoLConfig {
             gravityCost = builder.comment("Gravitational Staff: EMC per pull.").defineInRange("gravityCost", 32L, 0L, Long.MAX_VALUE);
             gravityRepelRadius = builder.comment("Gravitational Staff: radius of the shockwave (sneak).").defineInRange("gravityRepelRadius", 6, 2, 16);
             gravityRepelCost = builder.comment("Gravitational Staff: EMC per shockwave.").defineInRange("gravityRepelCost", 512L, 0L, Long.MAX_VALUE);
+            stormRange = builder.comment("Storm Staff: reach in blocks.").defineInRange("stormRange", 48, 8, 128);
+            stormCost = builder.comment("Storm Staff: EMC per lightning bolt.").defineInRange("stormCost", 1024L, 0L, Long.MAX_VALUE);
+            stormCooldown = builder.comment("Storm Staff: cooldown in ticks.").defineInRange("stormCooldown", 30, 0, 1200);
+            prismDamage = builder.comment("Prismatic Wand: magic damage per beam.").defineInRange("prismDamage", 10.0, 0.0, 1000.0);
+            prismRange = builder.comment("Prismatic Wand: beam length in blocks.").defineInRange("prismRange", 32, 4, 96);
+            prismCost = builder.comment("Prismatic Wand: EMC per beam.").defineInRange("prismCost", 256L, 0L, Long.MAX_VALUE);
+            recallCost = builder.comment("Recall Mirror: EMC per recall.").defineInRange("recallCost", 4096L, 0L, Long.MAX_VALUE);
+            recallCooldown = builder.comment("Recall Mirror: cooldown in ticks.").defineInRange("recallCooldown", 200, 0, 72000);
+            cloudLifetime = builder.comment("Cloud Scepter: how long a conjured cloud lasts, in ticks.").defineInRange("cloudLifetime", 200, 20, 72000);
+            cloudCostPerBlock = builder.comment("Cloud Scepter: EMC per cloud block.").defineInRange("cloudCostPerBlock", 4L, 0L, Long.MAX_VALUE);
+            soulJarCost = builder.comment("Soul Jar: EMC per capture.").defineInRange("soulJarCost", 512L, 0L, Long.MAX_VALUE);
+            wardRadius = builder.comment("Warding Lantern: radius where hostile mobs can't spawn naturally.").defineInRange("wardRadius", 32, 8, 128);
+            wardCostPerMinute = builder.comment("Warding Lantern: EMC per minute while active.").defineInRange("wardCostPerMinute", 128L, 0L, Long.MAX_VALUE);
             builder.pop();
         }
     }

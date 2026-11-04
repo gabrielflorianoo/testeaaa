@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "pattern": [
+    " GA",
+    " BG",
+    "B  "
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:glowstone_dust"
+    },
+    "A": {
+      "item": "minecraft:amethyst_cluster"
+    },
+    "B": {
+      "item": "minecraft:blaze_rod"
+    }
+  },
+  "result": {
+    "item": "peqol:prismatic_wand"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "prismatic_wand"
+    }
+  ]
+}

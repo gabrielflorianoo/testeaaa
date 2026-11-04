@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "pattern": [
+    "GCG",
+    "CLC",
+    "GDG"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "C": {
+      "item": "projecte:medium_covalence_dust"
+    },
+    "L": {
+      "item": "minecraft:soul_lantern"
+    },
+    "D": {
+      "item": "projecte:dark_matter"
+    }
+  },
+  "result": {
+    "item": "peqol:warding_lantern"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "warding_lantern"
+    }
+  ]
+}

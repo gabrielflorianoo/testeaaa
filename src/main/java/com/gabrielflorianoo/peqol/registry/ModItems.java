@@ -148,6 +148,19 @@ public final class ModItems {
     public static final RegistryObject<com.gabrielflorianoo.peqol.item.magic.GravityStaffItem> GRAVITY_STAFF = ITEMS.register("gravity_staff",
             () -> new com.gabrielflorianoo.peqol.item.magic.GravityStaffItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).fireResistant()));
 
+    public static final RegistryObject<com.gabrielflorianoo.peqol.item.magic.StormStaffItem> STORM_STAFF = ITEMS.register("storm_staff",
+            () -> new com.gabrielflorianoo.peqol.item.magic.StormStaffItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).fireResistant()));
+    public static final RegistryObject<com.gabrielflorianoo.peqol.item.magic.PrismaticWandItem> PRISMATIC_WAND = ITEMS.register("prismatic_wand",
+            () -> new com.gabrielflorianoo.peqol.item.magic.PrismaticWandItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).fireResistant()));
+    public static final RegistryObject<com.gabrielflorianoo.peqol.item.magic.RecallMirrorItem> RECALL_MIRROR = ITEMS.register("recall_mirror",
+            () -> new com.gabrielflorianoo.peqol.item.magic.RecallMirrorItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).fireResistant()));
+    public static final RegistryObject<com.gabrielflorianoo.peqol.item.magic.CloudScepterItem> CLOUD_SCEPTER = ITEMS.register("cloud_scepter",
+            () -> new com.gabrielflorianoo.peqol.item.magic.CloudScepterItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).fireResistant()));
+    public static final RegistryObject<com.gabrielflorianoo.peqol.item.magic.SoulJarItem> SOUL_JAR = ITEMS.register("soul_jar",
+            () -> new com.gabrielflorianoo.peqol.item.magic.SoulJarItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).fireResistant()));
+    public static final RegistryObject<com.gabrielflorianoo.peqol.item.magic.WardingLanternItem> WARDING_LANTERN = ITEMS.register("warding_lantern",
+            () -> new com.gabrielflorianoo.peqol.item.magic.WardingLanternItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).fireResistant()));
+
     private static Item.Properties charm() {
         return new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).fireResistant();
     }

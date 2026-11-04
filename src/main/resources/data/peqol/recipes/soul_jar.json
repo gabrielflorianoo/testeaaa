@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "pattern": [
+    " C ",
+    "GSG",
+    "GGG"
+  ],
+  "key": {
+    "C": {
+      "tag": "minecraft:planks"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "S": {
+      "item": "minecraft:soul_sand"
+    }
+  },
+  "result": {
+    "item": "peqol:soul_jar"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "soul_jar"
+    }
+  ]
+}

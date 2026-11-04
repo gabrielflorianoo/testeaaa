@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "pattern": [
+    "GGG",
+    "GPG",
+    " S "
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "P": {
+      "item": "minecraft:ender_pearl"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "peqol:recall_mirror"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "recall_mirror"
+    }
+  ]
+}
