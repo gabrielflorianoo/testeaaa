@@ -184,10 +184,21 @@ Comandos só do cliente, que salvam na config na hora:
 Ao enviar uma tag `v*` (por exemplo `git tag v1.5.0 && git push origin v1.5.0`), o GitHub Actions compila e publica o jar como uma release. O [CHANGELOG](CHANGELOG.md) lista as mudanças de cada versão.
 
 ## Compilando
+O projeto já vem com o **Gradle Wrapper** (`gradlew` / `gradlew.bat`), então não é preciso instalar o Gradle. Só é necessário ter o **Java 17** instalado.
+
+Linux / macOS:
 ```bash
 ./gradlew build
 ```
-O jar fica em `build/libs/`. O GitHub Actions compila, roda os game tests (um servidor headless com o ProjectE carregado) e publica o jar como artefato.
+
+Windows:
+```bat
+gradlew.bat build
+```
+
+O jar fica em `build/libs/peqol-1.20.1-<versão>.jar`. Para testar no jogo, use `./gradlew runClient`. Para rodar os testes automáticos (servidor com o ProjectE), use `./gradlew runGameTestServer`.
+
+O GitHub Actions faz o mesmo a cada push: compila, roda os game tests e publica o jar como artefato.
 
 ---
 
