@@ -6,6 +6,8 @@
 - Feather Charm: fall damage paid with EMC per block
 - Charm of Wisdom: experience orbs become EMC
 - Curios slots and advancement criteria for all of them
+- Alchemist's Toolkit: crafting table, anvil, stonecutter, smithing table, grindstone, loom and cartography table in one item
+- Pocket Smelter: instantly smelt the stack in your other hand for EMC
 
 ## 1.13.0
 - Alchemical Gauge threshold mode (`/peqol gauge threshold <amount>`, sneak + empty hand toggles)

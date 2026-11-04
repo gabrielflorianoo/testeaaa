@@ -126,6 +126,11 @@ public final class ModItems {
     public static final RegistryObject<WisdomCharmItem> WISDOM_CHARM = ITEMS.register("wisdom_charm",
             () -> new WisdomCharmItem(charm()));
 
+    public static final RegistryObject<com.gabrielflorianoo.peqol.item.AlchemistToolkitItem> ALCHEMIST_TOOLKIT = ITEMS.register("alchemist_toolkit",
+            () -> new com.gabrielflorianoo.peqol.item.AlchemistToolkitItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<com.gabrielflorianoo.peqol.item.PocketSmelterItem> POCKET_SMELTER = ITEMS.register("pocket_smelter",
+            () -> new com.gabrielflorianoo.peqol.item.PocketSmelterItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).fireResistant()));
+
     private static Item.Properties charm() {
         return new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).fireResistant();
     }

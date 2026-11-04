@@ -34,6 +34,8 @@ public final class ModCreativeTab {
                 output.accept(ModItems.WISDOM_CHARM.get());
                 output.accept(ModItems.UNDYING_CHARM.get());
                 output.accept(ModItems.POCKET_WORKBENCH.get());
+                output.accept(ModItems.ALCHEMIST_TOOLKIT.get());
+                output.accept(ModItems.POCKET_SMELTER.get());
                 output.accept(ModItems.VOID_POUCH.get());
                 output.accept(ModItems.PROSPECTOR.get());
                 output.accept(ModItems.KNOWLEDGE_SCROLL.get());

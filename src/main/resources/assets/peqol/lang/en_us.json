@@ -503,5 +503,16 @@
   "item.peqol.wisdom_charm": "Charm of Wisdom",
   "item.peqol.wisdom_charm.desc": "While active, experience orbs become personal EMC.",
   "item.peqol.wisdom_charm.desc2": "%s EMC per experience point.",
-  "jei.peqol.info.wisdom_charm": "Right click to toggle. While active, experience orbs you pick up are turned into personal EMC (same rate as /peqol xp) instead of levels."
+  "jei.peqol.info.wisdom_charm": "Right click to toggle. While active, experience orbs you pick up are turned into personal EMC (same rate as /peqol xp) instead of levels.",
+  "item.peqol.alchemist_toolkit": "Alchemist's Toolkit",
+  "item.peqol.alchemist_toolkit.desc": "Right click to open the selected workstation anywhere.",
+  "item.peqol.alchemist_toolkit.desc2": "Sneak + right click: crafting, anvil, stonecutter, smithing, grindstone, loom, cartography.",
+  "tooltip.peqol.toolkit.mode": "Mode: %s",
+  "message.peqol.toolkit.mode": "Toolkit: %s",
+  "jei.peqol.info.alchemist_toolkit": "Every utility workstation in your pocket: crafting table, anvil, stonecutter, smithing table, grindstone, loom and cartography table. Sneak + right click to pick one, right click to open it anywhere.",
+  "item.peqol.pocket_smelter": "Pocket Smelter",
+  "item.peqol.pocket_smelter.desc": "Right click: instantly smelts the stack in your other hand (%s EMC per item).",
+  "jei.peqol.info.pocket_smelter": "Right click to instantly smelt the stack held in your other hand (anything with a furnace recipe), paying a little personal EMC per item.",
+  "message.peqol.smelter.nothing": "Hold something smeltable in your other hand",
+  "message.peqol.smelter.done": "Smelted %sx %s for %s EMC"
 }

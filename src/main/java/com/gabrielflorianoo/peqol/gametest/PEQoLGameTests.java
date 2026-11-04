@@ -557,4 +557,16 @@ public class PEQoLGameTests {
         helper.assertTrue(com.gabrielflorianoo.peqol.item.FeatherCharmItem.costFor(10F) == 7 * 32, "10 block fall costs 7 blocks worth");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void pocketSmelterAndToolkit(GameTestHelper helper) {
+        ItemStack stone = com.gabrielflorianoo.peqol.item.PocketSmelterItem.result(helper.getLevel(), new ItemStack(Items.COBBLESTONE, 3));
+        helper.assertTrue(stone.is(Items.STONE) && stone.getCount() == 3, "3 cobblestone smelt into 3 stone, got " + stone);
+        helper.assertTrue(com.gabrielflorianoo.peqol.item.PocketSmelterItem.result(helper.getLevel(), new ItemStack(Items.DIAMOND)).isEmpty(), "Diamonds can't be smelted");
+        ItemStack toolkit = new ItemStack(ModItems.ALCHEMIST_TOOLKIT.get());
+        helper.assertTrue(com.gabrielflorianoo.peqol.item.AlchemistToolkitItem.getMode(toolkit) == com.gabrielflorianoo.peqol.item.AlchemistToolkitItem.Mode.CRAFTING, "Default mode is crafting");
+        toolkit.getOrCreateTag().putInt(com.gabrielflorianoo.peqol.item.AlchemistToolkitItem.TAG_MODE, 1);
+        helper.assertTrue(com.gabrielflorianoo.peqol.item.AlchemistToolkitItem.getMode(toolkit) == com.gabrielflorianoo.peqol.item.AlchemistToolkitItem.Mode.ANVIL, "Mode 1 is the anvil");
+        helper.succeed();
+    }
 }

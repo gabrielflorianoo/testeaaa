@@ -1,0 +1,47 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "pattern": [
+    "CAS",
+    "GPL",
+    "MTK"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:crafting_table"
+    },
+    "A": {
+      "item": "minecraft:anvil"
+    },
+    "S": {
+      "item": "minecraft:stonecutter"
+    },
+    "G": {
+      "item": "minecraft:grindstone"
+    },
+    "P": {
+      "item": "projecte:dark_matter"
+    },
+    "L": {
+      "item": "minecraft:loom"
+    },
+    "M": {
+      "item": "minecraft:smithing_table"
+    },
+    "T": {
+      "item": "minecraft:cartography_table"
+    },
+    "K": {
+      "item": "projecte:medium_covalence_dust"
+    }
+  },
+  "result": {
+    "item": "peqol:alchemist_toolkit"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "alchemist_toolkit"
+    }
+  ]
+}

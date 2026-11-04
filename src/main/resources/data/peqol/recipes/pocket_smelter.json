@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "pattern": [
+    "LFL",
+    "FBF",
+    "LFL"
+  ],
+  "key": {
+    "L": {
+      "item": "projecte:medium_covalence_dust"
+    },
+    "F": {
+      "item": "minecraft:blast_furnace"
+    },
+    "B": {
+      "item": "peqol:smelting_charm"
+    }
+  },
+  "result": {
+    "item": "peqol:pocket_smelter"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "pocket_smelter"
+    }
+  ]
+}

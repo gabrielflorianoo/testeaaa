@@ -503,5 +503,16 @@
   "item.peqol.wisdom_charm": "Amuleto da Sabedoria",
   "item.peqol.wisdom_charm.desc": "Ativo, orbes de experiência viram EMC pessoal.",
   "item.peqol.wisdom_charm.desc2": "%s EMC por ponto de experiência.",
-  "jei.peqol.info.wisdom_charm": "Clique direito para ligar/desligar. Ativo, os orbes de experiência coletados viram EMC pessoal (mesma taxa do /peqol xp) em vez de níveis."
+  "jei.peqol.info.wisdom_charm": "Clique direito para ligar/desligar. Ativo, os orbes de experiência coletados viram EMC pessoal (mesma taxa do /peqol xp) em vez de níveis.",
+  "item.peqol.alchemist_toolkit": "Kit do Alquimista",
+  "item.peqol.alchemist_toolkit.desc": "Clique direito para abrir a estação selecionada em qualquer lugar.",
+  "item.peqol.alchemist_toolkit.desc2": "Agache + clique direito: bancada, bigorna, cortador, ferraria, rebolo, tear, cartografia.",
+  "tooltip.peqol.toolkit.mode": "Modo: %s",
+  "message.peqol.toolkit.mode": "Kit: %s",
+  "jei.peqol.info.alchemist_toolkit": "Todas as estações de trabalho no bolso: bancada, bigorna, cortador de pedra, mesa de ferraria, rebolo, tear e mesa de cartografia. Agache + clique direito para escolher, clique direito para abrir em qualquer lugar.",
+  "item.peqol.pocket_smelter": "Fundidor de Bolso",
+  "item.peqol.pocket_smelter.desc": "Clique direito: funde na hora a pilha da outra mão (%s EMC por item).",
+  "jei.peqol.info.pocket_smelter": "Clique direito para fundir na hora a pilha segurada na outra mão (qualquer coisa com receita de fornalha), pagando um pouco de EMC pessoal por item.",
+  "message.peqol.smelter.nothing": "Segure algo fundível na outra mão",
+  "message.peqol.smelter.done": "Fundiu %sx %s por %s EMC"
 }

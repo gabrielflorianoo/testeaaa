@@ -54,6 +54,8 @@ Tudo usa a API pública do ProjectE (EMC pessoal, conhecimento, evento de aprend
 - **Amuleto da Pena**: o dano de queda vira custo de EMC (32 por bloco; os 3 primeiros blocos são de graça).
 - **Amuleto da Sabedoria**: os orbes de experiência coletados viram EMC, na mesma taxa do `/peqol xp`.
 - **Ampulheta Celestial**: clique com o botão direito para pular para a manhã; agache e clique para limpar o tempo. Os dois são pagos com EMC, anunciados no servidor e podem ser desligados na config.
+- **Kit do Alquimista**: todas as estações de trabalho num item só (bancada, bigorna, cortador de pedra, mesa de ferraria, rebolo, tear e mesa de cartografia). Agache e clique com o botão direito para escolher qual; clique com o botão direito para abrir em qualquer lugar.
+- **Fundidor de Bolso**: clique com o botão direito para fundir na hora a pilha da outra mão (qualquer receita de fornalha), pagando um pouco de EMC por item.
 - **Bancada de Bolso**: abre uma mesa de trabalho em qualquer lugar.
 - **Bolsa do Vazio**: abre o seu baú do Ender em qualquer lugar, por 64 EMC (configurável).
 - **Cheque de EMC**: o `/peqol withdraw` transforma EMC em um item que pode ser trocado entre jogadores. Clique com o botão direito para resgatar; agachado, você resgata a pilha inteira. O cheque não tem valor de EMC, então não dá para queimá-lo e duplicar EMC.
@@ -135,6 +137,8 @@ Clicar com a mão vazia mostra dono, estado e estatísticas no chat.
 | Chave do Filósofo | Ferro ×2, Matéria Escura, Pó de Covalência Médio |
 | Medidor Alquímico | Comparador, Redstone ×2, Matéria Escura, Pó de Covalência Baixo |
 | Prospector Alquímico | Linha, Pepita de Ouro, Pó de Covalência Baixo ×2, Diamante |
+| Kit do Alquimista | Bancada, Bigorna, Cortador de Pedra, Rebolo, Matéria Escura, Tear, Mesa de Ferraria, Mesa de Cartografia, Pó de Covalência Médio |
+| Fundidor de Bolso | Pó de Covalência Médio ×4, Alto-forno ×4, Amuleto da Fundição |
 | Bancada de Bolso | Mesa de Trabalho, Pó de Covalência Baixo, Couro (sem forma) |
 | Bolsa do Vazio | Linha, Couro ×3, Baú do Ender |
 | Melhoria de Máquina (×2) | Pó de Covalência Alto ×4, Redstone ×4, Matéria Escura |
