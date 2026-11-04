@@ -657,4 +657,77 @@ public class PEQoLGameTests {
         helper.assertFalse(com.gabrielflorianoo.peqol.item.magic.WardingLanternItem.isWarded(helper.getLevel(), 0, 0, 0), "Nobody is warded");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void architectBottleMovesAndRotates(GameTestHelper helper) {
+        helper.setBlock(new BlockPos(0, 1, 0), Blocks.STONE);
+        helper.setBlock(new BlockPos(1, 1, 0), Blocks.OAK_PLANKS);
+        java.util.List<BlockPos> selection = com.gabrielflorianoo.peqol.item.magic.ArchitectBottleItem.selection(helper.getLevel(),
+                helper.absolutePos(new BlockPos(0, 1, 0)), helper.absolutePos(new BlockPos(1, 1, 0)));
+        helper.assertTrue(selection != null && selection.size() == 2, "Two blocks selected");
+        ItemStack bottle = new ItemStack(ModItems.ARCHITECT_BOTTLE.get());
+        int taken = com.gabrielflorianoo.peqol.item.magic.ArchitectBottleItem.capture(bottle, helper.getLevel(), selection, Direction.NORTH, null);
+        helper.assertTrue(taken == 2, "Both blocks bottled, got " + taken);
+        helper.assertBlockPresent(Blocks.AIR, new BlockPos(0, 1, 0));
+        helper.assertBlockPresent(Blocks.AIR, new BlockPos(1, 1, 0));
+        helper.assertTrue(com.gabrielflorianoo.peqol.item.magic.ArchitectBottleItem.storedCount(bottle) == 2, "The bottle holds 2 blocks");
+        //Captured facing north, poured facing east: a quarter turn clockwise
+        int placed = com.gabrielflorianoo.peqol.item.magic.ArchitectBottleItem.place(bottle, helper.getLevel(), helper.absolutePos(new BlockPos(1, 1, 1)), Direction.EAST, null);
+        helper.assertTrue(placed == 2, "Both blocks poured, got " + placed);
+        helper.assertBlockPresent(Blocks.STONE, new BlockPos(1, 1, 1));
+        helper.assertBlockPresent(Blocks.OAK_PLANKS, new BlockPos(1, 1, 2));
+        helper.assertFalse(com.gabrielflorianoo.peqol.item.magic.ArchitectBottleItem.isFilled(bottle), "The bottle is empty again");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void dowsingFindsOreVariants(GameTestHelper helper) {
+        helper.setBlock(new BlockPos(0, 0, 0), Blocks.DEEPSLATE_DIAMOND_ORE);
+        BlockPos found = com.gabrielflorianoo.peqol.item.magic.DowsingRodItem.nearest(helper.getLevel(), helper.absolutePos(new BlockPos(1, 1, 1)), Blocks.DIAMOND_ORE, 4);
+        helper.assertTrue(helper.absolutePos(new BlockPos(0, 0, 0)).equals(found), "Diamond ore attunement finds deepslate diamond ore, got " + found);
+        helper.assertTrue(com.gabrielflorianoo.peqol.item.magic.DowsingRodItem.nearest(helper.getLevel(), helper.absolutePos(new BlockPos(1, 1, 1)), Blocks.EMERALD_ORE, 4) == null,
+                "No emerald ore around");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void soulboundItemsSurviveDeath(GameTestHelper helper) {
+        Player dead = helper.makeMockPlayer();
+        Player respawned = helper.makeMockPlayer();
+        ItemStack sword = new ItemStack(Items.DIAMOND_SWORD);
+        com.gabrielflorianoo.peqol.item.magic.SoulbindingRuneItem.setSoulbound(sword, true);
+        java.util.List<ItemEntity> drops = new java.util.ArrayList<>();
+        drops.add(new ItemEntity(helper.getLevel(), 0, 0, 0, sword));
+        drops.add(new ItemEntity(helper.getLevel(), 0, 0, 0, new ItemStack(Items.DIRT, 5)));
+        int kept = com.gabrielflorianoo.peqol.item.magic.SoulbindingRuneItem.keepFromDrops(dead, drops);
+        helper.assertTrue(kept == 1 && drops.size() == 1 && drops.get(0).getItem().is(Items.DIRT), "Only the sword is kept, the dirt drops");
+        com.gabrielflorianoo.peqol.item.magic.SoulbindingRuneItem.restore(dead, respawned);
+        helper.assertTrue(respawned.getInventory().contains(new ItemStack(Items.DIAMOND_SWORD)), "The sword comes back after respawning");
+        com.gabrielflorianoo.peqol.item.magic.SoulbindingRuneItem.setSoulbound(sword, false);
+        helper.assertFalse(com.gabrielflorianoo.peqol.item.magic.SoulbindingRuneItem.isSoulbound(sword), "Unbinding works");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void tempusAndGaiaAndWayfinder(GameTestHelper helper) {
+        helper.assertTrue(com.gabrielflorianoo.peqol.item.magic.TempusStoneItem.canAccelerate(Blocks.WHEAT.defaultBlockState(), null), "Crops can be accelerated");
+        helper.assertFalse(com.gabrielflorianoo.peqol.item.magic.TempusStoneItem.canAccelerate(Blocks.STONE.defaultBlockState(), null), "Plain stone has nothing to speed up");
+        BlockPos pos = helper.absolutePos(new BlockPos(1, 1, 1));
+        net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> dim = helper.getLevel().dimension();
+        int first = com.gabrielflorianoo.peqol.item.magic.TempusStoneItem.accelerate(dim, pos);
+        int second = com.gabrielflorianoo.peqol.item.magic.TempusStoneItem.accelerate(dim, pos);
+        helper.assertTrue(first == 4 && second == 8, "Speed starts at 4x and doubles, got " + first + " then " + second);
+        com.gabrielflorianoo.peqol.item.magic.TempusStoneItem.clear();
+
+        net.minecraft.core.Holder<net.minecraft.world.level.biome.Biome> mushroom = helper.getLevel().registryAccess()
+                .registryOrThrow(net.minecraft.core.registries.Registries.BIOME).getHolderOrThrow(net.minecraft.world.level.biome.Biomes.MUSHROOM_FIELDS);
+        com.gabrielflorianoo.peqol.item.magic.GaiaBrushItem.paint(helper.getLevel(), pos, 4, mushroom);
+        helper.assertTrue(helper.getLevel().getBiome(pos).is(net.minecraft.world.level.biome.Biomes.MUSHROOM_FIELDS), "The area is now a mushroom field");
+
+        net.minecraft.network.chat.Component east = com.gabrielflorianoo.peqol.item.magic.WayfinderCompassItem.direction(BlockPos.ZERO, new BlockPos(100, 0, 3));
+        helper.assertTrue(east.getContents() instanceof net.minecraft.network.chat.contents.TranslatableContents t && t.getKey().endsWith(".east"), "Positive X is east");
+        net.minecraft.network.chat.Component north = com.gabrielflorianoo.peqol.item.magic.WayfinderCompassItem.direction(BlockPos.ZERO, new BlockPos(0, 0, -50));
+        helper.assertTrue(north.getContents() instanceof net.minecraft.network.chat.contents.TranslatableContents t && t.getKey().endsWith(".north"), "Negative Z is north");
+        helper.succeed();
+    }
 }

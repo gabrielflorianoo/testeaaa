@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "pattern": [
+    "GDG",
+    "GBG",
+    "GGG"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "D": {
+      "item": "projecte:dark_matter"
+    },
+    "B": {
+      "item": "minecraft:dragon_breath"
+    }
+  },
+  "result": {
+    "item": "peqol:architect_bottle"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "architect_bottle"
+    }
+  ]
+}

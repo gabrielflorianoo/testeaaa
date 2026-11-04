@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "pattern": [
+    "A A",
+    " S ",
+    " S "
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "peqol:dowsing_rod"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "dowsing_rod"
+    }
+  ]
+}

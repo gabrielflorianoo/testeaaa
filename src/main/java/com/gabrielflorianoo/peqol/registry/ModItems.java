@@ -161,6 +161,21 @@ public final class ModItems {
     public static final RegistryObject<com.gabrielflorianoo.peqol.item.magic.WardingLanternItem> WARDING_LANTERN = ITEMS.register("warding_lantern",
             () -> new com.gabrielflorianoo.peqol.item.magic.WardingLanternItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).fireResistant()));
 
+    public static final RegistryObject<com.gabrielflorianoo.peqol.item.magic.TempusStoneItem> TEMPUS_STONE = ITEMS.register("tempus_stone",
+            () -> new com.gabrielflorianoo.peqol.item.magic.TempusStoneItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+    public static final RegistryObject<com.gabrielflorianoo.peqol.item.magic.DowsingRodItem> DOWSING_ROD = ITEMS.register("dowsing_rod",
+            () -> new com.gabrielflorianoo.peqol.item.magic.DowsingRodItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).fireResistant()));
+    public static final RegistryObject<com.gabrielflorianoo.peqol.item.magic.CourierSigilItem> COURIER_SIGIL = ITEMS.register("courier_sigil",
+            () -> new com.gabrielflorianoo.peqol.item.magic.CourierSigilItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).fireResistant()));
+    public static final RegistryObject<com.gabrielflorianoo.peqol.item.magic.GaiaBrushItem> GAIA_BRUSH = ITEMS.register("gaia_brush",
+            () -> new com.gabrielflorianoo.peqol.item.magic.GaiaBrushItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+    public static final RegistryObject<com.gabrielflorianoo.peqol.item.magic.WayfinderCompassItem> WAYFINDER_COMPASS = ITEMS.register("wayfinder_compass",
+            () -> new com.gabrielflorianoo.peqol.item.magic.WayfinderCompassItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).fireResistant()));
+    public static final RegistryObject<com.gabrielflorianoo.peqol.item.magic.SoulbindingRuneItem> SOULBINDING_RUNE = ITEMS.register("soulbinding_rune",
+            () -> new com.gabrielflorianoo.peqol.item.magic.SoulbindingRuneItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+    public static final RegistryObject<com.gabrielflorianoo.peqol.item.magic.ArchitectBottleItem> ARCHITECT_BOTTLE = ITEMS.register("architect_bottle",
+            () -> new com.gabrielflorianoo.peqol.item.magic.ArchitectBottleItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+
     private static Item.Properties charm() {
         return new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).fireResistant();
     }

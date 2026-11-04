@@ -29,6 +29,9 @@ public final class TooltipHandler {
             return;
         }
         List<Component> tooltip = event.getToolTip();
+        if (com.gabrielflorianoo.peqol.item.magic.SoulbindingRuneItem.isSoulbound(stack)) {
+            tooltip.add(1, Component.translatable("tooltip.peqol.soulbound").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC));
+        }
         CompoundTag beData = BlockItem.getBlockEntityData(stack);
         if (beData != null && beData.contains("EMC", Tag.TAG_LONG) && beData.getLong("EMC") > 0) {
             tooltip.add(Component.translatable("tooltip.peqol.wrenched_emc", EmcUtil.format(beData.getLong("EMC"))).withStyle(ChatFormatting.YELLOW));

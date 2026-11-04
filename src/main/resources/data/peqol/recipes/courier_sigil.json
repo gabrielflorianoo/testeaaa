@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "pattern": [
+    " P ",
+    "HEH",
+    " C "
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:paper"
+    },
+    "H": {
+      "item": "minecraft:honeycomb"
+    },
+    "E": {
+      "item": "minecraft:ender_eye"
+    },
+    "C": {
+      "item": "minecraft:ender_chest"
+    }
+  },
+  "result": {
+    "item": "peqol:courier_sigil"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "courier_sigil"
+    }
+  ]
+}

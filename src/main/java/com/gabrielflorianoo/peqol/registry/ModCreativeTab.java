@@ -50,6 +50,13 @@ public final class ModCreativeTab {
                 output.accept(ModItems.CLOUD_SCEPTER.get());
                 output.accept(ModItems.SOUL_JAR.get());
                 output.accept(ModItems.WARDING_LANTERN.get());
+                output.accept(ModItems.TEMPUS_STONE.get());
+                output.accept(ModItems.DOWSING_ROD.get());
+                output.accept(ModItems.COURIER_SIGIL.get());
+                output.accept(ModItems.GAIA_BRUSH.get());
+                output.accept(ModItems.WAYFINDER_COMPASS.get());
+                output.accept(ModItems.SOULBINDING_RUNE.get());
+                output.accept(ModItems.ARCHITECT_BOTTLE.get());
                 output.accept(ModItems.VOID_POUCH.get());
                 output.accept(ModItems.PROSPECTOR.get());
                 output.accept(ModItems.KNOWLEDGE_SCROLL.get());

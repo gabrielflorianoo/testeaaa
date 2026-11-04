@@ -43,6 +43,27 @@ public final class ClientForgeEvents {
         }
         EmcHudOverlay.INSTANCE.tick(mc.player);
         MachineInfoOverlay.INSTANCE.tick(mc);
+        if (mc.player.tickCount % 10 == 0) {
+            //Wayfinder's Compass: a short trail of light towards the place it found
+            for (net.minecraft.world.InteractionHand hand : net.minecraft.world.InteractionHand.values()) {
+                net.minecraft.world.item.ItemStack held = mc.player.getItemInHand(hand);
+                if (held.getItem() instanceof com.gabrielflorianoo.peqol.item.magic.WayfinderCompassItem) {
+                    net.minecraft.core.BlockPos target = com.gabrielflorianoo.peqol.item.magic.WayfinderCompassItem.getTarget(held, mc.level);
+                    if (target != null) {
+                        net.minecraft.world.phys.Vec3 eye = mc.player.getEyePosition().subtract(0, 0.4, 0);
+                        net.minecraft.world.phys.Vec3 dir = new net.minecraft.world.phys.Vec3(target.getX() + 0.5 - eye.x, 0, target.getZ() + 0.5 - eye.z);
+                        if (dir.lengthSqr() > 4) {
+                            dir = dir.normalize();
+                            for (int i = 2; i <= 7; i++) {
+                                net.minecraft.world.phys.Vec3 p = eye.add(dir.scale(i * 0.8));
+                                mc.level.addParticle(net.minecraft.core.particles.ParticleTypes.END_ROD, p.x, p.y, p.z, 0, 0, 0);
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+        }
         if (mc.player.tickCount % 8 == 0 && (mc.player.getMainHandItem().getItem() instanceof com.gabrielflorianoo.peqol.item.magic.LumenWandItem
                 || mc.player.getOffhandItem().getItem() instanceof com.gabrielflorianoo.peqol.item.magic.LumenWandItem)) {
             //Show the invisible lights conjured by the wand

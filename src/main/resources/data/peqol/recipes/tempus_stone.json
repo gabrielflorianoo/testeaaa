@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "pattern": [
+    "GCG",
+    "DKD",
+    "GCG"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "C": {
+      "item": "minecraft:clock"
+    },
+    "D": {
+      "item": "projecte:dark_matter"
+    },
+    "K": {
+      "item": "minecraft:diamond_block"
+    }
+  },
+  "result": {
+    "item": "peqol:tempus_stone"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "tempus_stone"
+    }
+  ]
+}

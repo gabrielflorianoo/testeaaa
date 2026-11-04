@@ -87,6 +87,41 @@ public final class CommonEvents {
     }
 
     /**
+     * Tempus Stone accelerations.
+     */
+    @SubscribeEvent
+    public static void onServerTickMagic(TickEvent.ServerTickEvent event) {
+        if (event.phase == TickEvent.Phase.END) {
+            net.minecraft.server.MinecraftServer server = net.minecraftforge.server.ServerLifecycleHooks.getCurrentServer();
+            if (server != null) {
+                com.gabrielflorianoo.peqol.item.magic.TempusStoneItem.tickAll(server);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onServerStopped(net.minecraftforge.event.server.ServerStoppedEvent event) {
+        com.gabrielflorianoo.peqol.item.magic.TempusStoneItem.clear();
+    }
+
+    /**
+     * Soulbound items never drop on death (runs before anything else can grab the drops).
+     */
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public static void onPlayerDrops(LivingDropsEvent event) {
+        if (event.getEntity() instanceof net.minecraft.world.entity.player.Player player && !player.level().isClientSide) {
+            com.gabrielflorianoo.peqol.item.magic.SoulbindingRuneItem.keepFromDrops(player, event.getDrops());
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerClone(net.minecraftforge.event.entity.player.PlayerEvent.Clone event) {
+        if (event.isWasDeath()) {
+            com.gabrielflorianoo.peqol.item.magic.SoulbindingRuneItem.restore(event.getOriginal(), event.getEntity());
+        }
+    }
+
+    /**
      * Warding Lantern: no natural hostile spawns around warded players.
      */
     @SubscribeEvent

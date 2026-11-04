@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "pattern": [
+    "SOS",
+    "ODO",
+    "SOS"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:soul_sand"
+    },
+    "O": {
+      "item": "minecraft:crying_obsidian"
+    },
+    "D": {
+      "item": "projecte:red_matter"
+    }
+  },
+  "result": {
+    "item": "peqol:soulbinding_rune"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "soulbinding_rune"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "pattern": [
+    "MAM",
+    "ACA",
+    "MAM"
+  ],
+  "key": {
+    "M": {
+      "item": "minecraft:map"
+    },
+    "A": {
+      "item": "projecte:medium_covalence_dust"
+    },
+    "C": {
+      "item": "minecraft:recovery_compass"
+    }
+  },
+  "result": {
+    "item": "peqol:wayfinder_compass"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "wayfinder_compass"
+    }
+  ]
+}

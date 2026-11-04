@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "pattern": [
+    "  L",
+    " GS",
+    "S  "
+  ],
+  "key": {
+    "L": {
+      "tag": "minecraft:leaves"
+    },
+    "G": {
+      "item": "projecte:dark_matter"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "peqol:gaia_brush"
+  },
+  "conditions": [
+    {
+      "type": "peqol:recipe_enabled",
+      "item": "gaia_brush"
+    }
+  ]
+}

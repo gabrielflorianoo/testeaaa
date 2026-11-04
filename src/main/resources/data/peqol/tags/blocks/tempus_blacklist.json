@@ -1,0 +1,38 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "projecte:collector_mk1",
+      "required": false
+    },
+    {
+      "id": "projecte:collector_mk2",
+      "required": false
+    },
+    {
+      "id": "projecte:collector_mk3",
+      "required": false
+    },
+    {
+      "id": "projecte:relay_mk1",
+      "required": false
+    },
+    {
+      "id": "projecte:relay_mk2",
+      "required": false
+    },
+    {
+      "id": "projecte:relay_mk3",
+      "required": false
+    },
+    {
+      "id": "projecte:condenser_mk1",
+      "required": false
+    },
+    {
+      "id": "projecte:condenser_mk2",
+      "required": false
+    },
+    "peqol:conjured_cloud"
+  ]
+}

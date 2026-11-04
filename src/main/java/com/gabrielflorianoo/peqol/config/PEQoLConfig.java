@@ -197,6 +197,19 @@ public final class PEQoLConfig {
         public final ForgeConfigSpec.LongValue soulJarCost;
         public final ForgeConfigSpec.IntValue wardRadius;
         public final ForgeConfigSpec.LongValue wardCostPerMinute;
+        public final ForgeConfigSpec.LongValue tempusCost;
+        public final ForgeConfigSpec.IntValue tempusDuration;
+        public final ForgeConfigSpec.IntValue tempusMaxSpeed;
+        public final ForgeConfigSpec.IntValue dowsingRadius;
+        public final ForgeConfigSpec.LongValue dowsingCost;
+        public final ForgeConfigSpec.LongValue courierCostPerStack;
+        public final ForgeConfigSpec.IntValue gaiaRadius;
+        public final ForgeConfigSpec.LongValue gaiaCostPerColumn;
+        public final ForgeConfigSpec.LongValue wayfinderCost;
+        public final ForgeConfigSpec.IntValue wayfinderRadius;
+        public final ForgeConfigSpec.LongValue soulbindCost;
+        public final ForgeConfigSpec.IntValue architectMaxSize;
+        public final ForgeConfigSpec.LongValue architectCostPerBlock;
 
         Common(ForgeConfigSpec.Builder builder) {
             builder.comment("Keybind driven actions (validated on the server)").push("keybinds");
@@ -468,6 +481,19 @@ public final class PEQoLConfig {
             soulJarCost = builder.comment("Soul Jar: EMC per capture.").defineInRange("soulJarCost", 512L, 0L, Long.MAX_VALUE);
             wardRadius = builder.comment("Warding Lantern: radius where hostile mobs can't spawn naturally.").defineInRange("wardRadius", 32, 8, 128);
             wardCostPerMinute = builder.comment("Warding Lantern: EMC per minute while active.").defineInRange("wardCostPerMinute", 128L, 0L, Long.MAX_VALUE);
+            tempusCost = builder.comment("Tempus Stone: EMC per use (each use doubles the speed of the block).").defineInRange("tempusCost", 2048L, 0L, Long.MAX_VALUE);
+            tempusDuration = builder.comment("Tempus Stone: how long a block stays accelerated, in ticks.").defineInRange("tempusDuration", 600, 20, 72000);
+            tempusMaxSpeed = builder.comment("Tempus Stone: maximum speed multiplier.").defineInRange("tempusMaxSpeed", 32, 2, 256);
+            dowsingRadius = builder.comment("Dowsing Rod: search radius in blocks.").defineInRange("dowsingRadius", 24, 4, 48);
+            dowsingCost = builder.comment("Dowsing Rod: EMC per search.").defineInRange("dowsingCost", 64L, 0L, Long.MAX_VALUE);
+            courierCostPerStack = builder.comment("Courier's Sigil: EMC per stack sent.").defineInRange("courierCostPerStack", 16L, 0L, Long.MAX_VALUE);
+            gaiaRadius = builder.comment("Gaia's Brush: radius of the painted area in blocks.").defineInRange("gaiaRadius", 4, 1, 16);
+            gaiaCostPerColumn = builder.comment("Gaia's Brush: EMC per painted column.").defineInRange("gaiaCostPerColumn", 16L, 0L, Long.MAX_VALUE);
+            wayfinderCost = builder.comment("Wayfinder's Compass: EMC per search (refunded when nothing is found).").defineInRange("wayfinderCost", 1024L, 0L, Long.MAX_VALUE);
+            wayfinderRadius = builder.comment("Wayfinder's Compass: search radius in chunks.").defineInRange("wayfinderRadius", 100, 8, 200);
+            soulbindCost = builder.comment("Soulbinding Rune: EMC per item bound.").defineInRange("soulbindCost", 8192L, 0L, Long.MAX_VALUE);
+            architectMaxSize = builder.comment("Architect's Bottle: maximum size of each side of the bottled area.").defineInRange("architectMaxSize", 12, 2, 48);
+            architectCostPerBlock = builder.comment("Architect's Bottle: EMC per block bottled.").defineInRange("architectCostPerBlock", 4L, 0L, Long.MAX_VALUE);
             builder.pop();
         }
     }
